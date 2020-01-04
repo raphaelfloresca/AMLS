@@ -47,7 +47,7 @@ class A1:
         gender_history = mlp_model.fit(
             self.gender_train_gen,
             steps_per_epoch=self.gender_train_gen.samples // self.batch_size,
-            validation_data=self.gender_val_gen,
+            validation_data=self.gender_val_gen.samples,
             validation_steps=self.gender_val_gen.samples // self.batch_size,
             epochs=epochs)
 

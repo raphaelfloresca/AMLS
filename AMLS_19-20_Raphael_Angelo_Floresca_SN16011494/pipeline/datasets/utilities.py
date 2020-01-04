@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 from keras.preprocessing.image import ImageDataGenerator
-from download_data import download_dataset
+from pipeline.datasets.download_data import download_dataset
 
 data_dir = "data/dataset_AMLS_19-20" 
 

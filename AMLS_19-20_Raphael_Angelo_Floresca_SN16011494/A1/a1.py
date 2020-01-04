@@ -8,9 +8,9 @@ class A1:
         self.height = 218 
         self.width = 178
         self.num_classes = 2
-        self.batch_size = batch_size, 
-        self.test_size = test_size, 
-        self.validation_split = validation_split, 
+        self.batch_size = batch_size 
+        self.test_size = test_size
+        self.validation_split = validation_split
         self.random_state = random_state
         self.gender_train_gen, self.gender_val_gen, self.gender_test_gen = create_gender_datagens(
             batch_size=batch_size,
@@ -47,7 +47,7 @@ class A1:
         gender_history = mlp_model.fit(
             self.gender_train_gen,
             steps_per_epoch=self.gender_train_gen.samples // self.batch_size,
-            validation_data=self.gender_val_gen.samples,
+            validation_data=self.gender_val_gen,
             validation_steps=self.gender_val_gen.samples // self.batch_size,
             epochs=epochs)
 

@@ -1,9 +1,10 @@
 # Transfer learning using the ResNet50-v2 architecture pretrained on ImageNet.
 # It has been modified to allow a custom input size.
-from keras.applications.resnet_v2 import ResNet50V2
-from keras.layers import GlobalAveragePooling2D
-from keras.layers import Dense
-from keras import Model
+
+import tensorflow as tf
+from tf.keras.applications.resnet_v2 import ResNet50V2
+from tf.keras.layers import GlobalAveragePooling2D, Dense
+from tf.keras import Model
 
 class ResNet50V2_TL:
     @staticmethod

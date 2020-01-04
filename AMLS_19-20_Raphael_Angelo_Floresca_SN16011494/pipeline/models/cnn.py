@@ -2,9 +2,8 @@
 # Architecture inspired by:
 # https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/images/classification.ipynb#scrollTo=L1WtoaOHVrVh
 
-import tensorflow as tf
-from tf.keras import Sequential
-from tf.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D
 
 class CNN:
     @staticmethod

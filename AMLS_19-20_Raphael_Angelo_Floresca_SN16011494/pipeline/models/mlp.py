@@ -2,9 +2,8 @@
 # We are using the Sequential API which creates a stack of layers
 # in which the input flows through one after the other
 
-import tensorflow as tf
-from tf.keras import Sequential
-from tf.keras.layers import Dense, Flatten
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense, Flatten
 
 class MLP:
     @staticmethod

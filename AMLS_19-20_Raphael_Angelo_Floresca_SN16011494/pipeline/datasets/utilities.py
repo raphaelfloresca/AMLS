@@ -1,7 +1,6 @@
 import pandas as pd
 import os
-import tensorflow as tf
-from tf.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from pipeline.datasets.download_data import download_dataset
 
 data_dir = "data/dataset_AMLS_19-20" 

@@ -2,24 +2,29 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from pipeline.datasets.utilities import create_datagen, create_cartoon_set_df, go_up_three_dirs
 
-def create_eye_color_datagens(height, width, batch_size, test_size, validation_split, random_state):
+def create_eye_color_df():
     # Go up three directories
     go_up_three_dirs()
-    
+
     # Import cartoon_set_df
     cartoon_set_df = create_cartoon_set_df()
 
+    # Create eye_color dataframe, drop unnecessary columns
+    eye_color_df = cartoon_set_df.copy()
+    eye_color_df.drop(eye_color_df.columns[0], axis=1, inplace=True)
+    eye_color_df.drop(eye_color_df.columns[0], axis=1, inplace=True)
+    return eye_color_df
+
+def create_eye_color_datagens(height, width, batch_size, test_size, validation_split, random_state):
     # Create datagen
     datagen = create_datagen(validation_split)
 
-    # Create eye_color dataframe, drop unnecessary columns
-    eye_color = cartoon_set_df.copy()
-    eye_color.drop(eye_color.columns[0], axis=1, inplace=True)
-    eye_color.drop(eye_color.columns[1], axis=1, inplace=True)
-
+    # Create face shape dataframe
+    eye_color_df = create_eye_color_df
+    
     # Now, we create training and test sets for the eye_color and smiling datasets
     eye_color_train, eye_color_test = train_test_split(
-        eye_color,
+        eye_color_df,
         test_size=test_size,
         random_state=random_state
     )

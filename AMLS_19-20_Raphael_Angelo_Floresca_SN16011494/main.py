@@ -14,7 +14,7 @@ acc_A1_train = model_A1.train() # Train model based on the training set (you sho
 acc_A1_test = model_A1.test()   # Test model based on the test set.
 
 # Clear GPU memory
-K.clear_session()
+# K.clear_session()
 
 # ======================================================================================================================
 # Task A2
@@ -23,7 +23,7 @@ acc_A2_train = model_A2.train()
 acc_A2_test = model_A2.test()
 
 # Clear GPU memory
-K.clear_session()
+# K.clear_session()
 
 # ======================================================================================================================
 # Task B1
@@ -32,7 +32,7 @@ acc_B1_train = model_B1.train()
 acc_B1_test = model_B1.test()
 
 # Clear GPU memory
-K.clear_session()
+# K.clear_session()
 
 # ======================================================================================================================
 # Task B2

@@ -12,7 +12,7 @@ def create_eye_color_df():
     # Create eye_color dataframe, drop unnecessary columns
     eye_color_df = cartoon_set_df.copy()
     eye_color_df.drop(eye_color_df.columns[0], axis=1, inplace=True)
-    eye_color_df.drop(eye_color_df.columns[0], axis=1, inplace=True)
+    eye_color_df.drop(eye_color_df.columns[1], axis=1, inplace=True)
     return eye_color_df
 
 def create_eye_color_datagens(height, width, batch_size, test_size, validation_split, random_state):

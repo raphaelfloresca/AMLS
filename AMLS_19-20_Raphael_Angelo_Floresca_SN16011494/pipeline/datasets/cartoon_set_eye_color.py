@@ -28,7 +28,7 @@ def create_eye_color_datagens(height, width, batch_size, test_size, validation_s
     eye_color_train_gen = datagen.flow_from_dataframe(
         dataframe=eye_color_train, 
         directory="img/",
-        x_col="img_name",
+        x_col="file_name",
         y_col="eye_color",
         class_mode="sparse",
         target_size=(height,width),
@@ -40,7 +40,7 @@ def create_eye_color_datagens(height, width, batch_size, test_size, validation_s
     eye_color_val_gen = datagen.flow_from_dataframe(
         dataframe=eye_color_train,
         directory="img/",
-        x_col="img_name",
+        x_col="file_name",
         y_col="eye_color",
             class_mode="sparse",
         target_size=(height,width),
@@ -53,7 +53,7 @@ def create_eye_color_datagens(height, width, batch_size, test_size, validation_s
     eye_color_test_gen = datagen.flow_from_dataframe(
         dataframe=eye_color_test,
         directory="img/",
-        x_col="img_name",
+        x_col="file_name",
         y_col="eye_color",
         class_mode="sparse",
         target_size=(height,width),

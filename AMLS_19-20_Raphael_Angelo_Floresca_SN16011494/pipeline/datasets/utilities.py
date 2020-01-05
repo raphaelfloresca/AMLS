@@ -15,14 +15,17 @@ def check_path():
 celeba_dir = "celeba"
 cartoon_set_dir = "cartoon_set"
 
+# Used to go up two directories
+def go_up_two_dirs():
+    os.chdir("..")
+    os.chdir("..")
+
 # Create a dataframe for the celeba labels.csv
 def create_celeba_df():
     check_path()
     os.chdir(os.path.join(data_dir, celeba_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
-    os.chdir("..")
-    os.chdir("..")
     return df
 
 # Create a dataframe for the cartoon_set labels.csv
@@ -31,8 +34,6 @@ def create_cartoon_set_df():
     os.chdir(os.path.join(data_dir, celeba_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
-    os.chdir("..")
-    os.chdir("..")
     return df
 
 # Create an ImageDataGenerator which will be fed into the

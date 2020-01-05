@@ -32,7 +32,7 @@ def create_celeba_df():
 # Create a dataframe for the cartoon_set labels.csv
 def create_cartoon_set_df():
     check_path()
-    os.chdir(os.path.join(data_dir, celeba_dir))
+    os.chdir(os.path.join(data_dir, cartoon_set_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
     return df

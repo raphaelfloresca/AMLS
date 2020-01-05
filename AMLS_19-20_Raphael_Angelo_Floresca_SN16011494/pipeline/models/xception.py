@@ -6,8 +6,6 @@ from tensorflow.keras.layers import GlobalAveragePooling2D, Dense
 from tensorflow.keras import Model
 from tensorflow.keras.optimizers import SGD
 
-xception_history = xception_model.fit(gender_train_gen, epochs=5, validation_data=gender_val_gen)
-
 def train_xception(
         height,
         width,

@@ -17,10 +17,10 @@ acc_A1_train = model_A1.train() # Train model based on the training set (you sho
 acc_A1_test = model_A1.test()   # Test model based on the test set.
 
 # Clear gpu memory
-# K.clear_session()
-cuda.select_device(0)
-cuda.close()
-cuda.select_device(0)
+K.clear_session()
+# cuda.select_device(0)
+# cuda.close()
+# cuda.select_device(0)
 
 # ======================================================================================================================
 # Task A2
@@ -29,10 +29,10 @@ acc_A2_train = model_A2.train()
 acc_A2_test = model_A2.test()
 
 # Clear gpu memory
-# K.clear_session()
-cuda.select_device(0)
-cuda.close()
-cuda.select_device(0)
+K.clear_session()
+# cuda.select_device(0)
+# cuda.close()
+# cuda.select_device(0)
 
 # ======================================================================================================================
 # Task B1
@@ -41,10 +41,10 @@ acc_B1_train = model_B1.train()
 acc_B1_test = model_B1.test()
 
 # Clear gpu memory
-# K.clear_session()
-cuda.select_device(0)
-cuda.close()
-cuda.select_device(0)
+K.clear_session()
+# cuda.select_device(0)
+# cuda.close()
+# cuda.select_device(0)
 
 # ======================================================================================================================
 # Task B2
@@ -53,10 +53,10 @@ acc_B2_train = model_B2.train()
 acc_B2_test = model_B2.test()
 
 # Clear gpu memory
-# K.clear_session()
-cuda.select_device(0)
-cuda.close()
-cuda.select_device(0)
+K.clear_session()
+# cuda.select_device(0)
+# cuda.close()
+# cuda.select_device(0)
 
 # ======================================================================================================================
 ## Print out your results with following format:

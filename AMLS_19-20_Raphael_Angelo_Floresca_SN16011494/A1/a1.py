@@ -36,10 +36,10 @@ class A1:
             layer1_hn,
             layer2_hn)
 
-    def mlp_train(self):
+    # def mlp_train(self):
     # Get the training accuracy
-        training_accuracy = self.mlp_history.history.get('accuracy')[-1]
-        return training_accuracy
+    #     training_accuracy = self.mlp_history.history.get('accuracy')[-1]
+    #     return training_accuracy
         
     def mlp_test(self):
         # Get the test accuracy

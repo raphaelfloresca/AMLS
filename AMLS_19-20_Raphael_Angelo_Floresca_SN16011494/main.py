@@ -3,6 +3,9 @@ from A2.a2_cnn import A2_CNN
 from B1.b1_cnn import B1_CNN
 from B2.b2_cnn import B2_CNN
 from tensorflow.keras import backend as K
+from numba import cuda
+
+
 
 # ======================================================================================================================
 # Data preprocessing
@@ -15,6 +18,9 @@ acc_A1_test = model_A1.test()   # Test model based on the test set.
 
 # Clear gpu memory
 K.clear_session()
+cuda.select_device(0)
+cuda.close()
+cuda.select_device(0)
 
 # ======================================================================================================================
 # Task A2
@@ -24,6 +30,9 @@ acc_A2_test = model_A2.test()
 
 # Clear gpu memory
 K.clear_session()
+cuda.select_device(0)
+cuda.close()
+cuda.select_device(0)
 
 # ======================================================================================================================
 # Task B1
@@ -33,6 +42,9 @@ acc_B1_test = model_B1.test()
 
 # Clear gpu memory
 K.clear_session()
+cuda.select_device(0)
+cuda.close()
+cuda.select_device(0)
 
 # ======================================================================================================================
 # Task B2
@@ -42,6 +54,9 @@ acc_B2_test = model_B2.test()
 
 # Clear gpu memory
 K.clear_session()
+cuda.select_device(0)
+cuda.close()
+cuda.select_device(0)
 
 # ======================================================================================================================
 ## Print out your results with following format:

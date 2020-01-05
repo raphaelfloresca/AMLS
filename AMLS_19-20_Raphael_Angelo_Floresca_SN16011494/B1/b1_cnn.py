@@ -12,8 +12,8 @@ class B1_CNN:
             num_start_filters=16,
             kernel_size=3,
             fcl_size=512):
-        self.height = 375 
-        self.width = 375
+        self.height = 200 
+        self.width = 200
         self.num_classes = 5
         self.face_shape_train_gen, self.face_shape_val_gen, self.face_shape_test_gen = create_face_shape_datagens(
             height=self.height,

@@ -1,6 +1,6 @@
 from pipeline.datasets.cartoon_set_face_shape import create_face_shape_datagens
 from pipeline.models.xception import train_xception
-from tensorflow.keras.applications.Xception import preprocess_input
+from tensorflow.keras.applications.xception import preprocess_input
 
 class B1_Xception:
     def __init__(

@@ -1,6 +1,6 @@
 from pipeline.datasets.cartoon_set_eye_color import create_eye_color_datagens
 from pipeline.models.xception import train_xception
-from tensorflow.keras.applications.Xception import preprocess_input
+from tensorflow.keras.applications.xception import preprocess_input
 
 class B2_Xception:
     def __init__(

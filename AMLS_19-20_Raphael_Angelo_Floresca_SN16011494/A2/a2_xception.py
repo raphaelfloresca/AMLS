@@ -1,6 +1,6 @@
 from pipeline.datasets.celeba_smiling import create_smiling_datagens
 from pipeline.models.xception import train_xception
-from tensorflow.keras.applications.Xception import preprocess_input
+from tensorflow.keras.applications.xception import preprocess_input
 
 class A2_Xception:
     def __init__(
@@ -27,7 +27,7 @@ class A2_Xception:
             batch_size,
             self.smiling_train_gen,
             self.smiling_val_gen)
-            
+
     def train(self):
         # Get the training accuracy
         training_accuracy = self.history.history['acc'][-1]

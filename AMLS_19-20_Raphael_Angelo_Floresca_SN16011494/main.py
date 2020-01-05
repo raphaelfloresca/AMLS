@@ -2,6 +2,7 @@ from A1.a1_cnn import A1_CNN
 from A2.a2_cnn import A2_CNN
 from B1.b1_cnn import B1_CNN
 from B2.b2_cnn import B2_CNN
+from tensorflow.keras import backend as K
 
 # ======================================================================================================================
 # Data preprocessing
@@ -12,17 +13,26 @@ model_A1 = A1_CNN()                     # Build model object.
 acc_A1_train = model_A1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A1_test = model_A1.test()   # Test model based on the test set.
 
+# Clear GPU memory
+K.clear_session()
+
 # ======================================================================================================================
 # Task A2
 model_A2 = A2_CNN()
 acc_A2_train = model_A2.train()
 acc_A2_test = model_A2.test()
 
+# Clear GPU memory
+K.clear_session()
+
 # ======================================================================================================================
 # Task B1
 model_B1 = B1_CNN()
 acc_B1_train = model_B1.train()
 acc_B1_test = model_B1.test()
+
+# Clear GPU memory
+K.clear_session()
 
 # ======================================================================================================================
 # Task B2

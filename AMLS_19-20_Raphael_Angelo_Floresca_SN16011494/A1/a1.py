@@ -1,6 +1,5 @@
 from pipeline.datasets.celeba_gender import create_gender_datagens
 from pipeline.models.mlp import train_mlp
-from numba import cuda
 
 class A1:
     def __init__(
@@ -38,19 +37,11 @@ class A1:
             layer2_hn)
 
     def train(self):
-        # Release GPU memory
-        cuda.select_device(0)
-        cuda.close()
-
         # Get the training accuracy
         training_accuracy = self.history.history['acc'][-1]
         return training_accuracy
         
     def test(self):
-        # Release GPU memory
-        cuda.select_device(0)
-        cuda.close()
-
         # Get the test accuracy
         test_accuracy = self.model.evaluate(self.gender_test_gen)[-1]
         return test_accuracy

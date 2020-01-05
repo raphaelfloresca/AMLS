@@ -1,6 +1,5 @@
 from pipeline.datasets.cartoon_set_face_shape import create_face_shape_datagens
 from pipeline.models.xception import train_xception
-from numba import cuda
 
 class A1_Xception:
     def __init__(
@@ -30,19 +29,11 @@ class A1_Xception:
             self.face_shape_val_gen)
 
     def train(self):
-        # Release GPU memory
-        cuda.select_device(0)
-        cuda.close()
-
         # Get the training accuracy
         training_accuracy = self.history.history['acc'][-1]
         return training_accuracy
         
     def test(self):
-        # Release GPU memory
-        cuda.select_device(0)
-        cuda.close()
-        
         # Get the test accuracy
         test_accuracy = self.model.evaluate(self.face_shape_test_gen)[-1]
         return test_accuracy

@@ -1,5 +1,7 @@
 from pipeline.datasets.cartoon_set_face_shape import create_face_shape_datagens
 from pipeline.models.xception import train_xception
+from tensorflow.keras import backend as K
+from numba import cuda
 
 class A1_Xception:
     def __init__(
@@ -9,8 +11,8 @@ class A1_Xception:
             validation_split=0.2, 
             epochs=5, 
             random_state=42):
-        self.height = 375 
-        self.width = 375
+        self.height = 250 
+        self.width = 250
         self.num_classes = 2
         self.face_shape_train_gen, self.face_shape_val_gen, self.face_shape_test_gen = create_face_shape_datagens(
             height=self.height,
@@ -34,6 +36,12 @@ class A1_Xception:
         return training_accuracy
         
     def test(self):
+        # Clear gpu memory
+        K.clear_session()
+        cuda.select_device(0)
+        cuda.close()
+        cuda.select_device(0)
+
         # Get the test accuracy
         test_accuracy = self.model.evaluate(self.face_shape_test_gen)[-1]
         return test_accuracy

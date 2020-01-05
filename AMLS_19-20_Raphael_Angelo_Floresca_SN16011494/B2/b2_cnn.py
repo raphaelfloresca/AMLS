@@ -12,8 +12,8 @@ class B2_CNN:
             num_start_filters=16,
             kernel_size=3,
             fcl_size=512):
-        self.height = 200 
-        self.width = 200
+        self.height = 250 
+        self.width = 250
         self.num_classes = 5
         self.eye_color_train_gen, self.eye_color_val_gen, self.eye_color_test_gen = create_eye_color_datagens(
             height=self.height,

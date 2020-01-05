@@ -13,8 +13,8 @@ class B2:
             second_af="relu",
             layer1_hn=300,
             layer2_hn=100):
-        self.height = 375 
-        self.width = 375
+        self.height = 250 
+        self.width = 250
         self.num_classes = 5
         self.eye_color_train_gen, self.eye_color_val_gen, self.eye_color_test_gen = create_eye_color_datagens(
             height=self.height,

@@ -4,6 +4,9 @@
 from tensorflow.keras.applications.resnet_v2 import Xception
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense
 from tensorflow.keras import Model
+from tensorflow.keras.optimizers import SGD
+
+xception_history = xception_model.fit(gender_train_gen, epochs=5, validation_data=gender_val_gen)
 
 def train_xception(
         height,
@@ -27,19 +30,42 @@ def train_xception(
     output = Dense(num_classes, activation="softmax")(avg)
     # Build model
     model = Model(inputs=base_model.input, outputs=output)
-        
-    # We now compile the MLP model to specify the loss function
-    # and the optimizer to use (SGD)
-    model.compile(
-        loss="sparse_categorical_crossentropy", # b/c of exclusive, sparse outputs
-        optimizer='sgd', # We use SGD to optimise the MLP
-        metrics=["accuracy"]) # Used for classifiers
 
-    # Training and evaluating the MLP model on the gender dataset
+    # First, we freeze the layers for the first part of the training
+    for layer in base_model.layers:
+        layer.trainable = False
+
+    # Specify optimiser parameters for the first stage
+    optimizer = SGD(lr=0.2, momentum=0.9, decay=0.01)
+        
+    # We now compile the Xception model for the first stage
+    model.compile(loss="sparse_categorical_crossentropy", optimizer=optimizer,
+              metrics=["accuracy"])
+
+    # Training and evaluating the Xception model for the first stage
     history = model.fit(
         train_gen,
         steps_per_epoch=train_gen.samples // batch_size,
         validation_data=val_gen,
         validation_steps=val_gen.samples // batch_size,
-        epochs=epochs)
+        epochs=int(epochs/2))
+
+    # Now, we unfreeze the layers for the second part of the training
+    for layer in base_model.layers:
+        layer.trainable = True
+
+    # Specify optimiser parameters for the second stage
+    optimizer = SGD(lr=0.01, momentum=0.9, decay=0.001)
+        
+    # We now compile the Xception model for the second stage
+    model.compile(loss="sparse_categorical_crossentropy", optimizer=optimizer,
+              metrics=["accuracy"])
+
+    # Training and evaluating the Xception model for the second stage
+    history = model.fit(
+        train_gen,
+        steps_per_epoch=train_gen.samples // batch_size,
+        validation_data=val_gen,
+        validation_steps=val_gen.samples // batch_size,
+        epochs=int(epochs/2))
     return model, history

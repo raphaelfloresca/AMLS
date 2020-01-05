@@ -39,14 +39,14 @@ def train_cnn(
         Dense(num_classes, activation='softmax')
     ])
 
-    # We now compile the MLP model to specify the loss function
-    # and the optimizer to use (SGD)
+    # We now compile the CNN model to specify the loss function
+    # and the optimizer to use (Adam)
     model.compile(
         loss="sparse_categorical_crossentropy", # b/c of exclusive, sparse outputs
         optimizer='adam', # We use the Adam optimizer to optimise the CNN
         metrics=["accuracy"]) # Used for classifiers
 
-    # Training and evaluating the MLP model on the gender dataset
+    # Training and evaluating the CNN model
     history = model.fit(
         train_gen,
         steps_per_epoch=train_gen.samples // batch_size,

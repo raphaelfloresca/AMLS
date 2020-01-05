@@ -37,7 +37,7 @@ def train_mlp(
         optimizer='sgd', # We use SGD to optimise the MLP
         metrics=["accuracy"]) # Used for classifiers
 
-    # Training and evaluating the MLP model on the gender dataset
+    # Training and evaluating the MLP model
     history = model.fit(
         train_gen,
         steps_per_epoch=train_gen.samples // batch_size,

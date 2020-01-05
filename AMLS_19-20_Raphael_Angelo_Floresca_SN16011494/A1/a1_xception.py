@@ -1,7 +1,6 @@
 from pipeline.datasets.celeba_gender import create_gender_datagens
 from pipeline.models.xception import train_xception
 from tensorflow.keras import backend as K
-from numba import cuda
 
 class A1_Xception:
     def __init__(
@@ -38,9 +37,6 @@ class A1_Xception:
     def test(self):
         # Clear gpu memory
         K.clear_session()
-        cuda.select_device(0)
-        cuda.close()
-        cuda.select_device(0)
         
         # Get the test accuracy
         test_accuracy = self.model.evaluate(self.gender_test_gen)[-1]

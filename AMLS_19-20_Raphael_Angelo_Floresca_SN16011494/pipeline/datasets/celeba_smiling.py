@@ -1,24 +1,29 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from utilities import create_datagen, create_celeba_df
+from pipeline.datasets.utilities import create_datagen, create_celeba_df
 
-# Create training, validation and test ImageDataGenerator objects
-# for the smiling data which will be used for training, validation and testing
-def create_smiling_datagens(batch_size=32, test_size=0.2, validation_split=0.2, random_state=42):
+def create_smiling_df():
     # Import celeba_df
     celeba_df = create_celeba_df()
 
+    # Create smiiling dataframe, drop unnecessary columns
+    smiling_df = celeba_df.copy()
+    smiling_df.drop(smiling_df.columns[0], axis=1, inplace=True)
+    smiling_df.drop(smiling_df.columns[1], axis=1, inplace=True)
+    return smiling_df
+
+# Create training, validation and test ImageDataGenerator objects
+# for the smiling data which will be used for training, validation and testing
+def create_smiling_datagens(height, width, batch_size, test_size, validation_split, random_state):
     # Create datagen
     datagen = create_datagen(validation_split)
 
-    # Create smiling dataframe, drop unnecessary columns
-    smiling = celeba_df.copy()
-    smiling.drop(smiling.columns[0], axis=1, inplace=True)
-    smiling.drop(smiling.columns[2], axis=1, inplace=True)
+    # Create smiling dataframe
+    smiling_df = create_smiling_df() 
 
     # Create training and test sets for the smiling and smiling datasets
     smiling_train, smiling_test = train_test_split(
-        smiling,
+        smiling_df,
         test_size=test_size,
         random_state=random_state
     )
@@ -30,7 +35,7 @@ def create_smiling_datagens(batch_size=32, test_size=0.2, validation_split=0.2, 
         x_col="img_name",
         y_col="smiling",
         class_mode="sparse",
-        target_size=(218,178),
+        target_size=(height,width),
         batch_size=batch_size,
         subset="training"
     )
@@ -42,7 +47,7 @@ def create_smiling_datagens(batch_size=32, test_size=0.2, validation_split=0.2, 
         x_col="img_name",
         y_col="smiling",
         class_mode="sparse",
-        target_size=(218,178),
+        target_size=(height,width),
         batch_size=batch_size,
         subset="validation"
     )
@@ -55,7 +60,7 @@ def create_smiling_datagens(batch_size=32, test_size=0.2, validation_split=0.2, 
         x_col="img_name",
         y_col="smiling",
         class_mode="sparse",
-        target_size=(218,178),
+        target_size=(height,width),
         batch_size=len(smiling_test)
     )
     return smiling_train_gen, smiling_val_gen, smiling_test_gen

@@ -11,11 +11,9 @@ acc_A1_test = model_A1.mlp_test()                  # Test model based on the tes
 
 # ======================================================================================================================
 # Task A2
-# model_A2 = A2(args...)
-# acc_A2_train = model_A2.train(args...)
-# acc_A2_test = model_A2.test(args...)
-# Clean up memory/GPU etc...
-
+model_A2 = A2()
+acc_A2_train = model_A2.train()
+acc_A2_test = model_A2.test()
 
 # ======================================================================================================================
 # Task B1

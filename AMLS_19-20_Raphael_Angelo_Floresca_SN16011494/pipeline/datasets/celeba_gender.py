@@ -14,7 +14,7 @@ def create_gender_df():
 
 # Create training, validation and test ImageDataGenerator objects
 # for the gender data which will be used for training, validation and testing
-def create_gender_datagens(batch_size, test_size, validation_split, random_state):
+def create_gender_datagens(height, width, batch_size, test_size, validation_split, random_state):
     # Create datagen
     datagen = create_datagen(validation_split)
 
@@ -25,8 +25,7 @@ def create_gender_datagens(batch_size, test_size, validation_split, random_state
     gender_train, gender_test = train_test_split(
         gender_df,
         test_size=test_size,
-        random_state=random_state
-    )
+        random_state=random_state)
 
     # Generate an image-label pair for the training set
     gender_train_gen = datagen.flow_from_dataframe(
@@ -35,10 +34,9 @@ def create_gender_datagens(batch_size, test_size, validation_split, random_state
         x_col="img_name",
         y_col="gender",
         class_mode="sparse",
-        target_size=(218,178),
+        target_size=(height,width),
         batch_size=batch_size,
-        subset="training"
-    )
+        subset="training")
 
     # Generate an image-label pair for the validation set as follows
     gender_val_gen = datagen.flow_from_dataframe(
@@ -47,10 +45,9 @@ def create_gender_datagens(batch_size, test_size, validation_split, random_state
         x_col="img_name",
         y_col="gender",
         class_mode="sparse",
-        target_size=(218,178),
+        target_size=(height,width),
         batch_size=batch_size,
-        subset="validation"
-    )
+        subset="validation")
 
     # Generate an image-label pair for the gender test set as follows
     # Set batch_size = size of test set
@@ -60,8 +57,8 @@ def create_gender_datagens(batch_size, test_size, validation_split, random_state
         x_col="img_name",
         y_col="gender",
         class_mode="sparse",
-        target_size=(218,178),
-        batch_size=len(gender_test)
-    )
+        target_size=(height,width),
+        batch_size=len(gender_test))
+
     return gender_train_gen, gender_val_gen, gender_test_gen
 

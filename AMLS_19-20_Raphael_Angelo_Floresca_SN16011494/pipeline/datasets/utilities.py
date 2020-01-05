@@ -21,7 +21,8 @@ def create_celeba_df():
     os.chdir(os.path.join(data_dir, celeba_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
-    os.chdir(os.path.join(os.pardir, parent_dir))
+    os.chdir("..")
+    os.chdir("..")
     return df
 
 # Create a dataframe for the cartoon_set labels.csv
@@ -30,7 +31,8 @@ def create_cartoon_set_df():
     os.chdir(os.path.join(data_dir, celeba_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
-    os.chdir(os.path.join(os.pardir, parent_dir))
+    os.chdir("..")
+    os.chdir("..")
     return df
 
 # Create an ImageDataGenerator which will be fed into the

@@ -4,10 +4,10 @@ from pipeline.models.xception import train_xception
 class A2_Xception:
     def __init__(
             self, 
-            batch_size=16, 
+            batch_size=10, 
             test_size=0.2, 
             validation_split=0.2, 
-            epochs=10, 
+            epochs=4, 
             random_state=42):
         self.height = 218 
         self.width = 178

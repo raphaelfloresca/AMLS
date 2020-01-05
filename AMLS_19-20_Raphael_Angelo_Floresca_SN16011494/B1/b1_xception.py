@@ -8,7 +8,7 @@ class B1_Xception:
             batch_size=32, 
             test_size=0.2, 
             validation_split=0.2, 
-            epochs=5, 
+            epochs=10, 
             random_state=42):
         self.height = 250 
         self.width = 250
@@ -35,9 +35,6 @@ class B1_Xception:
         return training_accuracy
         
     def test(self):
-        # Clear gpu memory
-        K.clear_session()
-
         # Get the test accuracy
         test_accuracy = self.model.evaluate(self.face_shape_test_gen)[-1]
         return test_accuracy

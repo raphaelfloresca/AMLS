@@ -33,7 +33,8 @@ acc_A2_test = model_A2.test()
 
 # ======================================================================================================================
 ## Print out your results with following format:
-print('TA1:{},{}'.format(acc_A1_train, acc_A1_test))
+print('TA1:{},{};TA2:{},{}'.format(acc_A1_train, acc_A1_test,
+                                   acc_A2_train, acc_A2_test))
 # print('TA1:{},{};TA2:{},{};TB1:{},{};TB2:{},{};'.format(acc_A1_train, acc_A1_test,
 #                                                        acc_A2_train, acc_A2_test,
 #                                                        acc_B1_train, acc_B1_test,

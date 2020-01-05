@@ -38,7 +38,7 @@ class A1:
 
     def mlp_train(self):
         # Get the training accuracy
-        training_accuracy = self.mlp_history.history['accuracy'][-1]
+        training_accuracy = self.mlp_history.history.get('acc')[-1]
         return training_accuracy
         
     def mlp_test(self):

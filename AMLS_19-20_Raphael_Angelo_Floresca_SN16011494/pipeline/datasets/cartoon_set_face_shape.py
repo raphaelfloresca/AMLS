@@ -20,7 +20,7 @@ def create_face_shape_datagens(height, width, batch_size, test_size, validation_
     datagen = create_datagen(validation_split)
 
     # Create face shape dataframe
-    face_shape_df = create_face_shape_df
+    face_shape_df = create_face_shape_df()
     
     # Now, we create training and test sets for the face_shape and smiling datasets
     face_shape_train, face_shape_test = train_test_split(

@@ -20,7 +20,7 @@ def create_eye_color_datagens(height, width, batch_size, test_size, validation_s
     datagen = create_datagen(validation_split)
 
     # Create face shape dataframe
-    eye_color_df = create_eye_color_df
+    eye_color_df = create_eye_color_df()
     
     # Now, we create training and test sets for the eye_color and smiling datasets
     eye_color_train, eye_color_test = train_test_split(

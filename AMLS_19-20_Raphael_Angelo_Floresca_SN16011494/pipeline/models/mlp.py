@@ -20,7 +20,7 @@ def train_mlp(
     
     # Instantiate Sequential API
     model = Sequential([
-        # This flattens the 218x178x3 input into a 1D tensor
+        # This flattens the input into a 1D tensor
         Flatten(input_shape=(height,width,3)),
         # Fully connected layer with 300 neurons, using ReLU by default.
         Dense(layer1_hn, activation=first_af),

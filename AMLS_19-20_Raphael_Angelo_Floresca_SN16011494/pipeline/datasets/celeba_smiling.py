@@ -17,7 +17,15 @@ def create_smiling_df():
 
 # Create training, validation and test ImageDataGenerator objects
 # for the smiling data which will be used for training, validation and testing
-def create_smiling_datagens(height, width, batch_size, test_size, validation_split, random_state):
+def create_smiling_datagens(
+        height, 
+        width, 
+        batch_size, 
+        test_size, 
+        validation_split, 
+        random_state,
+        preprocessing_function):
+        
     # Create datagen
     datagen = create_datagen(validation_split)
 
@@ -40,8 +48,8 @@ def create_smiling_datagens(height, width, batch_size, test_size, validation_spl
         class_mode="sparse",
         target_size=(height,width),
         batch_size=batch_size,
-        subset="training"
-    )
+        subset="training",
+        preprocessing_function=preprocessing_function)
 
     # Generate an image-label pair for the validation set as follows
     smiling_val_gen = datagen.flow_from_dataframe(
@@ -52,8 +60,8 @@ def create_smiling_datagens(height, width, batch_size, test_size, validation_spl
         class_mode="sparse",
         target_size=(height,width),
         batch_size=batch_size,
-        subset="validation"
-    )
+        subset="validation",
+        preprocessing_function=preprocessing_function)
 
     # Generate an image-label pair for the smiling test set as follows
     # Set batch_size = size of test set
@@ -64,6 +72,7 @@ def create_smiling_datagens(height, width, batch_size, test_size, validation_spl
         y_col="smiling",
         class_mode="sparse",
         target_size=(height,width),
-        batch_size=len(smiling_test)
-    )
+        batch_size=len(smiling_test),
+        preprocessing_function=preprocessing_function)
+
     return smiling_train_gen, smiling_val_gen, smiling_test_gen

@@ -15,7 +15,15 @@ def create_eye_color_df():
     eye_color_df.drop(eye_color_df.columns[1], axis=1, inplace=True)
     return eye_color_df
 
-def create_eye_color_datagens(height, width, batch_size, test_size, validation_split, random_state):
+def create_eye_color_datagens(
+        height, 
+        width, 
+        batch_size, 
+        test_size, 
+        validation_split, 
+        random_state,
+        preprocessing_function):
+
     # Create datagen
     datagen = create_datagen(validation_split)
 
@@ -38,8 +46,8 @@ def create_eye_color_datagens(height, width, batch_size, test_size, validation_s
         class_mode="sparse",
         target_size=(height,width),
         batch_size=batch_size,
-        subset="training"
-    )
+        subset="training",
+        preprocessing_function=preprocessing_function)
 
     # We generate an image-label pair for the validation set as follows
     eye_color_val_gen = datagen.flow_from_dataframe(
@@ -50,8 +58,8 @@ def create_eye_color_datagens(height, width, batch_size, test_size, validation_s
             class_mode="sparse",
         target_size=(height,width),
         batch_size=batch_size,
-        subset="validation"
-    )
+        subset="validation",
+        preprocessing_function=preprocessing_function)
 
     # We generate an image-label pair for the eye_color test set as follows
     # We set batch_size = size of test set
@@ -62,6 +70,7 @@ def create_eye_color_datagens(height, width, batch_size, test_size, validation_s
         y_col="eye_color",
         class_mode="sparse",
         target_size=(height,width),
-        batch_size=len(eye_color_test)
-    )
+        batch_size=len(eye_color_test),
+        preprocessing_function=preprocessing_function)
+        
     return eye_color_train_gen, eye_color_val_gen, eye_color_test_gen

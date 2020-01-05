@@ -1,6 +1,6 @@
 from pipeline.datasets.cartoon_set_eye_color import create_eye_color_datagens
 from pipeline.models.xception import train_xception
-from tensorflow.keras import backend as K
+from tensorflow.keras.applications.Xception import preprocess_input
 
 class B2_Xception:
     def __init__(
@@ -10,8 +10,8 @@ class B2_Xception:
             validation_split=0.2, 
             epochs=4, 
             random_state=42):
-        self.height = 250 
-        self.width = 250
+        self.height = 299 
+        self.width = 299
         self.num_classes = 2
         self.eye_color_train_gen, self.eye_color_val_gen, self.eye_color_test_gen = create_eye_color_datagens(
             height=self.height,
@@ -19,16 +19,14 @@ class B2_Xception:
             batch_size=batch_size,
             test_size=test_size, 
             validation_split=validation_split, 
-            random_state=random_state)
+            random_state=random_state,
+            preprocessing_function=preprocess_input)
         self.model, self.history = train_xception(
-            self.height, 
-            self.width,
             self.num_classes,
             epochs,
             batch_size,
             self.eye_color_train_gen,
             self.eye_color_val_gen)
-
     def train(self):
         # Get the training accuracy
         training_accuracy = self.history.history['acc'][-1]

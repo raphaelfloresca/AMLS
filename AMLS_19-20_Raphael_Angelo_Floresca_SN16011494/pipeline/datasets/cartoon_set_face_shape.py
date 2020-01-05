@@ -15,7 +15,15 @@ def create_face_shape_df():
     face_shape_df.drop(face_shape_df.columns[0], axis=1, inplace=True)
     return face_shape_df
 
-def create_face_shape_datagens(height, width, batch_size, test_size, validation_split, random_state):
+def create_face_shape_datagens(
+        height, 
+        width, 
+        batch_size, 
+        test_size, 
+        validation_split, 
+        random_state,
+        preprocessing_function):
+        
     # Create datagen
     datagen = create_datagen(validation_split)
 
@@ -38,8 +46,8 @@ def create_face_shape_datagens(height, width, batch_size, test_size, validation_
         class_mode="sparse",
         target_size=(height,width),
         batch_size=batch_size,
-        subset="training"
-    )
+        subset="training",
+        preprocessing_function=preprocessing_function)
 
     # We generate an image-label pair for the validation set as follows
     face_shape_val_gen = datagen.flow_from_dataframe(
@@ -50,8 +58,8 @@ def create_face_shape_datagens(height, width, batch_size, test_size, validation_
             class_mode="sparse",
         target_size=(height,width),
         batch_size=batch_size,
-        subset="validation"
-    )
+        subset="validation",
+        preprocessing_function=preprocessing_function)
 
     # We generate an image-label pair for the face_shape test set as follows
     # We set batch_size = size of test set
@@ -62,6 +70,7 @@ def create_face_shape_datagens(height, width, batch_size, test_size, validation_
         y_col="face_shape",
         class_mode="sparse",
         target_size=(height,width),
-        batch_size=len(face_shape_test)
-    )
+        batch_size=len(face_shape_test),
+        preprocessing_function=preprocessing_function)
+
     return face_shape_train_gen, face_shape_val_gen, face_shape_test_gen

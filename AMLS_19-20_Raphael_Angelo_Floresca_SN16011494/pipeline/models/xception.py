@@ -5,11 +5,8 @@ from tensorflow.keras.applications.xception import Xception
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense
 from tensorflow.keras import Model
 from tensorflow.keras.optimizers import SGD
-from tensorflow.keras import backend as K
 
 def train_xception(
-        height,
-        width,
         num_classes,
         epochs,
         batch_size,
@@ -20,8 +17,7 @@ def train_xception(
     # The top layers are not included in order to perform transfer learning.
     # Modified to allow for a custom input size
     base_model = Xception(weights="imagenet",
-                            include_top=False,
-                            input_shape=(height, width, 3))
+                            include_top=False)
         
     # Implement own pooling layer
     avg = GlobalAveragePooling2D()(base_model.output)

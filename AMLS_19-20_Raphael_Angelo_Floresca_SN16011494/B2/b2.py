@@ -22,7 +22,8 @@ class B2:
             batch_size=batch_size,
             test_size=test_size, 
             validation_split=validation_split, 
-            random_state=random_state)
+            random_state=random_state,
+            preprocessing_function=None)
         self.model, self.history = train_mlp(
             self.height, 
             self.width,

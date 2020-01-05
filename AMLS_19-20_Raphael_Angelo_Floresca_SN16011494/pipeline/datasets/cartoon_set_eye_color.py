@@ -1,8 +1,11 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from utilities import create_datagen, create_cartoon_set_df
+from utilities import create_datagen, create_cartoon_set_df, go_up_three_dirs
 
-def create_eye_color_datagens(batch_size=32, test_size=0.2, validation_split=0.2, random_state=42):
+def create_eye_color_datagens(height, width, batch_size, test_size, validation_split, random_state):
+    # Go up three directories
+    go_up_three_dirs()
+    
     # Import cartoon_set_df
     cartoon_set_df = create_cartoon_set_df()
 
@@ -28,8 +31,8 @@ def create_eye_color_datagens(batch_size=32, test_size=0.2, validation_split=0.2
         x_col="img_name",
         y_col="eye_color",
         class_mode="sparse",
-        target_size=(500,500),
-        batch_size=32,
+        target_size=(height,width),
+        batch_size=batch_size,
         subset="training"
     )
 
@@ -40,8 +43,8 @@ def create_eye_color_datagens(batch_size=32, test_size=0.2, validation_split=0.2
         x_col="img_name",
         y_col="eye_color",
             class_mode="sparse",
-        target_size=(500,500),
-        batch_size=32,
+        target_size=(height,width),
+        batch_size=batch_size,
         subset="validation"
     )
 
@@ -53,7 +56,7 @@ def create_eye_color_datagens(batch_size=32, test_size=0.2, validation_split=0.2
         x_col="img_name",
         y_col="eye_color",
         class_mode="sparse",
-        target_size=(500,500),
+        target_size=(height,width),
         batch_size=len(eye_color_test)
     )
     return eye_color_train_gen, eye_color_val_gen, eye_color_test_gen

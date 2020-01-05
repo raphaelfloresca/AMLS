@@ -1,5 +1,7 @@
 from A1.a1 import A1
 from A2.a2 import A2
+from B1.b1 import B1
+from B2.b2 import B2
 
 # ======================================================================================================================
 # Data preprocessing
@@ -18,28 +20,22 @@ acc_A2_test = model_A2.mlp_test()
 
 # ======================================================================================================================
 # Task B1
-# model_B1 = B1(args...)
-# acc_B1_train = model_B1.train(args...)
-# acc_B1_test = model_B1.test(args...)
-# Clean up memory/GPU etc...
-
+model_B1 = B1()
+acc_B1_train = model_B1.mlp_train()
+acc_B1_test = model_B1.mlp_test()
 
 # ======================================================================================================================
 # Task B2
-# model_B2 = B2(args...)
-# acc_B2_train = model_B2.train(args...)
-# acc_B2_test = model_B2.test(args...)
-# Clean up memory/GPU etc...
-
+model_B2 = B2()
+acc_B2_train = model_B2.mlp_train()
+acc_B2_test = model_B2.mlp_test()
 
 # ======================================================================================================================
 ## Print out your results with following format:
-print('TA1:{},{};TA2:{},{}'.format(acc_A1_train, acc_A1_test,
-                                   acc_A2_train, acc_A2_test))
-# print('TA1:{},{};TA2:{},{};TB1:{},{};TB2:{},{};'.format(acc_A1_train, acc_A1_test,
-#                                                        acc_A2_train, acc_A2_test,
-#                                                        acc_B1_train, acc_B1_test,
-#                                                        acc_B2_train, acc_B2_test))
+print('TA1:{},{};TA2:{},{};TB1:{},{};TB2:{},{};'.format(acc_A1_train, acc_A1_test,
+                                                        acc_A2_train, acc_A2_test,
+                                                        acc_B1_train, acc_B1_test,
+                                                        acc_B2_train, acc_B2_test))
 
 # If you are not able to finish a task, fill the corresponding variable with 'TBD'. For example:
 # acc_A1_train = 'TBD'

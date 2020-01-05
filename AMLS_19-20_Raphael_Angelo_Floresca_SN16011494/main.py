@@ -6,7 +6,7 @@ from A1.a1 import A1
 # ======================================================================================================================
 # Task A1
 model_A1 = A1()                                     # Build model object.
-acc_A1_train = model_A1.mlp_train()                 # Train model based on the training set (you should fine-tune your model based on validation set.)
+# acc_A1_train = model_A1.mlp_train()                 # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A1_test = model_A1.mlp_test()                  # Test model based on the test set.
 
 # ======================================================================================================================
@@ -35,7 +35,7 @@ acc_A1_test = model_A1.mlp_test()                  # Test model based on the tes
 
 # ======================================================================================================================
 ## Print out your results with following format:
-print('TA1:{},{}'.format(acc_A1_train, acc_A1_test))
+print('TA1:{}'.format(acc_A1_test))
 # print('TA1:{},{};TA2:{},{};TB1:{},{};TB2:{},{};'.format(acc_A1_train, acc_A1_test,
 #                                                        acc_A2_train, acc_A2_test,
 #                                                        acc_B1_train, acc_B1_test,

@@ -28,7 +28,7 @@ def create_face_shape_datagens(height, width, batch_size, test_size, validation_
     face_shape_train_gen = datagen.flow_from_dataframe(
         dataframe=face_shape_train, 
         directory="img/",
-        x_col="img_name",
+        x_col="file_name",
         y_col="face_shape",
         class_mode="sparse",
         target_size=(height,width),
@@ -40,7 +40,7 @@ def create_face_shape_datagens(height, width, batch_size, test_size, validation_
     face_shape_val_gen = datagen.flow_from_dataframe(
         dataframe=face_shape_train,
         directory="img/",
-        x_col="img_name",
+        x_col="file_name",
         y_col="face_shape",
             class_mode="sparse",
         target_size=(height,width),
@@ -53,7 +53,7 @@ def create_face_shape_datagens(height, width, batch_size, test_size, validation_
     face_shape_test_gen = datagen.flow_from_dataframe(
         dataframe=face_shape_test,
         directory="img/",
-        x_col="img_name",
+        x_col="file_name",
         y_col="face_shape",
         class_mode="sparse",
         target_size=(height,width),

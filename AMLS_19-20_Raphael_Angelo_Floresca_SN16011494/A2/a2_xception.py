@@ -8,7 +8,7 @@ class A2_Xception:
             batch_size=32, 
             test_size=0.2, 
             validation_split=0.2, 
-            epochs=10, 
+            epochs=6, 
             random_state=42):
         self.height = 218 
         self.width = 178

@@ -5,6 +5,7 @@ from tensorflow.keras.applications.xception import Xception
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense
 from tensorflow.keras import Model
 from tensorflow.keras.optimizers import SGD
+from numba import cuda
 
 def train_xception(
         height,
@@ -14,6 +15,11 @@ def train_xception(
         batch_size,
         train_gen,
         val_gen):
+    
+    # Refresh GPU
+    cuda.select_device(0)
+    cuda.close()
+    cuda.select_device(0)    
 
     # ResNet-50v2 is used as the base architecture for the model.
     # The top layers are not included in order to perform transfer learning.

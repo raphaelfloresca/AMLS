@@ -4,8 +4,6 @@ from B1.b1_xception import B1_Xception
 from B2.b2_xception import B2_Xception
 from tensorflow.keras import backend as K
 
-
-
 # ======================================================================================================================
 # Data preprocessing
 # data_train, data_val, data_test = data_preprocessing(args...)

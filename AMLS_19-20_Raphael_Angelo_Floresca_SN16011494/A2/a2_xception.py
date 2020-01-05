@@ -30,6 +30,11 @@ class A2_Xception:
             self.smiling_val_gen)
 
     def train(self):
+        # Clear GPU memory
+        cuda.select_device(0)
+        cuda.close()
+        cuda.select_device(0)
+
         # Get the training accuracy
         training_accuracy = self.history.history['acc'][-1]
         return training_accuracy

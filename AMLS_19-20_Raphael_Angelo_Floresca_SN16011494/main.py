@@ -1,34 +1,34 @@
-from A1.a1 import A1
-from A2.a2 import A2
-from B1.b1 import B1
-from B2.b2 import B2
+from A1.a1_cnn import A1_CNN
+from A2.a2_cnn import A2_CNN
+from B1.b1_cnn import B1_CNN
+from B2.b2_cnn import B2_CNN
 
 # ======================================================================================================================
 # Data preprocessing
 # data_train, data_val, data_test = data_preprocessing(args...)
 # ======================================================================================================================
 # Task A1
-model_A1 = A1()                                     # Build model object.
-acc_A1_train = model_A1.mlp_train()                 # Train model based on the training set (you should fine-tune your model based on validation set.)
-acc_A1_test = model_A1.mlp_test()                  # Test model based on the test set.
+model_A1 = A1_CNN()                     # Build model object.
+acc_A1_train = model_A1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
+acc_A1_test = model_A1.test()   # Test model based on the test set.
 
 # ======================================================================================================================
 # Task A2
-model_A2 = A2()
-acc_A2_train = model_A2.mlp_train()
-acc_A2_test = model_A2.mlp_test()
+model_A2 = A2_CNN()
+acc_A2_train = model_A2.train()
+acc_A2_test = model_A2.test()
 
 # ======================================================================================================================
 # Task B1
-model_B1 = B1()
-acc_B1_train = model_B1.mlp_train()
-acc_B1_test = model_B1.mlp_test()
+model_B1 = B1_CNN()
+acc_B1_train = model_B1.train()
+acc_B1_test = model_B1.test()
 
 # ======================================================================================================================
 # Task B2
-model_B2 = B2()
-acc_B2_train = model_B2.mlp_train()
-acc_B2_test = model_B2.mlp_test()
+model_B2 = B2_CNN()
+acc_B2_train = model_B2.train()
+acc_B2_test = model_B2.test()
 
 # ======================================================================================================================
 ## Print out your results with following format:

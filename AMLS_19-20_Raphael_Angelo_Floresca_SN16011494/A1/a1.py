@@ -1,7 +1,6 @@
 from pipeline.datasets.celeba_gender import create_gender_datagens
 from pipeline.models.mlp import train_mlp
-from pipeline.models.cnn import CNN
-from pipeline.models.resnet50_v2 import ResNet50V2_TL
+from numba import cuda
 
 class A1:
     def __init__(
@@ -25,7 +24,7 @@ class A1:
             test_size=test_size, 
             validation_split=validation_split, 
             random_state=random_state)
-        self.mlp_model, self.mlp_history = train_mlp(
+        self.model, self.history = train_mlp(
             self.height, 
             self.width,
             self.num_classes,
@@ -38,12 +37,20 @@ class A1:
             layer1_hn,
             layer2_hn)
 
-    def mlp_train(self):
+    def train(self):
+        # Release GPU memory
+        cuda.select_device(0)
+        cuda.close()
+
         # Get the training accuracy
-        training_accuracy = self.mlp_history.history['acc'][-1]
+        training_accuracy = self.history.history['acc'][-1]
         return training_accuracy
         
-    def mlp_test(self):
+    def test(self):
+        # Release GPU memory
+        cuda.select_device(0)
+        cuda.close()
+
         # Get the test accuracy
-        test_accuracy = self.mlp_model.evaluate(self.gender_test_gen)[-1]
+        test_accuracy = self.model.evaluate(self.gender_test_gen)[-1]
         return test_accuracy

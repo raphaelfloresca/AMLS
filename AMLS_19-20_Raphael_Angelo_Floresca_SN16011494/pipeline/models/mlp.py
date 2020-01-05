@@ -34,7 +34,7 @@ def train_mlp(
     # and the optimizer to use (SGD)
     model.compile(
         loss="sparse_categorical_crossentropy", # b/c of exclusive, sparse outputs
-        optimizer='sgd', # We use SGD to optimise the ANN
+        optimizer='sgd', # We use SGD to optimise the MLP
         metrics=["accuracy"]) # Used for classifiers
 
     # Training and evaluating the MLP model on the gender dataset

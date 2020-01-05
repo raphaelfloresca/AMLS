@@ -3,7 +3,8 @@ import os
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from pipeline.datasets.download_data import download_dataset
 
-data_dir = "data/dataset_AMLS_19-20" 
+data_dir = "data/dataset_AMLS_19-20"
+parent_dir = "AMLSassignment19_20/AMLS_19-20_Raphael_Angelo_Floresca_SN16011494"
 
 # This checks whether the dataset has been downloaded
 def check_path():
@@ -20,6 +21,7 @@ def create_celeba_df():
     os.chdir(os.path.join(data_dir, celeba_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
+    os.chdir(os.pardir, parent_dir)
     return df
 
 # Create a dataframe for the cartoon_set labels.csv
@@ -28,6 +30,7 @@ def create_cartoon_set_df():
     os.chdir(os.path.join(data_dir, celeba_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
+    os.chdir(os.pardir, parent_dir)
     return df
 
 # Create an ImageDataGenerator which will be fed into the

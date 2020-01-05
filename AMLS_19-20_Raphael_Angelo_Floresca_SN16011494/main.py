@@ -13,8 +13,8 @@ acc_A1_test = model_A1.mlp_test()                  # Test model based on the tes
 # ======================================================================================================================
 # Task A2
 model_A2 = A2()
-acc_A2_train = model_A2.train()
-acc_A2_test = model_A2.test()
+acc_A2_train = model_A2.mlp_train()
+acc_A2_test = model_A2.mlp_test()
 
 # ======================================================================================================================
 # Task B1

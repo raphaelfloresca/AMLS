@@ -1,14 +1,13 @@
 from pipeline.datasets.celeba_smiling import create_smiling_datagens
 from pipeline.models.xception import train_xception
-from tensorflow.keras import backend as K
 
 class A2_Xception:
     def __init__(
             self, 
-            batch_size=32, 
+            batch_size=16, 
             test_size=0.2, 
             validation_split=0.2, 
-            epochs=6, 
+            epochs=10, 
             random_state=42):
         self.height = 218 
         self.width = 178
@@ -30,11 +29,6 @@ class A2_Xception:
             self.smiling_val_gen)
 
     def train(self):
-        # Clear GPU memory
-        cuda.select_device(0)
-        cuda.close()
-        cuda.select_device(0)
-
         # Get the training accuracy
         training_accuracy = self.history.history['acc'][-1]
         return training_accuracy

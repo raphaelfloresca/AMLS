@@ -5,10 +5,10 @@ from tensorflow.keras import backend as K
 class B2_Xception:
     def __init__(
             self, 
-            batch_size=32, 
+            batch_size=16, 
             test_size=0.2, 
             validation_split=0.2, 
-            epochs=6, 
+            epochs=10, 
             random_state=42):
         self.height = 250 
         self.width = 250

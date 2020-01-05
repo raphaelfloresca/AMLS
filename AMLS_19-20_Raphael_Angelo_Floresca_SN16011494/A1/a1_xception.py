@@ -5,12 +5,12 @@ from tensorflow.keras import backend as K
 class A1_Xception:
     def __init__(
             self, 
-            batch_size=32, 
+            batch_size=16, 
             test_size=0.2, 
             validation_split=0.2, 
-            epochs=6, 
+            epochs=10, 
             random_state=42):
-        self.height = 218 
+        self.height = 218
         self.width = 178
         self.num_classes = 2
         self.gender_train_gen, self.gender_val_gen, self.gender_test_gen = create_gender_datagens(

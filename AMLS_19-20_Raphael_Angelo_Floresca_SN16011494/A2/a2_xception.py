@@ -2,7 +2,7 @@ from pipeline.datasets.celeba_smiling import create_smiling_datagens
 from pipeline.models.xception import train_xception
 from tensorflow.keras import backend as K
 
-class A1_Xception:
+class A2_Xception:
     def __init__(
             self, 
             batch_size=32, 

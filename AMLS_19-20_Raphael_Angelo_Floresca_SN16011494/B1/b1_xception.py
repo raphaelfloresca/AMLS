@@ -2,7 +2,7 @@ from pipeline.datasets.cartoon_set_face_shape import create_face_shape_datagens
 from pipeline.models.xception import train_xception
 from tensorflow.keras import backend as K
 
-class A1_Xception:
+class B1_Xception:
     def __init__(
             self, 
             batch_size=32, 

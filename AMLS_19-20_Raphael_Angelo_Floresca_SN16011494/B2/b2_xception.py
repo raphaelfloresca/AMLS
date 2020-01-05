@@ -2,7 +2,7 @@ from pipeline.datasets.cartoon_set_eye_color import create_eye_color_datagens
 from pipeline.models.xception import train_xception
 from tensorflow.keras import backend as K
 
-class A1_Xception:
+class B2_Xception:
     def __init__(
             self, 
             batch_size=32, 

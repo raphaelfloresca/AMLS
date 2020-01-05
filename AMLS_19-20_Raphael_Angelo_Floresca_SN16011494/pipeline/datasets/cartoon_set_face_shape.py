@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from utilities import create_datagen, create_cartoon_set_df, go_up_three_dirs
+from pipeline.datasets.utilities import create_datagen, create_cartoon_set_df, go_up_three_dirs
 
 def create_face_shape_datagens(height, width, batch_size, test_size, validation_split, random_state):
     # Go up three directories

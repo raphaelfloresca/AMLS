@@ -44,3 +44,8 @@ def create_cartoon_set_df():
 def create_datagen(validation_split=0.2):
     datagen = ImageDataGenerator(rescale=1./255, validation_split=validation_split)
     return datagen
+
+def get_X_y_test_sets(test_gen):
+    itr = test_gen
+    gender_X_test, gender_y_test = itr.next()
+    return gender_X_test, gender_y_test

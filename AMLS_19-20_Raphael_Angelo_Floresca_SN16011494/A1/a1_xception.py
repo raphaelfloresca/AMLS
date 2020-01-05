@@ -1,17 +1,19 @@
 from pipeline.datasets.celeba_gender import create_gender_datagens
 from pipeline.models.xception import train_xception
+from pipeline.datasets.utilities import get_X_y_test_sets
 from tensorflow.keras.applications.xception import preprocess_input
+
 
 class A1_Xception:
     def __init__(
             self, 
-            batch_size=10, 
+            batch_size=32, 
             test_size=0.2, 
             validation_split=0.2, 
-            epochs=4, 
+            epochs=10, 
             random_state=42):
-        self.height = 299
-        self.width = 299
+        self.height = 218
+        self.width = 178
         self.num_classes = 2
         self.gender_train_gen, self.gender_val_gen, self.gender_test_gen = create_gender_datagens(
             height=self.height,
@@ -22,6 +24,8 @@ class A1_Xception:
             random_state=random_state,
             preprocessing_function=preprocess_input)
         self.model, self.history = train_xception(
+            self.height,
+            self.width,
             self.num_classes,
             epochs,
             batch_size,
@@ -34,6 +38,9 @@ class A1_Xception:
         return training_accuracy
         
     def test(self):
+        # Split ImageDataGenerator object for the test set into separate X and y test sets
+        gender_X_test, gender_y_test = get_X_y_test_sets(self.gender_test_gen)
+
         # Get the test accuracy
-        test_accuracy = self.model.evaluate(self.gender_test_gen)[-1]
+        test_accuracy = self.model.evaluate(gender_X_test, gender_y_test)[-1]
         return test_accuracy

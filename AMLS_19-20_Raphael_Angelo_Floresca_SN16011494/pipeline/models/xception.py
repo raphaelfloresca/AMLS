@@ -1,7 +1,7 @@
 # Transfer learning using the Xception architecture pretrained on ImageNet.
 # It has been modified to allow a custom input size.
 
-from tensorflow.keras.applications.resnet_v2 import Xception
+from tensorflow.keras.applications.Xception import Xception
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense
 from tensorflow.keras import Model
 from tensorflow.keras.optimizers import SGD

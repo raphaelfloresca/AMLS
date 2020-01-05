@@ -15,8 +15,9 @@ def check_path():
 celeba_dir = "celeba"
 cartoon_set_dir = "cartoon_set"
 
-# Used to go up two directories
-def go_up_two_dirs():
+# Used to go up three directories
+def go_up_three_dirs():
+    os.chdir("..")
     os.chdir("..")
     os.chdir("..")
 

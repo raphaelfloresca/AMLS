@@ -6,7 +6,7 @@ from tensorflow.keras.applications.xception import preprocess_input
 class B2_Xception:
     def __init__(
             self, 
-            batch_size=32, 
+            batch_size=16, 
             test_size=0.2, 
             validation_split=0.2, 
             epochs=10, 

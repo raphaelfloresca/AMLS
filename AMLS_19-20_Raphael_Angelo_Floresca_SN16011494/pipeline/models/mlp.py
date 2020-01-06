@@ -8,20 +8,20 @@ from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras.optimizers import SGD
 from pipeline.optimisation.learning_rate_schedulers import StepDecay
 from pipeline.optimisation.learning_rate_schedulers import PolynomialDecay
-from main import args
 
 def train_mlp(
         height, 
         width, 
         num_classes,
-        batch_size, 
+        batch_size,
+        epochs,
+        schedule,
         train_gen, 
         val_gen, 
         first_af, 
         second_af, 
         layer1_hn, 
-        layer2_hn,
-        epochs=args["epochs"]):
+        layer2_hn):
 
     # Store the number of epochs to train for in a convenience variable,
     # then initialize the list of callbacks and learning rate scheduler
@@ -30,17 +30,17 @@ def train_mlp(
     schedule = None
  
     # check to see if step-based learning rate decay should be used
-    if args["schedule"] == "step":
+    if epochs == "step":
     	print("[INFO] using 'step-based' learning rate decay...")
     	schedule = StepDecay(initAlpha=1e-1, factor=0.25, dropEvery=15)
  
     # check to see if linear learning rate decay should should be used
-    elif args["schedule"] == "linear":
+    elif epochs == "linear":
 	    print("[INFO] using 'linear' learning rate decay...")
 	    schedule = PolynomialDecay(maxEpochs=epochs, initAlpha=1e-1, power=1)
  
     # check to see if a polynomial learning rate decay should be used
-    elif args["schedule"] == "poly":
+    elif epochs == "poly":
 	    print("[INFO] using 'polynomial' learning rate decay...")
 	    schedule = PolynomialDecay(maxEpochs=epochs, initAlpha=1e-1, power=5)
  
@@ -54,7 +54,7 @@ def train_mlp(
  
     # if we are using Keras' "standard" decay, then we need to set the
     # decay parameter
-    if args["schedule"] == "standard":
+    if epochs == "standard":
     	print("[INFO] using 'keras standard' learning rate decay...")
     	decay = 1e-1 / epochs
  
@@ -74,13 +74,10 @@ def train_mlp(
         Dense(num_classes, activation="softmax") 
     ])
 
-    # We now compile the MLP model to specify the loss function
-    # and the optimizer to use (SGD)
-
-
     # initialize our optimizer and model, then compile it
     opt = SGD(lr=1e-1, momentum=0.9, decay=decay)
     
+    # We now compile the MLP model to specify the loss function
     model.compile(
         loss="sparse_categorical_crossentropy",
         optimizer=opt,

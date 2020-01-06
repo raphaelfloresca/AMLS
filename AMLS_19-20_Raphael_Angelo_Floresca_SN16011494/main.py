@@ -19,7 +19,7 @@ ap.add_argument("-e", "--epochs", type=int, default=10,
 args = vars(ap.parse_args())
 # ======================================================================================================================
 # Task A1
-model_A1 = A1()        # Build model object.
+model_A1 = A1(args["epochs"], args["schedule"])        # Build model object.
 acc_A1_train = model_A1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A1_test = model_A1.test()   # Test model based on the test set.
 

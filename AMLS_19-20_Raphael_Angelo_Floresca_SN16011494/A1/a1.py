@@ -5,8 +5,10 @@ from pipeline.plotting.plotting import plot_train_loss_acc_lr
 
 class A1:
     def __init__(
-            self, 
-            batch_size=32, 
+            self,
+            epochs,
+            schedule,
+            batch_size=32,
             test_size=0.2, 
             validation_split=0.2, 
             random_state=42,
@@ -30,6 +32,8 @@ class A1:
             self.width,
             self.num_classes,
             batch_size,
+            epochs,
+            schedule,
             self.gender_train_gen,
             self.gender_val_gen,
             first_af,

@@ -1,6 +1,7 @@
 from pipeline.datasets.celeba_gender import create_gender_datagens
 from pipeline.datasets.utilities import get_X_y_test_sets
 from pipeline.models.mlp import train_mlp
+from pipeline.plotting.plotting import plot_train_loss_acc_lr
 
 class A1:
     def __init__(
@@ -8,7 +9,6 @@ class A1:
             batch_size=32, 
             test_size=0.2, 
             validation_split=0.2, 
-            epochs=10, 
             random_state=42,
             first_af="relu",
             second_af="relu",
@@ -25,11 +25,10 @@ class A1:
             validation_split=validation_split, 
             random_state=random_state,
             preprocessing_function=None)
-        self.model, self.history = train_mlp(
+        self.model, self.history, self.schedule = train_mlp(
             self.height, 
             self.width,
             self.num_classes,
-            epochs,
             batch_size,
             self.gender_train_gen,
             self.gender_val_gen,
@@ -39,6 +38,13 @@ class A1:
             layer2_hn)
 
     def train(self):
+        # Plot training loss accuracy and learning rate change
+        plot_train_loss_acc_lr(
+            self.history,
+            self.schedule,
+            "output/train_loss_acc_a1",
+            "output/lr_a1")
+
         # Get the training accuracy
         training_accuracy = self.history.history['acc'][-1]
         return training_accuracy

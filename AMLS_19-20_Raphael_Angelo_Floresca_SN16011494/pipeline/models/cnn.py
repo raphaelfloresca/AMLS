@@ -32,7 +32,7 @@ def train_cnn(
     # check to see if step-based learning rate decay should be used
     if epochs == "step":
     	print("[INFO] using 'step-based' learning rate decay...")
-    	schedule = StepDecay(initAlpha=1e-1, factor=0.25, dropEvery=15)
+    	schedule = StepDecay(initAlpha=1e-1, factor=0.25, dropEvery=int(epochs/5))
  
     # check to see if linear learning rate decay should should be used
     elif epochs == "linear":

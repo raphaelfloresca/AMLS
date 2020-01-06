@@ -11,8 +11,8 @@ class B1_Xception:
             validation_split=0.2, 
             epochs=10, 
             random_state=42):
-        self.height = 250
-        self.width = 250
+        self.height = 500
+        self.width = 500
         self.num_classes = 5
         self.face_shape_train_gen, self.face_shape_val_gen, self.face_shape_test_gen = create_face_shape_datagens(
             height=self.height,

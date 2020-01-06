@@ -1,4 +1,5 @@
 from pipeline.datasets.cartoon_set_eye_color import create_eye_color_datagens
+from pipeline.datasets.utilities import get_X_y_test_sets
 from pipeline.models.cnn import train_cnn
 
 class B2_CNN:
@@ -12,8 +13,8 @@ class B2_CNN:
             num_start_filters=16,
             kernel_size=3,
             fcl_size=512):
-        self.height = 250 
-        self.width = 250
+        self.height = 500 
+        self.width = 500
         self.num_classes = 5
         self.eye_color_train_gen, self.eye_color_val_gen, self.eye_color_test_gen = create_eye_color_datagens(
             height=self.height,
@@ -41,6 +42,9 @@ class B2_CNN:
         return training_accuracy
         
     def test(self):
+        # Split ImageDataGenerator object for the test set into separate X and y test sets
+        eye_color_X_test, eye_color_y_test = get_X_y_test_sets(self.eye_color_test_gen)
+
         # Get the test accuracy
-        test_accuracy = self.model.evaluate(self.eye_color_test_gen)[-1]
+        test_accuracy = self.model.evaluate(eye_color_X_test, eye_color_y_test)[-1]
         return test_accuracy

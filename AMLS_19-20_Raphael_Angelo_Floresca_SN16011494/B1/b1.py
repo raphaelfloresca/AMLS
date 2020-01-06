@@ -1,4 +1,5 @@
 from pipeline.datasets.cartoon_set_face_shape import create_face_shape_datagens
+from pipeline.datasets.utilities import get_X_y_test_sets
 from pipeline.models.mlp import train_mlp
 
 class B1:
@@ -13,8 +14,8 @@ class B1:
             second_af="relu",
             layer1_hn=300,
             layer2_hn=100):
-        self.height = 250 
-        self.width = 250
+        self.height = 500 
+        self.width = 500
         self.num_classes = 5
         self.face_shape_train_gen, self.face_shape_val_gen, self.face_shape_test_gen = create_face_shape_datagens(
             height=self.height,
@@ -43,6 +44,9 @@ class B1:
         return training_accuracy
         
     def test(self):
+        # Split ImageDataGenerator object for the test set into separate X and y test sets
+        face_shape_X_test, face_shape_y_test = get_X_y_test_sets(self.face_shape_test_gen)
+
         # Get the test accuracy
-        test_accuracy = self.model.evaluate(self.face_shape_test_gen)[-1]
+        test_accuracy = self.model.evaluate(face_shape_X_test, face_shape_y_test)[-1]
         return test_accuracy

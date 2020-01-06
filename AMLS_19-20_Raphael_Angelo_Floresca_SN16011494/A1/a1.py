@@ -1,4 +1,5 @@
 from pipeline.datasets.celeba_gender import create_gender_datagens
+from pipeline.datasets.utilities import get_X_y_test_sets
 from pipeline.models.mlp import train_mlp
 
 class A1:
@@ -43,6 +44,9 @@ class A1:
         return training_accuracy
         
     def test(self):
+        # Split ImageDataGenerator object for the test set into separate X and y test sets
+        gender_X_test, gender_y_test = get_X_y_test_sets(self.gender_test_gen)
+
         # Get the test accuracy
-        test_accuracy = self.model.evaluate(self.gender_test_gen)[-1]
+        test_accuracy = self.model.evaluate(gender_X_test, gender_y_test)[-1]
         return test_accuracy

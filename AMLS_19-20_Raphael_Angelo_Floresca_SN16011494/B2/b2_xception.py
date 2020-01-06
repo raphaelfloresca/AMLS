@@ -11,8 +11,8 @@ class B2_Xception:
             validation_split=0.2, 
             epochs=10, 
             random_state=42):
-        self.height = 250 
-        self.width = 250
+        self.height = 500 
+        self.width = 500
         self.num_classes = 5
         self.eye_color_train_gen, self.eye_color_val_gen, self.eye_color_test_gen = create_eye_color_datagens(
             height=self.height,

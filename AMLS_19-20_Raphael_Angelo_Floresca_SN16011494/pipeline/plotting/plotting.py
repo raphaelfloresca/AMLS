@@ -1,10 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from main import args
 
 # Plot the training loss and accuracy
-def plot_train_loss_acc_lr(H, schedule, tla_plot_path, lr_plot_path):
-    N = np.arange(0, args["epochs"])
+def plot_train_loss_acc_lr(H, epochs, schedule, tla_plot_path, lr_plot_path):
+    N = np.arange(0, epochs)
     plt.style.use("ggplot")
     plt.figure()
     plt.plot(N, H.history["loss"], label="train_loss")

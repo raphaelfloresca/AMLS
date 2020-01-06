@@ -45,6 +45,7 @@ class A1:
         # Plot training loss accuracy and learning rate change
         plot_train_loss_acc_lr(
             self.history,
+            epochs,
             self.schedule,
             "output/train_loss_acc_a1",
             "output/lr_a1")

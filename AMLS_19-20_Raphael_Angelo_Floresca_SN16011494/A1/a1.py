@@ -19,6 +19,7 @@ class A1:
         self.height = 218 
         self.width = 178
         self.num_classes = 2
+        self.epochs=epochs
         self.gender_train_gen, self.gender_val_gen, self.gender_test_gen = create_gender_datagens(
             height=self.height,
             width=self.width,
@@ -32,7 +33,7 @@ class A1:
             self.width,
             self.num_classes,
             batch_size,
-            epochs,
+            self.epochs,
             schedule,
             self.gender_train_gen,
             self.gender_val_gen,
@@ -45,7 +46,7 @@ class A1:
         # Plot training loss accuracy and learning rate change
         plot_train_loss_acc_lr(
             self.history,
-            epochs,
+            self.epochs,
             self.schedule,
             "output/train_loss_acc_a1",
             "output/lr_a1")

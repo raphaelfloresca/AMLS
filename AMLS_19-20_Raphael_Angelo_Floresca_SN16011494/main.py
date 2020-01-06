@@ -17,6 +17,7 @@ ap.add_argument("-s", "--schedule", type=str, default="",
 ap.add_argument("-e", "--epochs", type=int, default=10,
 	help="# of epochs to train for")
 args = vars(ap.parse_args())
+
 # ======================================================================================================================
 # Task A1
 model_A1 = A1(args["epochs"], args["schedule"])        # Build model object.

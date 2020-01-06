@@ -44,6 +44,7 @@ class A1:
             layer2_hn)
 
     def train(self):
+        # Navigate to output folder in parent directory
         go_up_three_dirs()        
 
         # Plot training loss accuracy and learning rate change
@@ -59,7 +60,8 @@ class A1:
         return training_accuracy
         
     def test(self):
-        os.chdir("data/dataset_AMLS_19-20/celeba/img")
+        # Go back to image folder
+        os.chdir("data/dataset_AMLS_19-20/celeba")
 
         # Split ImageDataGenerator object for the test set into separate X and y test sets
         gender_X_test, gender_y_test = get_X_y_test_sets(self.gender_test_gen)

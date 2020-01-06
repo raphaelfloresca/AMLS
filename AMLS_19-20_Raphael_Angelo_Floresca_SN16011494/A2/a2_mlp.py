@@ -1,10 +1,10 @@
-from pipeline.datasets.celeba_gender import create_gender_datagens
+from pipeline.datasets.celeba_smiling import create_smiling_datagens
 from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs
 from pipeline.models.mlp import train_mlp
 from pipeline.plotting.plotting import plot_train_loss_acc_lr
 import os
 
-class A1:
+class A2_MLP:
     def __init__(
             self,
             epochs,
@@ -20,8 +20,8 @@ class A1:
         self.height = 218 
         self.width = 178
         self.num_classes = 2
-        self.epochs=epochs
-        self.gender_train_gen, self.gender_val_gen, self.gender_test_gen = create_gender_datagens(
+        self.epochs = epochs
+        self.smiling_train_gen, self.smiling_val_gen, self.smiling_test_gen = create_smiling_datagens(
             height=self.height,
             width=self.width,
             batch_size=batch_size,
@@ -36,8 +36,8 @@ class A1:
             batch_size,
             self.epochs,
             schedule,
-            self.gender_train_gen,
-            self.gender_val_gen,
+            self.smiling_train_gen,
+            self.smiling_val_gen,
             first_af,
             second_af,
             layer1_hn,
@@ -52,8 +52,8 @@ class A1:
             self.history,
             self.epochs,
             self.schedule,
-            "output/train_loss_acc_a1.png",
-            "output/lr_a1.png")
+            "output/train_loss_acc_A2_mlp.png",
+            "output/lr_A2_mlp.png")
 
         # Get the training accuracy
         training_accuracy = self.history.history['acc'][-1]
@@ -64,8 +64,8 @@ class A1:
         os.chdir("data/dataset_AMLS_19-20/celeba")
 
         # Split ImageDataGenerator object for the test set into separate X and y test sets
-        gender_X_test, gender_y_test = get_X_y_test_sets(self.gender_test_gen)
+        smiling_X_test, smiling_y_test = get_X_y_test_sets(self.smiling_test_gen)
 
         # Get the test accuracy
-        test_accuracy = self.model.evaluate(gender_X_test, gender_y_test)[-1]
+        test_accuracy = self.model.evaluate(smiling_X_test, smiling_y_test)[-1]
         return test_accuracy

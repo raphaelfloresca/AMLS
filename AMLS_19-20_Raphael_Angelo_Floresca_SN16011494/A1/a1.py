@@ -2,6 +2,7 @@ from pipeline.datasets.celeba_gender import create_gender_datagens
 from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs
 from pipeline.models.mlp import train_mlp
 from pipeline.plotting.plotting import plot_train_loss_acc_lr
+import os
 
 class A1:
     def __init__(
@@ -58,6 +59,8 @@ class A1:
         return training_accuracy
         
     def test(self):
+        os.chdir("data/dataset_AMLS_19-20/celeba/img")
+
         # Split ImageDataGenerator object for the test set into separate X and y test sets
         gender_X_test, gender_y_test = get_X_y_test_sets(self.gender_test_gen)
 

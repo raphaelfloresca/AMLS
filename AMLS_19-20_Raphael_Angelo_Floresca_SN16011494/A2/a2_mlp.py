@@ -1,13 +1,14 @@
 from pipeline.datasets.celeba_smiling import create_smiling_datagens
 from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs
 from pipeline.models.mlp import train_mlp
-from pipeline.plotting.plotting import plot_train_loss_acc_lr
+from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses
 import os
 
 class A2_MLP:
     def __init__(
             self,
             epochs,
+            learning_rate,
             schedule,
             batch_size=32,
             test_size=0.2, 
@@ -35,6 +36,7 @@ class A2_MLP:
             self.num_classes,
             batch_size,
             self.epochs,
+            learning_rate,
             schedule,
             self.smiling_train_gen,
             self.smiling_val_gen,
@@ -52,6 +54,7 @@ class A2_MLP:
             self.history,
             self.epochs,
             self.schedule,
+            "A2",
             "output/train_loss_acc_A2_mlp.png",
             "output/lr_A2_mlp.png")
 
@@ -65,6 +68,12 @@ class A2_MLP:
 
         # Split ImageDataGenerator object for the test set into separate X and y test sets
         smiling_X_test, smiling_y_test = get_X_y_test_sets(self.smiling_test_gen)
+
+        # Navigate to output folder in parent directory
+        go_up_three_dirs()
+
+        # Plot top losses
+        plot_top_losses(self.model, smiling_X_test, smiling_y_test, "output/plot_top_losses_A2_mlp")
 
         # Get the test accuracy
         test_accuracy = self.model.evaluate(smiling_X_test, smiling_y_test)[-1]

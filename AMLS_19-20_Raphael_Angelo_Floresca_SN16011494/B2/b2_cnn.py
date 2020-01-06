@@ -1,13 +1,14 @@
 from pipeline.datasets.cartoon_set_eye_color import create_eye_color_datagens
 from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs
 from pipeline.models.cnn import train_cnn
-from pipeline.plotting.plotting import plot_train_loss_acc_lr
+from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses
 import os
 
 class B2_CNN:
     def __init__(
             self,
             epochs,
+            learning_rate,
             schedule,
             batch_size=16, 
             test_size=0.2, 
@@ -34,6 +35,7 @@ class B2_CNN:
             self.num_classes,
             batch_size,
             self.epochs,
+            learning_rate,
             schedule,
             self.eye_color_train_gen,
             self.eye_color_val_gen,
@@ -50,8 +52,9 @@ class B2_CNN:
             self.history,
             self.epochs,
             self.schedule,
-            "output/train_loss_acc_B1_cnn.png",
-            "output/lr_B1_cnn.png")
+            "B2",
+            "output/train_loss_acc_B2_cnn.png",
+            "output/lr_B2_cnn.png")
 
         # Get the training accuracy
         training_accuracy = self.history.history['acc'][-1]
@@ -63,6 +66,12 @@ class B2_CNN:
 
         # Split ImageDataGenerator object for the test set into separate X and y test sets
         eye_color_X_test, eye_color_y_test = get_X_y_test_sets(self.eye_color_test_gen)
+
+        # Navigate to output folder in parent directory
+        go_up_three_dirs()
+
+        # Plot top losses
+        plot_top_losses(self.model, eye_color_X_test, eye_color_y_test, "output/plot_top_losses_B2_cnn")
 
         # Get the test accuracy
         test_accuracy = self.model.evaluate(eye_color_X_test, eye_color_y_test)[-1]

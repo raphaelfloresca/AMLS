@@ -3,9 +3,6 @@ from sklearn.model_selection import train_test_split
 from pipeline.datasets.utilities import create_datagen, create_cartoon_set_df, go_up_three_dirs
 
 def create_eye_color_df():
-    # Go up three directories
-    go_up_three_dirs()
-
     # Import cartoon_set_df
     cartoon_set_df = create_cartoon_set_df()
 

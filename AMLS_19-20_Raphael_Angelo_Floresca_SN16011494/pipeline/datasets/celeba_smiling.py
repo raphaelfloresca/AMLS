@@ -3,9 +3,6 @@ from sklearn.model_selection import train_test_split
 from pipeline.datasets.utilities import create_datagen, create_celeba_df, go_up_three_dirs
 
 def create_smiling_df():
-    # Go up three directories
-    go_up_three_dirs()
-    
     # Import celeba_df
     celeba_df = create_celeba_df()
 

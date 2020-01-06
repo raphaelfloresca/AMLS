@@ -1,13 +1,14 @@
 from pipeline.datasets.cartoon_set_face_shape import create_face_shape_datagens
 from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs
 from pipeline.models.cnn import train_cnn
-from pipeline.plotting.plotting import plot_train_loss_acc_lr
+from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses
 import os
 
 class B1_CNN:
     def __init__(
             self,
             epochs,
+            learning_rate,
             schedule,
             batch_size=16, 
             test_size=0.2, 
@@ -34,6 +35,7 @@ class B1_CNN:
             self.num_classes,
             batch_size,
             self.epochs,
+            learning_rate,
             schedule,
             self.face_shape_train_gen,
             self.face_shape_val_gen,
@@ -50,6 +52,7 @@ class B1_CNN:
             self.history,
             self.epochs,
             self.schedule,
+            "B1",
             "output/train_loss_acc_B1_cnn.png",
             "output/lr_B1_cnn.png")
 
@@ -63,6 +66,12 @@ class B1_CNN:
 
         # Split ImageDataGenerator object for the test set into separate X and y test sets
         face_shape_X_test, face_shape_y_test = get_X_y_test_sets(self.face_shape_test_gen)
+
+        # Navigate to output folder in parent directory
+        go_up_three_dirs()
+
+        # Plot top losses
+        plot_top_losses(self.model, face_shape_X_test, face_shape_y_test, "output/plot_top_losses_B1_cnn")
 
         # Get the test accuracy
         test_accuracy = self.model.evaluate(face_shape_X_test, face_shape_y_test)[-1]

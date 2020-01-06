@@ -1,13 +1,14 @@
 from pipeline.datasets.celeba_gender import create_gender_datagens
 from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs
 from pipeline.models.cnn import train_cnn
-from pipeline.plotting.plotting import plot_train_loss_acc_lr
+from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses
 import os
 
 class A1_CNN:
     def __init__(
             self,
             epochs,
+            learning_rate,
             schedule,
             batch_size=32, 
             test_size=0.2, 
@@ -34,6 +35,7 @@ class A1_CNN:
             self.num_classes,
             batch_size,
             self.epochs,
+            learning_rate,
             schedule,
             self.gender_train_gen,
             self.gender_val_gen,
@@ -50,8 +52,9 @@ class A1_CNN:
             self.history,
             self.epochs,
             self.schedule,
+            "A1",
             "output/train_loss_acc_A1_cnn.png",
-            "output/lr_a1_cnn.png")
+            "output/lr_A1_cnn.png")
 
         # Get the training accuracy
         training_accuracy = self.history.history['acc'][-1]
@@ -63,6 +66,12 @@ class A1_CNN:
 
         # Split ImageDataGenerator object for the test set into separate X and y test sets
         gender_X_test, gender_y_test = get_X_y_test_sets(self.gender_test_gen)
+
+        # Navigate to output folder in parent directory
+        go_up_three_dirs()
+
+        # Plot top losses
+        plot_top_losses(self.model, gender_X_test, gender_y_test, "output/plot_top_losses_A1_cnn.png")
 
         # Get the test accuracy
         test_accuracy = self.model.evaluate(gender_X_test, gender_y_test)[-1]

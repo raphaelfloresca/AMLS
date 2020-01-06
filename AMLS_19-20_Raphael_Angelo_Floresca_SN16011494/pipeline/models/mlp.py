@@ -15,6 +15,7 @@ def train_mlp(
         num_classes,
         batch_size,
         epochs,
+        learning_rate,
         schedule,
         train_gen, 
         val_gen, 
@@ -75,7 +76,7 @@ def train_mlp(
     ])
 
     # initialize our optimizer and model, then compile it
-    opt = SGD(lr=1e-1, momentum=0.9, decay=decay)
+    opt = SGD(lr=learning_rate, momentum=0.9, decay=decay)
     
     # We now compile the MLP model to specify the loss function
     model.compile(

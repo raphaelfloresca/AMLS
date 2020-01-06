@@ -1,5 +1,5 @@
 from pipeline.datasets.celeba_gender import create_gender_datagens
-from pipeline.datasets.utilities import get_X_y_test_sets
+from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs
 from pipeline.models.mlp import train_mlp
 from pipeline.plotting.plotting import plot_train_loss_acc_lr
 
@@ -43,6 +43,8 @@ class A1:
             layer2_hn)
 
     def train(self):
+        go_up_three_dirs()        
+
         # Plot training loss accuracy and learning rate change
         plot_train_loss_acc_lr(
             self.history,

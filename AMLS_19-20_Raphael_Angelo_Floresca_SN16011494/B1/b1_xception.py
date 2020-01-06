@@ -13,7 +13,7 @@ class B1_Xception:
             random_state=42):
         self.height = 250
         self.width = 250
-        self.num_classes = 2
+        self.num_classes = 5
         self.face_shape_train_gen, self.face_shape_val_gen, self.face_shape_test_gen = create_face_shape_datagens(
             height=self.height,
             width=self.width,

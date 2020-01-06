@@ -13,7 +13,7 @@ class B2_Xception:
             random_state=42):
         self.height = 250 
         self.width = 250
-        self.num_classes = 2
+        self.num_classes = 5
         self.eye_color_train_gen, self.eye_color_val_gen, self.eye_color_test_gen = create_eye_color_datagens(
             height=self.height,
             width=self.width,

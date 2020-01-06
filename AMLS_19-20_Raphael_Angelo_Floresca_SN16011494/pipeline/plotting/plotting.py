@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 
 # Plot the training loss and accuracy
 def plot_train_loss_acc_lr(history, epochs, schedule, tla_plot_path, lr_plot_path):
-    acc = history.history['accuracy']
-    val_acc = history.history['val_accuracy']
+    acc = history.history['acc']
+    val_acc = history.history['val_acc']
 
     loss = history.history['loss']
     val_loss = history.history['val_loss']

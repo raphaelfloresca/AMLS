@@ -48,8 +48,8 @@ class A1:
             self.history,
             self.epochs,
             self.schedule,
-            "output/train_loss_acc_a1",
-            "output/lr_a1")
+            "output/train_loss_acc_a1.png",
+            "output/lr_a1.png")
 
         # Get the training accuracy
         training_accuracy = self.history.history['acc'][-1]

@@ -1,4 +1,4 @@
-from A1.a1_xception import A1_Xception
+from A1.a1 import A1
 from A2.a2_xception import A2_Xception
 from B1.b1_xception import B1_Xception
 from B2.b2_xception import B2_Xception
@@ -19,7 +19,7 @@ ap.add_argument("-e", "--epochs", type=int, default=10,
 args = vars(ap.parse_args())
 # ======================================================================================================================
 # Task A1
-model_A1 = A1_Xception()        # Build model object.
+model_A1 = A1()        # Build model object.
 acc_A1_train = model_A1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A1_test = model_A1.test()   # Test model based on the test set.
 

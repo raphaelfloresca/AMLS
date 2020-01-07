@@ -11,11 +11,12 @@ class A1:
     num_classes = 2
     batch_size = 32
     random_state = 42
+    df = create_celeba_df()
 
     train_gen, val_gen, test_gen = create_datagens(
         height,
         width,
-        create_celeba_df(),
+        df,
         "celeba",
         "img_name",
         "gender",

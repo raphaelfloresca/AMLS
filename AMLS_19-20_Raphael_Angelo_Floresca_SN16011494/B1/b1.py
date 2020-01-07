@@ -11,11 +11,12 @@ class B1:
     num_classes = 5
     batch_size = 32
     random_state = 42
+    df = create_cartoon_set_df()
 
     train_gen, val_gen, test_gen = create_datagens(
         height,
         width,
-        create_cartoon_set_df(),
+        df,
         "cartoon_set",
         "file_name",
         "face_shape",

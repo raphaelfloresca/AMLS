@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import pipeline.plotting.gradcamutils
+from pipeline.plotting.gradcamutils import grad_cam, grad_cam_plus
 
 # Plot the training loss and accuracy
 def plot_train_loss_acc_lr(H, epochs, schedule, task_name, tla_plot_path, lr_plot_path):
@@ -173,8 +173,8 @@ def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
 
     for i in range(top_n):
         img = X_test[int(top_n_data[i,0])] 
-        gradcam = gradcamutils.grad_cam(model, img, layer_name=layer_name)
-        gradcamplus = gradcamutils.grad_cam_plus(model, img, layer_name=layer_name)
+        gradcam = grad_cam(model, img, layer_name=layer_name)
+        gradcamplus = grad_cam_plus(model, img, layer_name=layer_name)
         plt.subplot(top_n+1,3,1)
         plt.imshow(int(top_n_data[i,0]))
         plt.grid(False)

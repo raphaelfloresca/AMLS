@@ -23,19 +23,12 @@ def go_up_three_dirs():
     os.chdir("..")
     os.chdir("..")
 
-# Used to go up two directories
-def go_up_two_dirs():
-    os.chdir("..")
-    os.chdir("..")
-
 # Create a dataframe for the celeba labels.csv
 def create_celeba_df():
     check_path()
     os.chdir(os.path.join(data_dir, celeba_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
-    os.chdir("..")
-    os.chdir("..")
     return df
 
 # Create a dataframe for the cartoon_set labels.csv
@@ -44,8 +37,6 @@ def create_cartoon_set_df():
     os.chdir(os.path.join(data_dir, cartoon_set_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
-    os.chdir("..")
-    os.chdir("..")
     return df
 
 # Create ImageDataGenerators for training, validation and testing
@@ -77,7 +68,7 @@ def create_datagens(
         random_state=random_state
     )
 
-    os.chdir(os.path.join(data_dir, img_dir))
+    os.chdir(img_dir)
 
     # Generate an image-label pair for the training set
     train_gen = datagen.flow_from_dataframe(
@@ -114,6 +105,11 @@ def create_datagens(
         target_size=(height,width),
         batch_size=len(test),
         preprocessing_function=preprocessing_function)
+
+    os.chdir("..")
+    os.chdir("..")
+    os.chdir("..")
+    os.chdir("..")
 
     return train_gen, val_gen, test_gen
 

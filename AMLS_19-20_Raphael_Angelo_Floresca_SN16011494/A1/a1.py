@@ -1,5 +1,5 @@
 from pipeline.datasets.celeba_gender import create_celeba_df
-from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs, create_datagens
+from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs, create_datagens, data_dir, celeba_dir
 from pipeline.models.mlp import train_mlp
 from pipeline. models.cnn import train_cnn
 from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses
@@ -35,6 +35,9 @@ class A1_MLP(A1):
             second_af="relu",
             layer1_hn=300,
             layer2_hn=100):
+        
+        # Change to relevant image set directory
+        os.chdir(data_dir, celeba_dir)
 
         # Change random state according to constructor
         self.random_state = random_state
@@ -103,6 +106,9 @@ class A1_CNN(A1):
             num_start_filters=16,
             kernel_size=3,
             fcl_size=512):
+
+        # Change to relevant image set directory
+        os.chdir(data_dir, celeba_dir)
 
         # Change random state according to constructor
         self.random_state = random_state

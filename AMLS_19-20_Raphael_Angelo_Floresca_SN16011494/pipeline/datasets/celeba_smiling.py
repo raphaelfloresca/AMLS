@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from pipeline.datasets.utilities import create_datagen, create_celeba_df, go_up_three_dirs
+from pipeline.datasets.utilities import create_celeba_df
 
 def create_smiling_df():
     # Import celeba_df

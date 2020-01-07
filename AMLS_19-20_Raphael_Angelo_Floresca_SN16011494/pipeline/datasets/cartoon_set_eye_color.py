@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from pipeline.datasets.utilities import create_datagen, create_cartoon_set_df, go_up_three_dirs
+from pipeline.datasets.utilities import create_cartoon_set_df
 
 def create_eye_color_df():
     # Import cartoon_set_df

@@ -1,6 +1,7 @@
 from pipeline.datasets.celeba_gender import create_celeba_df
 from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs, create_datagens
-from pipeline.models.mlp import train_mlp, train_cnn
+from pipeline.models.mlp import train_mlp
+from pipeline.nodeks.cnn import train_cnn
 from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses
 import os
 

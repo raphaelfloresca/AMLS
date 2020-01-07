@@ -163,7 +163,7 @@ class A1_CNN(A1):
         plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_A1_cnn.png")
 
         # Plot GradCam
-        plot_grad_cam(self.model, X_test, y_test, 5, "conv2d_2", "output/plot_top_5_gradcam_A1_cnn.png")
+        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_2", "output/plot_top_5_gradcam_A1_cnn.png")
 
         # Get the test accuracy
         test_accuracy = self.model.evaluate(X_test, y_test)[-1]

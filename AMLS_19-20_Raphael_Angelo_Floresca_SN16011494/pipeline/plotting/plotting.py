@@ -185,7 +185,7 @@ def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
         plt.grid(False)
         plt.xticks([])
         plt.yticks([])
-        plt.xlabel("Input image, classified as {}".format(int(top_n_data[i,1])))
+        plt.xlabel("Input: {}".format(int(top_n_data[i,1])))
 
         plt.subplot(top_n,3,index+2)
         plt.imshow(X_test[int(top_n_data[i,0])])

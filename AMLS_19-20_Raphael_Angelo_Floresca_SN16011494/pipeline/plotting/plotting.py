@@ -173,6 +173,8 @@ def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
 
     for i in range(top_n):
         img = X_test[int(top_n_data[i,0])] 
+        img = np.expand_dims(img, axis=0)
+
         gradcam = grad_cam(model, img, layer_name=layer_name)
         gradcamplus = grad_cam_plus(model, img, layer_name=layer_name)
         plt.subplot(top_n+1,3,1)

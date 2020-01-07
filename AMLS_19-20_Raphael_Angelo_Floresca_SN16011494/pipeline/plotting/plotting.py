@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import gradcamutils
 
 # Plot the training loss and accuracy
 def plot_train_loss_acc_lr(H, epochs, schedule, task_name, tla_plot_path, lr_plot_path):
@@ -96,10 +97,12 @@ def create_loss_pred_data(model, X_test, y_test):
     loss_pred_data = loss_pred_data[np.argsort(loss_pred_data[:,3])[::-1]]
     return loss_pred_data
 
+
+
 # This plots a single misclassified image alongside its predicted label,
 # its actual label, the error rate for the image and the probability given
 # to the actual label
-def plot_image(i, loss_pred_data, img_data):
+def plot_wrong_image(i, loss_pred_data, img_data):
     plt.imshow(img_data[int(loss_pred_data[i,0])])
     plt.grid(False)
     plt.xticks([])
@@ -118,6 +121,79 @@ def plot_top_losses(model, X_test, y_test, ptl_plot_path):
     plt.figure(figsize=(6, 6))
     for i in range(num_images):
         plt.subplot(3, 3, i+1)
-        plot_image(i, loss_pred_data, X_test)
+        plot_wrong_image(i, loss_pred_data, X_test)
     plt.tight_layout()
     plt.savefig(ptl_plot_path)
+
+def get_correct_indices(model, X_test, y_test):
+    corrects = np.asarray(np.nonzero(model.predict(X_test).argmax(axis=-1).reshape((-1,)) == y_test))
+    corrects = corrects.T.flatten()
+    return corrects
+
+def get_correct_preds(model, X_test, y_test, corrects):
+    correct_preds = []
+
+    for correct in np.nditer(corrects):
+        probs_pred = model.predict(X_test[correct:correct+1])
+        correct_pred = probs_pred.argmax(axis=-1)
+        correct_preds.append(correct_pred)
+
+    correct_preds = np.asarray(correct_preds)
+    correct_preds = correct_preds.T.flatten()
+    correct_preds = correct_preds.astype(float)
+    return correct_preds
+
+def get_correct_accuracies(model, X_test, y_test, corrects):
+    correct_accuracies = []
+
+    for correct in np.nditer(corrects):
+        accuracy = model.evaluate(X_test[correct:correct+1], y_test[correct:correct+1], verbose=0)
+        correct_accuracies.append(accuracy[1])
+    
+    correct_accuracies = np.asarray(correct_accuracies)
+    correct_accuracies = correct_accuracies.astype(float)
+    return correct_accuracies
+
+def create_top_n_data(model, X_test, y_test, top_n):
+    corrects = get_correct_indices(model, X_test, y_test)
+    correct_preds = get_correct_preds(model, X_test, y_test, corrects)
+    correct_accuracies = get_correct_accuracies(model, X_test, y_test, corrects)
+
+    top_n_data = np.column_stack((corrects.astype(float),
+                                  correct_preds,
+                                  correct_accuracies))
+    top_n_data = top_n_data[np.argsort(top_n_data[:,2])[::-1]]
+    top_n_data = top_n_data[:top_n,:]
+    return top_n_data
+
+def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
+    top_n_data = create_top_n_data(model, X_test, y_test, top_n)
+    
+    plt.figure(figsize=(6,6))
+
+    for i in range(top_n):
+        img = X_test[int(top_n_data[i,0])] 
+        gradcam = gradcamutils.grad_cam(model, img, layer_name=layer_name)
+        gradcamplus = gradcamutils.grad_cam_plus(model, img, layer_name=layer_name)
+        plt.subplot(top_n+1,3,1)
+        plt.imshow(int(top_n_data[i,0]))
+        plt.grid(False)
+        plt.xticks([])
+        plt.yticks([])
+        plt.xlabel("{} {:0.2f}".format(int(top_n_data[i,1]),
+                                           top_n_data[i,2]))
+        plt.title("input image")
+        plt.subplot(top_n+1,3,2)
+        plt.imshow(int(top_n_data[i,0]))
+        plt.xticks([])
+        plt.yticks([])
+        plt.imshow(gradcam,alpha=0.8,cmap="jet")
+        plt.title("Grad-CAM")
+        plt.subplot(top_n+1,3,3)
+        plt.imshow(int(top_n_data[i,0]))
+        plt.xticks([])
+        plt.yticks([])
+        plt.imshow(gradcamplus,alpha=0.8,cmap="jet")
+        plt.title("Grad-CAM++")
+    plt.tight_layout()
+    plt.savefig(grad_cam_plot_path)

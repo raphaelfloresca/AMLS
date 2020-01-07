@@ -2,7 +2,7 @@ from pipeline.datasets.celeba_gender import create_celeba_df
 from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs, create_datagens, data_dir, celeba_dir
 from pipeline.models.mlp import train_mlp
 from pipeline. models.cnn import train_cnn
-from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses
+from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses, plot_grad_cam
 import os
 
 class A1:
@@ -161,6 +161,9 @@ class A1_CNN(A1):
 
         # Plot top losses
         plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_A1_cnn.png")
+
+        # Plot GradCam
+        plot_grad_cam(self.model, X_test, y_test, 5, "conv2d_2", "output/plot_top_5_gradcam_A1_cnn.png")
 
         # Get the test accuracy
         test_accuracy = self.model.evaluate(X_test, y_test)[-1]

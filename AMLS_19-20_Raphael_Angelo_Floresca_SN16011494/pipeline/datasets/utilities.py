@@ -2,6 +2,8 @@ import pandas as pd
 import os
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from pipeline.datasets.download_data import download_dataset
+from sklearn.model_selection import train_test_split
+
 
 data_dir = "data/dataset_AMLS_19-20"
 parent_dir = "AMLSassignment19_20/AMLS_19-20_Raphael_Angelo_Floresca_SN16011494"
@@ -37,13 +39,71 @@ def create_cartoon_set_df():
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
     return df
 
-# Create an ImageDataGenerator which will be fed into the
-# models for training, validation and testing
+# Create ImageDataGenerators for training, validation and testing
 # Rescale to ensure RGB values fall between 0 and 1, speeding up training.
 # Set aside 20% of the training set for validation by default, this can be changed.
-def create_datagen(validation_split=0.2):
+def create_datagens(
+        height, 
+        width,
+        df,
+        x_col,
+        y_col,
+        batch_size, 
+        random_state,
+        preprocessing_function,
+        test_size=0.2,
+        validation_split=0.2):
+
+    # Create datagen
     datagen = ImageDataGenerator(rescale=1./255, validation_split=validation_split)
-    return datagen
+
+    # Create dataframe
+    df = df
+
+    # Create training and test sets for the smiling and smiling datasets
+    train, test = train_test_split(
+        df,
+        test_size=test_size,
+        random_state=random_state
+    )
+
+    # Generate an image-label pair for the training set
+    train_gen = datagen.flow_from_dataframe(
+        dataframe=train, 
+        directory="img/",
+        x_col=x_col,
+        y_col=y_col,
+        class_mode="sparse",
+        target_size=(height,width),
+        batch_size=batch_size,
+        subset="training",
+        preprocessing_function=preprocessing_function)
+
+    # Generate an image-label pair for the validation set as follows
+    val_gen = datagen.flow_from_dataframe(
+        dataframe=train,
+        directory="img/",
+        x_col=x_col,
+        y_col=y_col,
+        class_mode="sparse",
+        target_size=(height,width),
+        batch_size=batch_size,
+        subset="validation",
+        preprocessing_function=preprocessing_function)
+
+    # Generate an image-label pair for the smiling test set as follows
+    # Set batch_size = size of test set
+    test_gen = datagen.flow_from_dataframe(
+        dataframe=test,
+        directory="img/",
+        x_col=x_col,
+        y_col=y_col,
+        class_mode="sparse",
+        target_size=(height,width),
+        batch_size=len(test),
+        preprocessing_function=preprocessing_function)
+
+    return train_gen, val_gen, test_gen
 
 def get_X_y_test_sets(test_gen):
     itr = test_gen

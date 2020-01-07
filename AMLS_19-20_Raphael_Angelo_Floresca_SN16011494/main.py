@@ -1,4 +1,4 @@
-from A1.a1_cnn import A1_CNN
+from A1.a1 import A1_MLP
 from A2.a2_cnn import A2_CNN
 from B1.b1_cnn import B1_CNN
 from B2.b2_cnn import B2_CNN
@@ -22,7 +22,7 @@ args = vars(ap.parse_args())
 
 # ======================================================================================================================
 # Task A1
-model_A1 = A1_CNN(args["epochs"], args["learning_rate"], args["schedule"])        # Build model object.
+model_A1 = A1_MLP(args["epochs"], args["learning_rate"], args["schedule"])        # Build model object.
 acc_A1_train = model_A1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A1_test = model_A1.test()   # Test model based on the test set.
 

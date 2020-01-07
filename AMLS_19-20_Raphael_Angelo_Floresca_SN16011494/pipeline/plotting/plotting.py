@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import gradcamutils
+import pipeline.plotting.gradcamutils
 
 # Plot the training loss and accuracy
 def plot_train_loss_acc_lr(H, epochs, schedule, task_name, tla_plot_path, lr_plot_path):

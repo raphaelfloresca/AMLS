@@ -16,6 +16,7 @@ class A1:
         height,
         width,
         create_celeba_df(),
+        "celeba",
         "img_name",
         "gender",
         batch_size,

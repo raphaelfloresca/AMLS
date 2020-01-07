@@ -16,6 +16,7 @@ class A2:
         height,
         width,
         create_celeba_df(),
+        "celeba",
         "img_name",
         "smiling",
         batch_size,

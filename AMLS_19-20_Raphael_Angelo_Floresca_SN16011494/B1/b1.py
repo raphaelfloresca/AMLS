@@ -16,6 +16,7 @@ class B1:
         height,
         width,
         create_cartoon_set_df(),
+        "cartoon_set",
         "file_name",
         "face_shape",
         batch_size,

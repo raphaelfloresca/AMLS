@@ -169,6 +169,9 @@ def create_top_n_data(model, X_test, y_test, top_n):
 def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
     top_n_data = create_top_n_data(model, X_test, y_test, top_n)
 
+    plt.subplots(nrows=top_n, ncols=3)
+    plt.figure(figsize=(6, 6))
+
     for i in range(top_n):
         img = X_test[int(top_n_data[i,0])] 
         img = np.expand_dims(img, axis=0)
@@ -177,8 +180,7 @@ def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
         gradcamplus = grad_cam_plus(model, img, layer_name=layer_name)
 
         index = i*3
-
-        plt.subplots(nrows=top_n, ncols=3)
+        
         plt.subplot(top_n,3,index+1)
         plt.imshow(X_test[int(top_n_data[i,0])])
         plt.grid(False)

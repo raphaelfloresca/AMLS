@@ -2,7 +2,7 @@ from pipeline.datasets.cartoon_set_face_shape import create_cartoon_set_df
 from pipeline.datasets.utilities import get_X_y_test_sets, create_datagens, go_up_three_dirs, data_dir, cartoon_set_dir
 from pipeline.models.mlp import train_mlp
 from pipeline. models.cnn import train_cnn
-from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses
+from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses, plot_grad_cam
 import os
 
 class B1:
@@ -161,6 +161,9 @@ class B1_CNN(B1):
 
         # Plot top losses
         plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_B1_cnn.png")
+
+        # Plot GradCam
+        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_2", "output/plot_top_5_gradcam_B1_cnn.png")
 
         # Get the test accuracy
         test_accuracy = self.model.evaluate(X_test, y_test)[-1]

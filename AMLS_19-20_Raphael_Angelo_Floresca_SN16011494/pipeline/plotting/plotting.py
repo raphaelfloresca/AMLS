@@ -4,6 +4,9 @@ from pipeline.plotting.gradcamutils import grad_cam, grad_cam_plus
 
 # Plot the training loss and accuracy
 def plot_train_loss_acc_lr(H, epochs, schedule, task_name, tla_plot_path, lr_plot_path):
+    
+    print("Plotting training and validation loss/accuracy graph...")
+
     N = np.arange(0, epochs)
     plt.style.use("ggplot")
     plt.figure()
@@ -18,8 +21,9 @@ def plot_train_loss_acc_lr(H, epochs, schedule, task_name, tla_plot_path, lr_plo
     plt.savefig(tla_plot_path)
  
     if schedule is not None:
-	    schedule.plot(N)
-	    plt.savefig(lr_plot_path)
+        print("Plotting learning rate graph...")
+        schedule.plot(N)
+        plt.savefig(lr_plot_path)
 
 # Get indices of wrongfully misclassified test set
 # https://stackoverflow.com/questions/39300880/how-to-find-wrong-prediction-cases-in-test-set-cnns-using-keras
@@ -116,6 +120,9 @@ def plot_wrong_image(i, loss_pred_data, img_data):
 # model on the test set. Inspired by the plot_top_losses function in the fastai
 # library
 def plot_top_losses(model, X_test, y_test, ptl_plot_path):
+
+    print("Plotting top losses...")
+
     loss_pred_data = create_loss_pred_data(model, X_test, y_test)
     num_images = 9
     plt.figure(figsize=(6, 6))
@@ -170,6 +177,8 @@ def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
     top_n_data = create_top_n_data(model, X_test, y_test, top_n)
 
     plt.figure(figsize=(6, 6))
+
+    print("Plotting Grad-CAM results...")
 
     for i in range(top_n):
         img = X_test[int(top_n_data[i,0])] 

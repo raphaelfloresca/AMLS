@@ -37,7 +37,7 @@ class B1_MLP(B1):
             layer2_hn=100):
 
         # Change to relevant image set directory
-        os.chdir(os.join(data_dir, cartoon_set_dir))
+        os.chdir(os.path.join(data_dir, cartoon_set_dir))
 
         # Change random state according to constructor
         self.random_state = random_state
@@ -108,7 +108,7 @@ class B1_CNN(B1):
             fcl_size=512):
 
         # Change to relevant image set directory
-        os.chdir(os.join(data_dir, cartoon_set_dir))
+        os.chdir(os.path.join(data_dir, cartoon_set_dir))
 
         # Change random state according to constructor
         self.random_state = random_state

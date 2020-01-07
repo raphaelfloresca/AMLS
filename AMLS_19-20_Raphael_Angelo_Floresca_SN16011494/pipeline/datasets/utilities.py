@@ -68,8 +68,6 @@ def create_datagens(
         random_state=random_state
     )
 
-    os.chdir(img_dir)
-
     # Generate an image-label pair for the training set
     train_gen = datagen.flow_from_dataframe(
         dataframe=train, 
@@ -106,10 +104,7 @@ def create_datagens(
         batch_size=len(test),
         preprocessing_function=preprocessing_function)
 
-    os.chdir("..")
-    os.chdir("..")
-    os.chdir("..")
-    os.chdir("..")
+    go_up_three_dirs()
 
     return train_gen, val_gen, test_gen
 

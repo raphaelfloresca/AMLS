@@ -166,18 +166,8 @@ def create_top_n_data(model, X_test, y_test, top_n):
     top_n_data = top_n_data[:top_n,:]
     return top_n_data
 
-def plot_correct_image(i, top_n_data, img_data):
-    plt.imshow(img_data[int(top_n_data[i,0])])
-    plt.grid(False)
-    plt.xticks([])
-    plt.yticks([])
-    plt.xlabel("{}/{} {:0.2f} {:0.2f}".format(int(top_n_data[i,1]),
-                                              top_n_data[i,2])
-
-def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
+def plot_correct_image(i, model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
     top_n_data = create_top_n_data(model, X_test, y_test, top_n)
-    
-    plt.figure(figsize=(6,6))
 
     for i in range(top_n):
         img = X_test[int(top_n_data[i,0])] 
@@ -186,8 +176,8 @@ def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
         gradcam = grad_cam(model, img, layer_name=layer_name)
         gradcamplus = grad_cam_plus(model, img, layer_name=layer_name)
 
-        pltplt.subplots(nrows=top_n, ncols=3)
-        plt.subplot(i+1,3,1)
+        plt.subplots(nrows=top_n, ncols=3)
+        plt.subplot(1,3,1)
         plt.imshow(X_test[int(top_n_data[i,0])])
         plt.grid(False)
         plt.xticks([])
@@ -195,19 +185,26 @@ def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
         plt.xlabel("{} {:0.2f}".format(int(top_n_data[i,1]),
                                            top_n_data[i,2]))
         plt.title("input image")
-        plt.subplot(i+1,3,1)
+
+        plt.subplot(1,3,2)
         plt.imshow(X_test[int(top_n_data[i,0])])
         plt.xticks([])
         plt.yticks([])
         plt.imshow(gradcam,alpha=0.8,cmap="jet")
         plt.title("Grad-CAM")
-        plt.subplot(i+1,3,1)
+
+        plt.subplot(1,3,3)
         plt.imshow(X_test[int(top_n_data[i,0])])
         plt.xticks([])
         plt.yticks([])
         plt.imshow(gradcamplus,alpha=0.8,cmap="jet")
         plt.title("Grad-CAM++")
+
+def plot_grad_cam(model, X_test, y_test, top_n, layer_name, ptl_plot_path):
+    num_rows = top_n
+    plt.figure(figsize=(6, 6))
+    for i in range(num_rows):
+        plt.subplot(num_rows, 1, i+1)
+        plot_correct_image(i, model, X_test, y_test, top_n, layer_name, ptl_plot_path)
     plt.tight_layout()
-    plt.savefig(grad_cam_plot_path)
-
-
+    plt.savefig(ptl_plot_path)

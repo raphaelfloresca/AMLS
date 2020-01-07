@@ -169,7 +169,7 @@ def create_top_n_data(model, X_test, y_test, top_n):
 def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
     top_n_data = create_top_n_data(model, X_test, y_test, top_n)
 
-    plt.figure(figsize=(6,6))
+    plt.figure(figsize=(6, 6))
 
     for i in range(top_n):
         img = X_test[int(top_n_data[i,0])] 
@@ -185,23 +185,21 @@ def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
         plt.grid(False)
         plt.xticks([])
         plt.yticks([])
-        plt.xlabel("{} {:0.2f}".format(int(top_n_data[i,1]),
-                                           top_n_data[i,2]))
-        plt.title("input image")
+        plt.xlabel("Input image, classified as {}".format(int(top_n_data[i,1])))
 
         plt.subplot(top_n,3,index+2)
         plt.imshow(X_test[int(top_n_data[i,0])])
         plt.xticks([])
         plt.yticks([])
         plt.imshow(gradcam,alpha=0.8,cmap="jet")
-        plt.title("Grad-CAM")
+        plt.xlabel("Grad-CAM")
 
         plt.subplot(top_n,3,index+3)
         plt.imshow(X_test[int(top_n_data[i,0])])
         plt.xticks([])
         plt.yticks([])
         plt.imshow(gradcamplus,alpha=0.8,cmap="jet")
-        plt.title("Grad-CAM++")
+        plt.xlabel("Grad-CAM++")
 
     plt.tight_layout()
     plt.savefig(grad_cam_plot_path)

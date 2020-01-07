@@ -166,6 +166,14 @@ def create_top_n_data(model, X_test, y_test, top_n):
     top_n_data = top_n_data[:top_n,:]
     return top_n_data
 
+def plot_correct_image(i, top_n_data, img_data):
+    plt.imshow(img_data[int(top_n_data[i,0])])
+    plt.grid(False)
+    plt.xticks([])
+    plt.yticks([])
+    plt.xlabel("{}/{} {:0.2f} {:0.2f}".format(int(top_n_data[i,1]),
+                                              top_n_data[i,2])
+
 def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
     top_n_data = create_top_n_data(model, X_test, y_test, top_n)
     
@@ -177,7 +185,9 @@ def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
 
         gradcam = grad_cam(model, img, layer_name=layer_name)
         gradcamplus = grad_cam_plus(model, img, layer_name=layer_name)
-        plt.subplot(top_n+1,3,i+1)
+
+        pltplt.subplots(nrows=top_n, ncols=3)
+        plt.subplot(i+1,3,1)
         plt.imshow(X_test[int(top_n_data[i,0])])
         plt.grid(False)
         plt.xticks([])
@@ -185,13 +195,13 @@ def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
         plt.xlabel("{} {:0.2f}".format(int(top_n_data[i,1]),
                                            top_n_data[i,2]))
         plt.title("input image")
-        plt.subplot(top_n+1,3,2)
+        plt.subplot(i+1,3,1)
         plt.imshow(X_test[int(top_n_data[i,0])])
         plt.xticks([])
         plt.yticks([])
         plt.imshow(gradcam,alpha=0.8,cmap="jet")
         plt.title("Grad-CAM")
-        plt.subplot(top_n+1,3,3)
+        plt.subplot(i+1,3,1)
         plt.imshow(X_test[int(top_n_data[i,0])])
         plt.xticks([])
         plt.yticks([])
@@ -199,3 +209,5 @@ def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
         plt.title("Grad-CAM++")
     plt.tight_layout()
     plt.savefig(grad_cam_plot_path)
+
+

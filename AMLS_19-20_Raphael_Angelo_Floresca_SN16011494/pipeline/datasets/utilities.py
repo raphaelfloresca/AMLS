@@ -36,8 +36,6 @@ def create_celeba_df():
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
     os.chdir("..")
     os.chdir("..")
-    os.chdir("..")
-
     return df
 
 # Create a dataframe for the cartoon_set labels.csv
@@ -48,8 +46,6 @@ def create_cartoon_set_df():
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
     os.chdir("..")
     os.chdir("..")
-    os.chdir("..")
-
     return df
 
 # Create ImageDataGenerators for training, validation and testing

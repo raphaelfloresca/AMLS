@@ -35,17 +35,17 @@ class A1_MLP(A1):
 
         # Change random state according to function
         self.random_state = random_state
-        super().random_state = self.random_state
+        A1.random_state = self.random_state
 
         self.epochs = epochs
 
-        self.train_gen, self.val_gen, self.test_gen = super().train_gen, super().val_gen, super().test_gen
+        self.train_gen, self.val_gen, self.test_gen = A1.train_gen, A1.val_gen, A1.test_gen
 
         self.model, self.history, self.schedule = train_mlp(
-            super().height, 
-            super().width,
-            super().num_classes,
-            super().batch_size,
+            A1.height, 
+            A1.width,
+            A1.num_classes,
+            A1.batch_size,
             epochs,
             learning_rate,
             schedule,

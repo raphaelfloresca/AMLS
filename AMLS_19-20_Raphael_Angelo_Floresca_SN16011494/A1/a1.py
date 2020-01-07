@@ -79,16 +79,16 @@ class A1_MLP(A1):
         os.chdir("data/dataset_AMLS_19-20/celeba")
 
         # Split ImageDataGenerator object for the test set into separate X and y test sets
-        gender_X_test, gender_y_test = get_X_y_test_sets(self.test_gen)
+        X_test, y_test = get_X_y_test_sets(self.test_gen)
 
         # Navigate to output folder in parent directory
         go_up_three_dirs()
 
         # Plot top losses
-        plot_top_losses(self.model, gender_X_test, gender_y_test, "output/plot_top_losses_A1_mlp.png")
+        plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_A1_mlp.png")
 
         # Get the test accuracy
-        test_accuracy = self.model.evaluate(gender_X_test, gender_y_test)[-1]
+        test_accuracy = self.model.evaluate(X_test, y_test)[-1]
         return test_accuracy
 
 class A1_CNN(A1):
@@ -146,14 +146,14 @@ class A1_CNN(A1):
         os.chdir("data/dataset_AMLS_19-20/celeba")
 
         # Split ImageDataGenerator object for the test set into separate X and y test sets
-        gender_X_test, gender_y_test = get_X_y_test_sets(self.test_gen)
+        X_test, y_test = get_X_y_test_sets(self.test_gen)
 
         # Navigate to output folder in parent directory
         go_up_three_dirs()
 
         # Plot top losses
-        plot_top_losses(self.model, gender_X_test, gender_y_test, "output/plot_top_losses_A1_cnn.png")
+        plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_A1_cnn.png")
 
         # Get the test accuracy
-        test_accuracy = self.model.evaluate(gender_X_test, gender_y_test)[-1]
+        test_accuracy = self.model.evaluate(X_test, y_test)[-1]
         return test_accuracy

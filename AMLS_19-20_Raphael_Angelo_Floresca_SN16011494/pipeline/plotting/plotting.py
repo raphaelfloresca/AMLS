@@ -170,7 +170,7 @@ def plot_grad_cam(model, X_test, y_test, top_n, layer_name, grad_cam_plot_path):
     top_n_data = create_top_n_data(model, X_test, y_test, top_n)
 
     plt.subplots(nrows=top_n, ncols=3)
-    plt.figure(figsize=(24, 24))
+    plt.figure(figsize=(12, 12))
 
     for i in range(top_n):
         img = X_test[int(top_n_data[i,0])] 

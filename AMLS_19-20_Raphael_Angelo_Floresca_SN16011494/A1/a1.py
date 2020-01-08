@@ -162,6 +162,9 @@ class A1_CNN(A1):
             )
         else:
             # Plot training loss accuracy and learning rate change
+            # Navigate to output folder in parent directory
+            go_up_three_dirs()
+
             plot_train_loss_acc_lr(
                 self.history,
                 self.epochs,

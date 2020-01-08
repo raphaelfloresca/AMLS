@@ -1,7 +1,7 @@
-from A1.a1 import A1_CNN
-from A2.a2 import A2_CNN
-from B1.b1 import B1_CNN
-from B2.b2 import B2_CNN
+from A1.a1 import A1CNN
+from A2.a2 import A2CNN
+from B1.b1 import B1CNN
+from B2.b2 import B2CNN
 from tensorflow.keras import backend as K
 import argparse
 

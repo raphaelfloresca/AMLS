@@ -67,8 +67,10 @@ def train_cnn(
     	decay = 1e-1 / epochs
  
     # otherwise, no learning rate schedule is being used
-    elif schedule is None:
+    elif schedule is None and find_lr != True:
     	print("[INFO] no learning rate schedule being used")
+    elif schedule is not None and find_lr == True:
+        print("[INFO] Finding learning rate...") 
 
     # Instantiate Sequential API
     model = Sequential([

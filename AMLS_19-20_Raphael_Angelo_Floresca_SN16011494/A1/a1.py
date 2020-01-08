@@ -151,26 +151,27 @@ class A1_CNN(A1):
                 fcl_size)
 
     def train(self):
-        # Navigate to output folder in parent directory
-        go_up_three_dirs()        
+        if find_lr == True:
+            # Navigate to output folder in parent directory
+            go_up_three_dirs()        
 
-        # Plot learning rate finder plot
-        self.lr_finder.plot_loss(
-            "output/lr_finder_plot_A1.png"
-        )
-
-        # Plot training loss accuracy and learning rate change
-        plot_train_loss_acc_lr(
-            self.history,
-            self.epochs,
-            self.schedule,
-            "A1",
-            "output/train_loss_acc_A1_cnn.png",
-            "output/lr_A1_cnn.png")
-
-        # Get the training accuracy
-        training_accuracy = self.history.history['acc'][-1]
-        return training_accuracy
+            # Plot learning rate finder plot
+            self.lr_finder.plot_loss(
+                "output/lr_finder_plot_A1.png"
+            )
+        else:
+            # Plot training loss accuracy and learning rate change
+            plot_train_loss_acc_lr(
+                self.history,
+                self.epochs,
+                self.schedule,
+                "A1",
+                "output/train_loss_acc_A1_cnn.png",
+                "output/lr_A1_cnn.png")
+                
+            # Get the training accuracy
+            training_accuracy = self.history.history['acc'][-1]
+            return training_accuracy
 
     def test(self):
         # Go back to image folder

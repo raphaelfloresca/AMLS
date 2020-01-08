@@ -20,8 +20,8 @@ ap.add_argument("-l", "--learning_rate", type=float, default=0.01,
     help="starting learning rate")
 ap.add_argument("-f", "--find_learning_rate", type=bool, default=False,
     help="find learning rate with the learning rate finder")
-ap.add_argument("-r", "--random_state", type=int, default=42,
-    help="random state for splitting the training and test sets")
+ap.add_argument("-r", "--random_state", type=int, default=None,
+    help="random state for splitting the training and test sets, used for replicating results")
 args = vars(ap.parse_args())
 
 # ======================================================================================================================

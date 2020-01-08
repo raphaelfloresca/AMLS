@@ -8,6 +8,7 @@ from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras.optimizers import SGD
 from pipeline.optimisation.learning_rate_schedulers import StepDecay
 from pipeline.optimisation.learning_rate_schedulers import PolynomialDecay
+from pipeline.optimisation.one_cycle_lr.lr_finder import LRFinder
 
 def train_cnn(
         height,
@@ -17,6 +18,7 @@ def train_cnn(
         epochs,
         learning_rate,
         schedule,
+        find_lr,
         train_gen,
         val_gen,
         num_start_filters,
@@ -93,13 +95,17 @@ def train_cnn(
         optimizer=opt,
 	    metrics=["accuracy"])
 
-    # Training and evaluating the CNN model
-    history = model.fit(
-        train_gen,
-        steps_per_epoch=train_gen.samples // batch_size,
-        validation_data=val_gen,
-        validation_steps=val_gen.samples // batch_size,
-        callbacks=callbacks,
-        epochs=epochs)
-
-    return model, history, schedule
+    if find_lr == True:
+        lr_finder = LRFinder(model)
+        lr_finder.find(train_gen)
+        return lr_finder
+    else:
+        # Training and evaluating the CNN model
+        history = model.fit(
+            train_gen,
+            steps_per_epoch=train_gen.samples // batch_size,
+            validation_data=val_gen,
+            validation_steps=val_gen.samples // batch_size,
+            callbacks=callbacks,
+            epochs=epochs)
+        return model, history, schedule

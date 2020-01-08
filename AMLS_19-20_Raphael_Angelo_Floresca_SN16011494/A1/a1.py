@@ -102,6 +102,7 @@ class A1_CNN(A1):
             epochs,
             learning_rate,
             schedule,
+            find_lr,
             random_state,
             num_start_filters=16,
             kernel_size=3,
@@ -117,8 +118,9 @@ class A1_CNN(A1):
         self.epochs = epochs
 
         self.train_gen, self.val_gen, self.test_gen = A1.train_gen, A1.val_gen, A1.test_gen
-
-        self.model, self.history, self.schedule = train_cnn(
+        
+        if find_lr == True:
+            self.lr_finder = train_cnn(
             A1.height, 
             A1.width,
             A1.num_classes,
@@ -126,15 +128,36 @@ class A1_CNN(A1):
             self.epochs,
             learning_rate,
             schedule,
+            find_lr,
             self.train_gen,
             self.val_gen,
             num_start_filters,
             kernel_size,
             fcl_size)
+        else:
+            self.model, self.history, self.schedule = train_cnn(
+                A1.height, 
+                A1.width,
+                A1.num_classes,
+                A1.batch_size,
+                self.epochs,
+                learning_rate,
+                schedule,
+                find_lr,
+                self.train_gen,
+                self.val_gen,
+                num_start_filters,
+                kernel_size,
+                fcl_size)
 
     def train(self):
         # Navigate to output folder in parent directory
         go_up_three_dirs()        
+
+        # Plot learning rate finder plot
+        self.lr_finder.plot_loss(
+            "output/lr_finder_plot_A1.png"
+        )
 
         # Plot training loss accuracy and learning rate change
         plot_train_loss_acc_lr(
@@ -148,7 +171,7 @@ class A1_CNN(A1):
         # Get the training accuracy
         training_accuracy = self.history.history['acc'][-1]
         return training_accuracy
-        
+
     def test(self):
         # Go back to image folder
         os.chdir("data/dataset_AMLS_19-20/celeba")

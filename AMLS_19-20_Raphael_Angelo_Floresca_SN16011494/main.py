@@ -24,7 +24,7 @@ args = vars(ap.parse_args())
 
 # ======================================================================================================================
 # Task A1
-model_A1 = A1_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"])        # Build model object.
+model_A1 = A1_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], True)        # Build model object.
 acc_A1_train = model_A1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A1_test = model_A1.test()   # Test model based on the test set.
 

@@ -9,6 +9,7 @@ from tensorflow.keras.optimizers import SGD
 from pipeline.optimisation.learning_rate_schedulers import StepDecay
 from pipeline.optimisation.learning_rate_schedulers import PolynomialDecay
 from pipeline.optimisation.one_cycle_lr.lr_finder import LRFinder
+from pipeline.optimisation.one_cycle_lr.one_cycle_scheduler import OneCycleScheduler
 
 def train_cnn(
         height,
@@ -17,7 +18,7 @@ def train_cnn(
         batch_size,
         epochs,
         learning_rate,
-        schedule,
+        schedule_type,
         find_lr,
         train_gen,
         val_gen,
@@ -32,23 +33,28 @@ def train_cnn(
     schedule = None
  
     # check to see if step-based learning rate decay should be used
-    if epochs == "step":
+    if schedule_type == "step":
     	print("[INFO] using 'step-based' learning rate decay...")
     	schedule = StepDecay(initAlpha=1e-1, factor=0.25, dropEvery=int(epochs/5))
  
     # check to see if linear learning rate decay should should be used
-    elif epochs == "linear":
+    elif schedule_type == "linear":
 	    print("[INFO] using 'linear' learning rate decay...")
 	    schedule = PolynomialDecay(maxEpochs=epochs, initAlpha=1e-1, power=1)
  
     # check to see if a polynomial learning rate decay should be used
-    elif epochs == "poly":
+    elif schedule_type == "poly":
 	    print("[INFO] using 'polynomial' learning rate decay...")
 	    schedule = PolynomialDecay(maxEpochs=epochs, initAlpha=1e-1, power=5)
- 
+
+    elif schedule_type == "one_cycle":
+        print("[INFO] using 'one cycle' learning...")
+        schedule = OneCycleScheduler(learning_rate)
+        callbacks = [schedule]
+
     # if the learning rate schedule is not empty, add it to the list of
     # callbacks
-    if schedule is not None:
+    if schedule is not None and schedule_type != "one_cycle":
 	    callbacks = [LearningRateScheduler(schedule)]
 
     # initialize the decay for the optimizer
@@ -56,7 +62,7 @@ def train_cnn(
  
     # if we are using Keras' "standard" decay, then we need to set the
     # decay parameter
-    if epochs == "standard":
+    if schedule_type == "standard":
     	print("[INFO] using 'keras standard' learning rate decay...")
     	decay = 1e-1 / epochs
  
@@ -86,8 +92,11 @@ def train_cnn(
         Dense(num_classes, activation='softmax')
     ])
 
-    # initialize our optimizer and model, then compile it
-    opt = SGD(lr=learning_rate, momentum=0.9, decay=decay)
+    if schedule_type != "one_cycle":
+        # initialize our optimizer and model, then compile it
+        opt = SGD(lr=learning_rate, momentum=0.9, decay=decay)
+    else:
+        opt = SGD()
     
     # We now compile the MLP model to specify the loss function
     model.compile(

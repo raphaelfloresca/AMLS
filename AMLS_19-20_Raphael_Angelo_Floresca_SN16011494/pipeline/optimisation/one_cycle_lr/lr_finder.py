@@ -39,7 +39,7 @@ class LRFinder:
 
     def find(self, generator, start_lr = 1e-7, end_lr = 10., beta=0.98, num_iter=100, **kwargs):
         # calculate number of epochs
-        num_epochs = math.ceil(num_iter/len(generator))
+        num_epochs = 5
         
         # calculate lr multiplier
         self.lr_multiplier = (end_lr / start_lr)**(1./num_iter)

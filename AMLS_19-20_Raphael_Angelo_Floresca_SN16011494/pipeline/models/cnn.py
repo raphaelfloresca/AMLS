@@ -93,7 +93,7 @@ def train_cnn(
     ])
 
     if schedule_type != "one_cycle":
-        # initialize our optimizer and model, then compile it
+        # initialize optimizer and model, then compile it
         opt = SGD(lr=learning_rate, momentum=0.9, decay=decay)
     else:
         opt = SGD()

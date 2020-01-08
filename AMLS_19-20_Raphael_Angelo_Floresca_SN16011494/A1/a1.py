@@ -116,6 +116,7 @@ class A1_CNN(A1):
         A1.random_state = self.random_state
 
         self.epochs = epochs
+        self.find_lr = find_lr
 
         self.train_gen, self.val_gen, self.test_gen = A1.train_gen, A1.val_gen, A1.test_gen
         
@@ -151,7 +152,7 @@ class A1_CNN(A1):
                 fcl_size)
 
     def train(self):
-        if find_lr == True:
+        if self.find_lr == True:
             # Navigate to output folder in parent directory
             go_up_three_dirs()        
 
@@ -168,7 +169,7 @@ class A1_CNN(A1):
                 "A1",
                 "output/train_loss_acc_A1_cnn.png",
                 "output/lr_A1_cnn.png")
-                
+
             # Get the training accuracy
             training_accuracy = self.history.history['acc'][-1]
             return training_accuracy

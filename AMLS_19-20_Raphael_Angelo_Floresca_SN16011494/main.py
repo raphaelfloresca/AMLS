@@ -26,7 +26,7 @@ args = vars(ap.parse_args())
 
 # ======================================================================================================================
 # Task A1
-model_A1 = A1_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])        # Build model object.
+model_A1 = A1CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])        # Build model object.
 acc_A1_train = model_A1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A1_test = model_A1.test()   # Test model based on the test set.
 
@@ -35,7 +35,7 @@ K.clear_session()
 
 # ======================================================================================================================
 # Task A2
-model_A2 = A2_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])
+model_A2 = A2CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])
 acc_A2_train = model_A2.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A2_test = model_A2.test()   # Test model based on the test set.
 
@@ -44,7 +44,7 @@ K.clear_session()
 
 # ======================================================================================================================
 # Task B1
-model_B1 = B1_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])
+model_B1 = B1CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])
 acc_B1_train = model_B1.train()
 acc_B1_test = model_B1.test()
 
@@ -53,7 +53,7 @@ K.clear_session()
 
 # ======================================================================================================================
 # Task B2
-model_B2 = B2_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])
+model_B2 = B2CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])
 acc_B2_train = model_B2.train()
 acc_B2_test = model_B2.test()
 

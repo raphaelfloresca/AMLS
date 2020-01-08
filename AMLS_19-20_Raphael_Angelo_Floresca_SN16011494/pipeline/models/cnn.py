@@ -31,45 +31,46 @@ def train_cnn(
     # to be used
     callbacks = []
     schedule = None
+    
+    if find_lr != True:
+        # check to see if step-based learning rate decay should be used
+        if schedule_type == "step":
+    	    print("[INFO] using 'step-based' learning rate decay...")
+    	    schedule = StepDecay(initAlpha=1e-1, factor=0.25, dropEvery=int(epochs/5))
  
-    # check to see if step-based learning rate decay should be used
-    if schedule_type == "step":
-    	print("[INFO] using 'step-based' learning rate decay...")
-    	schedule = StepDecay(initAlpha=1e-1, factor=0.25, dropEvery=int(epochs/5))
- 
-    # check to see if linear learning rate decay should should be used
-    elif schedule_type == "linear":
-	    print("[INFO] using 'linear' learning rate decay...")
-	    schedule = PolynomialDecay(maxEpochs=epochs, initAlpha=1e-1, power=1)
- 
-    # check to see if a polynomial learning rate decay should be used
-    elif schedule_type == "poly":
-	    print("[INFO] using 'polynomial' learning rate decay...")
-	    schedule = PolynomialDecay(maxEpochs=epochs, initAlpha=1e-1, power=5)
+        # check to see if linear learning rate decay should should be used
+        elif schedule_type == "linear":
+            print("[INFO] using 'linear' learning rate decay...")
+            schedule = PolynomialDecay(maxEpochs=epochs, initAlpha=1e-1, power=1)
+    
+        # check to see if a polynomial learning rate decay should be used
+        elif schedule_type == "poly":
+            print("[INFO] using 'polynomial' learning rate decay...")
+            schedule = PolynomialDecay(maxEpochs=epochs, initAlpha=1e-1, power=5)
 
-    elif schedule_type == "one_cycle":
-        print("[INFO] using 'one cycle' learning...")
-        schedule = OneCycleScheduler(learning_rate)
-        callbacks = [schedule]
+        elif schedule_type == "one_cycle":
+            print("[INFO] using 'one cycle' learning...")
+            schedule = OneCycleScheduler(learning_rate)
+            callbacks = [schedule]
 
-    # if the learning rate schedule is not empty, add it to the list of
-    # callbacks
-    if schedule is not None and schedule_type != "one_cycle":
-	    callbacks = [LearningRateScheduler(schedule)]
+        # if the learning rate schedule is not empty, add it to the list of
+        # callbacks
+        if schedule is not None and schedule_type != "one_cycle":
+	        callbacks = [LearningRateScheduler(schedule)]
 
-    # initialize the decay for the optimizer
-    decay = 0.0
+        # initialize the decay for the optimizer
+        decay = 0.0
  
-    # if we are using Keras' "standard" decay, then we need to set the
-    # decay parameter
-    if schedule_type == "standard":
-    	print("[INFO] using 'keras standard' learning rate decay...")
-    	decay = 1e-1 / epochs
+        # if we are using Keras' "standard" decay, then we need to set the
+        # decay parameter
+        if schedule_type == "standard":
+        	print("[INFO] using 'keras standard' learning rate decay...")
+        	decay = 1e-1 / epochs
  
-    # otherwise, no learning rate schedule is being used
-    elif schedule is None and find_lr != True:
-    	print("[INFO] no learning rate schedule being used")
-    elif schedule is not None and find_lr == True:
+        # otherwise, no learning rate schedule is being used
+        elif schedule is None:
+        	print("[INFO] no learning rate schedule being used")
+    else:
         print("[INFO] Finding learning rate...") 
 
     # Instantiate Sequential API

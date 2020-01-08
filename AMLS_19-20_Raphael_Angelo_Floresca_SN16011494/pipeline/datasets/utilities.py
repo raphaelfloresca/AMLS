@@ -53,7 +53,7 @@ def create_datagens(
         random_state,
         preprocessing_function,
         test_size=0.2,
-        validation_split=0.2):
+        validation_split=0.25):
 
     # Create datagen
     datagen = ImageDataGenerator(rescale=1./255, validation_split=validation_split)

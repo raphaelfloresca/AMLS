@@ -18,13 +18,15 @@ ap.add_argument("-e", "--epochs", type=int, default=10,
 	help="# of epochs to train for")
 ap.add_argument("-l", "--learning_rate", type=float, default=0.01,
     help="starting learning rate")
+ap.add_argument("-f", "--find_learning_rate", type=bool, default=False,
+    help="find learning rate with the learning rate finder")
 ap.add_argument("-r", "--random_state", type=int, default=42,
     help="random state for splitting the training and test sets")
 args = vars(ap.parse_args())
 
 # ======================================================================================================================
 # Task A1
-model_A1 = A1_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], True)        # Build model object.
+model_A1 = A1_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])        # Build model object.
 acc_A1_train = model_A1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A1_test = model_A1.test()   # Test model based on the test set.
 
@@ -33,7 +35,7 @@ K.clear_session()
 
 # ======================================================================================================================
 # Task A2
-model_A2 = A2_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"])        # Build model object.
+model_A2 = A2_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])
 acc_A2_train = model_A2.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A2_test = model_A2.test()   # Test model based on the test set.
 
@@ -42,7 +44,7 @@ K.clear_session()
 
 # ======================================================================================================================
 # Task B1
-model_B1 = B1_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"])
+model_B1 = B1_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])
 acc_B1_train = model_B1.train()
 acc_B1_test = model_B1.test()
 
@@ -51,7 +53,7 @@ K.clear_session()
 
 # ======================================================================================================================
 # Task B2
-model_B2 = B2_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"])
+model_B2 = B2_CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])
 acc_B2_train = model_B2.train()
 acc_B2_test = model_B2.test()
 

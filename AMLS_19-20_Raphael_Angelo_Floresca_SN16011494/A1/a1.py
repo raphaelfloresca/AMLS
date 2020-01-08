@@ -117,6 +117,7 @@ class A1_CNN(A1):
 
         self.epochs = epochs
         self.find_lr = find_lr
+        self.schedule_type = schedule_type
 
         self.train_gen, self.val_gen, self.test_gen = A1.train_gen, A1.val_gen, A1.test_gen
         
@@ -169,6 +170,7 @@ class A1_CNN(A1):
                 self.history,
                 self.epochs,
                 self.schedule,
+                self.schedule_type,
                 "A1",
                 "output/train_loss_acc_A1_cnn.png",
                 "output/lr_A1_cnn.png")

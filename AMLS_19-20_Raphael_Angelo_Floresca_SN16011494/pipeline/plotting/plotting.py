@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from pipeline.plotting.gradcamutils import grad_cam, grad_cam_plus
 
 # Plot the training loss and accuracy
-def plot_train_loss_acc_lr(H, epochs, schedule, task_name, tla_plot_path, lr_plot_path):
+def plot_train_loss_acc_lr(H, epochs, schedule, schedule_type, task_name, tla_plot_path, lr_plot_path):
     
     print("Plotting training and validation loss/accuracy graph...")
 
@@ -20,9 +20,13 @@ def plot_train_loss_acc_lr(H, epochs, schedule, task_name, tla_plot_path, lr_plo
     plt.legend()
     plt.savefig(tla_plot_path)
  
-    if schedule is not None:
+    if schedule is not None and schedule_type != "one_cycle":
         print("Plotting learning rate graph...")
         schedule.plot(N)
+        plt.savefig(lr_plot_path)
+    elif schedule is not None and schedule_type == "one_cycle":
+        print("Plotting learning rate graph...")
+        schedule.plot()
         plt.savefig(lr_plot_path)
 
 # Get indices of wrongfully misclassified test set

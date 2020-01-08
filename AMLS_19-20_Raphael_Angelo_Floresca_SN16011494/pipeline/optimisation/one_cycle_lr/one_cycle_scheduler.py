@@ -56,7 +56,7 @@ class OneCycleScheduler(Callback):
             self.model.stop_training=True
             return
         
-    def plot_lr(self, show_momentums=True):
+    def plot(self, show_momentums=True):
         if hasattr(self.model.optimizer, 'momentum') and show_momentums:
             plt.subplot(121)
             plt.plot(self.logs['lr'])

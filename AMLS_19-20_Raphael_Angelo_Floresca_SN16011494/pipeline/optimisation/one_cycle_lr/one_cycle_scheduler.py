@@ -1,6 +1,6 @@
 import tensorflow.keras.backend as K
 from tensorflow.keras.callbacks import Callback
-from param_scheduler import CosineScheduler
+from pipeline.optimisation.one_cycle_lr.param_scheduler import CosineScheduler
 import matplotlib.pyplot as plt
 
 class OneCycleScheduler(Callback):

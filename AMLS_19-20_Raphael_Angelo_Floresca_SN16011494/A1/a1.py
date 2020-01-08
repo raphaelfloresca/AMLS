@@ -1,7 +1,7 @@
 from pipeline.datasets.celeba_gender import create_celeba_df
 from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs, create_datagens, data_dir, celeba_dir
 from pipeline.models.mlp import train_mlp
-from pipeline. models.cnn import train_cnn
+from pipeline.models.cnn import train_cnn
 from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses, plot_grad_cam
 import os
 
@@ -24,18 +24,20 @@ class A1:
         random_state,
         None)
 
-class A1_MLP(A1):
+
+class A1MLP(A1):
     def __init__(
             self,
             epochs,
             learning_rate,
-            schedule,
+            schedule_type,
+            find_lr,
             random_state,
             first_af="relu",
             second_af="relu",
             layer1_hn=300,
             layer2_hn=100):
-        
+
         # Change to relevant image set directory
         os.chdir(os.path.join(data_dir, celeba_dir))
 
@@ -44,41 +46,71 @@ class A1_MLP(A1):
         A1.random_state = self.random_state
 
         self.epochs = epochs
+        self.find_lr = find_lr
+        self.schedule_type = schedule_type
 
         self.train_gen, self.val_gen, self.test_gen = A1.train_gen, A1.val_gen, A1.test_gen
-
-        self.model, self.history, self.schedule = train_mlp(
+        
+        if find_lr == True:
+            self.lr_finder = train_mlp(
             A1.height, 
             A1.width,
             A1.num_classes,
             A1.batch_size,
             self.epochs,
             learning_rate,
-            schedule,
+            schedule_type,
+            find_lr,
             self.train_gen,
             self.val_gen,
             first_af,
             second_af,
             layer1_hn,
             layer2_hn)
+        else:
+            self.model, self.history, self.schedule = train_mlp(
+                A1.height, 
+                A1.width,
+                A1.num_classes,
+                A1.batch_size,
+                self.epochs,
+                learning_rate,
+                schedule_type,
+                find_lr,
+                self.train_gen,
+                self.val_gen,
+                first_af,
+                second_af,
+                layer1_hn,
+                layer2_hn)
 
     def train(self):
-        # Navigate to output folder in parent directory
-        go_up_three_dirs()        
+        if self.find_lr == True:
+            # Navigate to output folder in parent directory
+            go_up_three_dirs()        
 
-        # Plot training loss accuracy and learning rate change
-        plot_train_loss_acc_lr(
-            self.history,
-            self.epochs,
-            self.schedule,
-            "A1",
-            "output/train_loss_acc_A1_mlp.png",
-            "output/lr_A1_mlp.png")
+            # Plot learning rate finder plot
+            self.lr_finder.plot_loss(
+                "output/lr_finder_plot_A1.png"
+            )
+        else:
+            # Plot training loss accuracy and learning rate change
+            # Navigate to output folder in parent directory
+            go_up_three_dirs()
 
-        # Get the training accuracy
-        training_accuracy = self.history.history['acc'][-1]
-        return training_accuracy
-        
+            plot_train_loss_acc_lr(
+                self.history,
+                self.epochs,
+                self.schedule,
+                self.schedule_type,
+                "A1",
+                "output/train_loss_acc_A1_mlp.png",
+                "output/lr_A1_cnn.png")
+
+            # Get the training accuracy
+            training_accuracy = self.history.history['acc'][-1]
+            return training_accuracy
+
     def test(self):
         # Go back to image folder
         os.chdir("data/dataset_AMLS_19-20/celeba")
@@ -92,11 +124,15 @@ class A1_MLP(A1):
         # Plot top losses
         plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_A1_mlp.png")
 
+        # Plot GradCam
+        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_2", "output/plot_top_5_gradcam_A1_mlp.png")
+
         # Get the test accuracy
         test_accuracy = self.model.evaluate(X_test, y_test)[-1]
         return test_accuracy
 
-class A1_CNN(A1):
+
+class A1CNN(A1):
     def __init__(
             self,
             epochs,

@@ -24,12 +24,13 @@ class B2:
         random_state,
         None)
 
-class B2_MLP(B2):
+class B2MLP(B2):
     def __init__(
             self,
             epochs,
             learning_rate,
-            schedule,
+            schedule_type,
+            find_lr,
             random_state,
             first_af="relu",
             second_af="relu",
@@ -44,41 +45,71 @@ class B2_MLP(B2):
         B2.random_state = self.random_state
 
         self.epochs = epochs
+        self.find_lr = find_lr
+        self.schedule_type = schedule_type
 
         self.train_gen, self.val_gen, self.test_gen = B2.train_gen, B2.val_gen, B2.test_gen
-
-        self.model, self.history, self.schedule = train_mlp(
+        
+        if find_lr == True:
+            self.lr_finder = train_mlp(
             B2.height, 
             B2.width,
             B2.num_classes,
             B2.batch_size,
             self.epochs,
             learning_rate,
-            schedule,
+            schedule_type,
+            find_lr,
             self.train_gen,
             self.val_gen,
             first_af,
             second_af,
             layer1_hn,
             layer2_hn)
+        else:
+            self.model, self.history, self.schedule = train_mlp(
+                B2.height, 
+                B2.width,
+                B2.num_classes,
+                B2.batch_size,
+                self.epochs,
+                learning_rate,
+                schedule_type,
+                find_lr,
+                self.train_gen,
+                self.val_gen,
+                first_af,
+                second_af,
+                layer1_hn,
+                layer2_hn)
 
     def train(self):
-        # Navigate to output folder in parent directory
-        go_up_three_dirs()        
+        if self.find_lr == True:
+            # Navigate to output folder in parent directory
+            go_up_three_dirs()        
 
-        # Plot training loss accuracy and learning rate change
-        plot_train_loss_acc_lr(
-            self.history,
-            self.epochs,
-            self.schedule,
-            "B2",
-            "output/train_loss_acc_B2_mlp.png",
-            "output/lr_B2_mlp.png")
+            # Plot learning rate finder plot
+            self.lr_finder.plot_loss(
+                "output/lr_finder_plot_B2.png"
+            )
+        else:
+            # Plot training loss accuracy and learning rate change
+            # Navigate to output folder in parent directory
+            go_up_three_dirs()
 
-        # Get the training accuracy
-        training_accuracy = self.history.history['acc'][-1]
-        return training_accuracy
-        
+            plot_train_loss_acc_lr(
+                self.history,
+                self.epochs,
+                self.schedule,
+                self.schedule_type,
+                "B2",
+                "output/train_loss_acc_B2_mlp.png",
+                "output/lr_B2_cnn.png")
+
+            # Get the training accuracy
+            training_accuracy = self.history.history['acc'][-1]
+            return training_accuracy
+
     def test(self):
         # Go back to image folder
         os.chdir("data/dataset_AMLS_19-20/cartoon_set")
@@ -92,16 +123,21 @@ class B2_MLP(B2):
         # Plot top losses
         plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_B2_mlp.png")
 
+        # Plot GradCam
+        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_2", "output/plot_top_5_gradcam_B2_mlp.png")
+
         # Get the test accuracy
         test_accuracy = self.model.evaluate(X_test, y_test)[-1]
         return test_accuracy
 
-class B2_CNN(B2):
+
+class B2CNN(B2):
     def __init__(
             self,
             epochs,
             learning_rate,
-            schedule,
+            schedule_type,
+            find_lr,
             random_state,
             num_start_filters=16,
             kernel_size=3,
@@ -115,40 +151,69 @@ class B2_CNN(B2):
         B2.random_state = self.random_state
 
         self.epochs = epochs
+        self.find_lr = find_lr
+        self.schedule_type = schedule_type
 
         self.train_gen, self.val_gen, self.test_gen = B2.train_gen, B2.val_gen, B2.test_gen
-
-        self.model, self.history, self.schedule = train_cnn(
+        
+        if find_lr == True:
+            self.lr_finder = train_cnn(
             B2.height, 
             B2.width,
             B2.num_classes,
             B2.batch_size,
             self.epochs,
             learning_rate,
-            schedule,
+            schedule_type,
+            find_lr,
             self.train_gen,
             self.val_gen,
             num_start_filters,
             kernel_size,
             fcl_size)
+        else:
+            self.model, self.history, self.schedule = train_cnn(
+                B2.height, 
+                B2.width,
+                B2.num_classes,
+                B2.batch_size,
+                self.epochs,
+                learning_rate,
+                schedule_type,
+                find_lr,
+                self.train_gen,
+                self.val_gen,
+                num_start_filters,
+                kernel_size,
+                fcl_size)
 
     def train(self):
-        # Navigate to output folder in parent directory
-        go_up_three_dirs()        
+        if self.find_lr == True:
+            # Navigate to output folder in parent directory
+            go_up_three_dirs()        
 
-        # Plot training loss accuracy and learning rate change
-        plot_train_loss_acc_lr(
-            self.history,
-            self.epochs,
-            self.schedule,
-            "B2",
-            "output/train_loss_acc_B2_cnn.png",
-            "output/lr_B2_cnn.png")
+            # Plot learning rate finder plot
+            self.lr_finder.plot_loss(
+                "output/lr_finder_plot_B2.png"
+            )
+        else:
+            # Plot training loss accuracy and learning rate change
+            # Navigate to output folder in parent directory
+            go_up_three_dirs()
 
-        # Get the training accuracy
-        training_accuracy = self.history.history['acc'][-1]
-        return training_accuracy
-        
+            plot_train_loss_acc_lr(
+                self.history,
+                self.epochs,
+                self.schedule,
+                self.schedule_type,
+                "B2",
+                "output/train_loss_acc_B2_cnn.png",
+                "output/lr_B2_cnn.png")
+
+            # Get the training accuracy
+            training_accuracy = self.history.history['acc'][-1]
+            return training_accuracy
+
     def test(self):
         # Go back to image folder
         os.chdir("data/dataset_AMLS_19-20/cartoon_set")

@@ -6,8 +6,7 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D
 from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras.optimizers import SGD
-from pipeline.optimisation.learning_rate_schedulers import StepDecay
-from pipeline.optimisation.learning_rate_schedulers import PolynomialDecay
+from pipeline.optimisation.learning_rate_schedulers import StepDecay, PolynomialDecay
 from pipeline.optimisation.one_cycle_lr.lr_finder import LRFinder
 from pipeline.optimisation.one_cycle_lr.one_cycle_scheduler import OneCycleScheduler
 

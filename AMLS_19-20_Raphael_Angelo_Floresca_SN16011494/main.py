@@ -14,7 +14,7 @@ import argparse
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--schedule_type", type=list, default=["","","",""],
 	help="learning rate schedule method")
-ap.add_argument("-e", "--epochs", type=int, default=[10,10,10,10],
+ap.add_argument("-e", "--epochs", type=list, default=[10,10,10,10],
 	help="# of epochs to train for")
 ap.add_argument("-l", "--learning_rates", type=list, default=[0.01,0.01,0.01,0.01],
     help="starting learning rate")

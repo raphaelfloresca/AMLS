@@ -58,7 +58,8 @@ def train_cnn(
 	        callbacks = [LearningRateScheduler(schedule)]
 
         # initialize the decay for the optimizer
-        global decay = 0.0
+        global decay
+        decay = 0.0
  
         # if we are using Keras' "standard" decay, then we need to set the
         # decay parameter

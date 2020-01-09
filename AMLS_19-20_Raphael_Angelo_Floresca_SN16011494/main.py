@@ -33,9 +33,9 @@ model_type = [str(item) for item in args["model_type"].split(",")]
 # ======================================================================================================================
 # Task A1
 if model_type[0] == "mlp":
-    model_A1 = A1MLP(epochs[0], learning_rates[0], schedule_type[0], args["random_state"], args["find_lr"])        # Build model object.
+    model_A1 = A1MLP(epochs[0], learning_rates[0], schedule_type[0], args["find_lr"], args["random_state"])        # Build model object.
 elif model_type[0] == "cnn":
-    model_A1 = A1CNN(epochs[0], learning_rates[0], schedule_type[0], args["random_state"], args["find_lr"])        # Build model object.
+    model_A1 = A1CNN(epochs[0], learning_rates[0], schedule_type[0], args["find_lr"], args["random_state"])        # Build model object.
 acc_A1_train = model_A1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A1_test = model_A1.test()   # Test model based on the test set.
 
@@ -45,9 +45,9 @@ K.clear_session()
 # ======================================================================================================================
 # Task A2
 if model_type[1] == "mlp":
-    model_A2 = A2MLP(epochs[1], learning_rates[1], schedule_type[1], args["random_state"], args["find_lr"])        # Build model object.
+    model_A2 = A2MLP(epochs[1], learning_rates[1], schedule_type[1], args["find_lr"], args["random_state"])        # Build model object.
 elif model_type[1] == "cnn":
-    model_A2 = A2CNN(epochs[1], learning_rates[1], schedule_type[1], args["random_state"], args["find_lr"])        # Build model object.
+    model_A2 = A2CNN(epochs[1], learning_rates[1], schedule_type[1], args["find_lr"], args["random_state"])        # Build model object.
 acc_A2_train = model_A2.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A2_test = model_A2.test()   # Test model based on the test set.
 
@@ -57,9 +57,9 @@ K.clear_session()
 # ======================================================================================================================
 # Task B1
 if model_type[2] == "mlp":
-    model_B1 = B1MLP(epochs[2], learning_rates[2], schedule_type[2], args["random_state"], args["find_lr"])        # Build model object.
+    model_B1 = B1MLP(epochs[2], learning_rates[2], schedule_type[2], args["find_lr"], args["random_state"])        # Build model object.
 elif model_type[2] == "cnn":
-    model_B1 = B1CNN(epochs[2], learning_rates[2], schedule_type[2], args["random_state"], args["find_lr"])        # Build model object.
+    model_B1 = B1CNN(epochs[2], learning_rates[2], schedule_type[2], args["find_lr"], args["random_state"])        # Build model object.
 acc_B1_train = model_B1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_B1_test = model_B1.test()   # Test model based on the test set.
 
@@ -69,9 +69,9 @@ K.clear_session()
 # ======================================================================================================================
 # Task B2
 if model_type[3] == "mlp":
-    model_B2 = B2MLP(epochs[3], learning_rates[3], schedule_type[3], args["random_state"], args["find_lr"])        # Build model object.
+    model_B2 = B2MLP(epochs[3], learning_rates[3], schedule_type[3], args["find_lr"], args["random_state"])        # Build model object.
 elif model_type[3] == "cnn":
-    model_B2 = B2CNN(epochs[3], learning_rates[3], schedule_type[3], args["random_state"], args["find_lr"])        # Build model object.
+    model_B2 = B2CNN(epochs[3], learning_rates[3], schedule_type[3], args["find_lr"], args["random_state"])        # Build model object.
 acc_B2_train = model_B2.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_B2_test = model_B2.test()   # Test model based on the test set.
 

@@ -55,7 +55,7 @@ def train_mlp(
 
         # if the learning rate schedule is not empty, add it to the list of
         # callbacks
-        if schedule is not None and schedule_type != "one_cycle":
+        if schedule != "none" and schedule_type != "one_cycle":
 	        callbacks = [LearningRateScheduler(schedule)]
 
         # initialize the decay for the optimizer
@@ -68,7 +68,7 @@ def train_mlp(
         	decay = 1e-1 / epochs
  
         # otherwise, no learning rate schedule is being used
-        elif schedule is None:
+        elif schedule is "none":
         	print("[INFO] no learning rate schedule being used")
     else:
         print("[INFO] Finding learning rate...") 

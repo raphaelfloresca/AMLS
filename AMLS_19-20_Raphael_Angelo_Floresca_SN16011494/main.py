@@ -12,7 +12,7 @@ import argparse
 # Argument parser, used to define which learning rate scheduler to use as well as the number of epochs
 # This section is taken from: https://www.pyimagesearch.com/2019/07/22/keras-learning-rate-schedules-and-decay/
 ap = argparse.ArgumentParser()
-ap.add_argument("-s", "--schedule_type", type=str, default='None,None,None,None',
+ap.add_argument("-s", "--schedule_type", type=str, default='none,none,none,none',
 	help="learning rate schedule method")
 ap.add_argument("-e", "--epochs", type=str, default='10,10,10,10',
 	help="# of epochs to train for")
@@ -28,7 +28,7 @@ args = vars(ap.parse_args())
 schedule_type = [str(item) for item in args["schedule_type"].split(",")]
 epochs = [int(item) for item in args["epochs"].split(",")]
 learning_rates = [float(item) for item in args["learning_rates"].split(",")]
-model_type = [str(item) for item in args["learning_rates"].split(",")]
+model_type = [str(item) for item in args["model_type"].split(",")]
 
 # ======================================================================================================================
 # Task A1

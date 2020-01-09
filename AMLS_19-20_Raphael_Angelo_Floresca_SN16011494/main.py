@@ -26,11 +26,6 @@ ap.add_argument("-t", "--model_type", type=list, default=["cnn","cnn","cnn","cnn
     help="choose model type ('mlp', 'cnn', 'xception') for each of the tasks")
 args = vars(ap.parse_args())
 
-parser = ArgumentParser()
-parser.add_argument('-l', '--list', help='delimited list input', type=str)
-args = parser.parse_args()
-my_list = [int(item) for item in args.list.split(',')]
-
 # ======================================================================================================================
 # Task A1
 if args.get("model_type")[0] == "mlp":

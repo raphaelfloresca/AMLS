@@ -67,6 +67,7 @@ class B2MLP(B2):
             layer1_hn,
             layer2_hn)
         else:
+            print("Training MLP...")
             self.model, self.history, self.schedule = train_mlp(
                 B2.height, 
                 B2.width,
@@ -172,6 +173,7 @@ class B2CNN(B2):
             kernel_size,
             fcl_size)
         else:
+            print("Training CNN...")
             self.model, self.history, self.schedule = train_cnn(
                 B2.height, 
                 B2.width,

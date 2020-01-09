@@ -71,3 +71,4 @@ class LRFinder:
             plt.plot(self.lrs[min_grad_idx], self.losses[min_grad_idx], 'ro')
             print("Min. loss grad point, lr: {}, loss: {}".format(self.lrs[min_grad_idx],self.losses[min_grad_idx]))
         plt.savefig(find_lr_plot_path)
+        plt.close()

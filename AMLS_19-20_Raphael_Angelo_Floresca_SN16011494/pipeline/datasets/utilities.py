@@ -58,11 +58,11 @@ def create_datagens(
     # Create datagen
     datagen = ImageDataGenerator(
         rescale=1./255, 
-        width_shift_range=[-0.05,0.05],
-        height_shift_range=[-0.05,0.05],
-        horizontal_flip=True,
-        rotation_range=10,
-        zoom_range=[0.1,1.1],
+        #width_shift_range=[-0.05,0.05],
+        #height_shift_range=[-0.05,0.05],
+        #horizontal_flip=True,
+        #rotation_range=10,
+        #zoom_range=[0.1,1.1],
         validation_split=validation_split)
 
     # Create dataframe

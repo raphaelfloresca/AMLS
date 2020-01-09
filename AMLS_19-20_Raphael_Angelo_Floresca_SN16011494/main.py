@@ -37,7 +37,8 @@ if model_type[0] == "mlp":
 elif model_type[0] == "cnn":
     model_A1 = A1CNN(epochs[0], learning_rates[0], schedule_type[0], args["find_lr"], args["random_state"])        # Build model object.
 acc_A1_train = model_A1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
-acc_A1_test = model_A1.test()   # Test model based on the test set.
+if args["find_lr"] != True:
+    acc_A1_test = model_A1.test()   # Test model based on the test set.
 
 # Clear GPU memory
 K.clear_session()
@@ -49,7 +50,8 @@ if model_type[1] == "mlp":
 elif model_type[1] == "cnn":
     model_A2 = A2CNN(epochs[1], learning_rates[1], schedule_type[1], args["find_lr"], args["random_state"])        # Build model object.
 acc_A2_train = model_A2.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
-acc_A2_test = model_A2.test()   # Test model based on the test set.
+if args["find_lr"] != True:
+    acc_A2_test = model_A2.test()   # Test model based on the test set.
 
 # Clear GPU memory
 K.clear_session()
@@ -61,7 +63,8 @@ if model_type[2] == "mlp":
 elif model_type[2] == "cnn":
     model_B1 = B1CNN(epochs[2], learning_rates[2], schedule_type[2], args["find_lr"], args["random_state"])        # Build model object.
 acc_B1_train = model_B1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
-acc_B1_test = model_B1.test()   # Test model based on the test set.
+if args["find_lr"] != True:
+    acc_B1_test = model_B1.test()   # Test model based on the test set.
 
 # Clear GPU memory
 K.clear_session()
@@ -73,7 +76,8 @@ if model_type[3] == "mlp":
 elif model_type[3] == "cnn":
     model_B2 = B2CNN(epochs[3], learning_rates[3], schedule_type[3], args["find_lr"], args["random_state"])        # Build model object.
 acc_B2_train = model_B2.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
-acc_B2_test = model_B2.test()   # Test model based on the test set.
+if args["find_lr"] != True:
+    acc_B2_test = model_B2.test()   # Test model based on the test set.
 
 # Clear GPU memory
 K.clear_session()

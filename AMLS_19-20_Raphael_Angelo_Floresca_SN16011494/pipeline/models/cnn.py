@@ -70,7 +70,7 @@ def train_cnn(
         elif schedule == "none":
         	print("[INFO] no learning rate schedule being used")
     else:
-        print("[INFO] Finding learning rate...") 
+        print("[INFO] Finding learning rate...")
 
     # Instantiate Sequential API
     model = Sequential([
@@ -94,7 +94,7 @@ def train_cnn(
         Dense(num_classes, activation='softmax')
     ])
 
-    if schedule_type != "one_cycle":
+    if schedule_type != "one_cycle" and find_lr != True:
         # initialize optimizer and model, then compile it
         opt = SGD(lr=learning_rate, momentum=0.9, decay=decay)
     else:

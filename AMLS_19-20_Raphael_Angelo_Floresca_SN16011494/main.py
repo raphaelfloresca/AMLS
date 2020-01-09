@@ -84,10 +84,10 @@ K.clear_session()
 
 # ======================================================================================================================
 ## Print out your results with following format:
-print('TA1:{},{};TA2:{},{};TA3:{},{};TA4:{},{}'.format(acc_A1_train, acc_A1_test,
-                                                       acc_A2_train, acc_A2_test,
-                                                       acc_B1_train, acc_B1_test,
-                                                       acc_B2_train, acc_B2_test))
+# print('TA1:{},{};TA2:{},{};TA3:{},{};TA4:{},{}'.format(acc_A1_train, acc_A1_test,
+#                                                       acc_A2_train, acc_A2_test,
+#                                                       acc_B1_train, acc_B1_test,
+#                                                       acc_B2_train, acc_B2_test))
 
 # If you are not able to finish a task, fill the corresponding variable with 'TBD'. For example:
 # acc_A1_train = 'TBD'

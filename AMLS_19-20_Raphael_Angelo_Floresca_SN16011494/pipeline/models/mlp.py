@@ -68,7 +68,7 @@ def train_mlp(
         	decay = 1e-1 / epochs
  
         # otherwise, no learning rate schedule is being used
-        elif schedule is "none":
+        elif schedule_type == "none":
         	print("[INFO] no learning rate schedule being used")
     else:
         print("[INFO] Finding learning rate...") 

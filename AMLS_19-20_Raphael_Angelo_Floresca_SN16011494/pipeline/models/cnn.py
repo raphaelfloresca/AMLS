@@ -67,7 +67,7 @@ def train_cnn(
         	decay = 1e-1 / epochs
  
         # otherwise, no learning rate schedule is being used
-        elif schedule == "none":
+        elif schedule_type == "none":
         	print("[INFO] no learning rate schedule being used")
     else:
         print("[INFO] Finding learning rate...")

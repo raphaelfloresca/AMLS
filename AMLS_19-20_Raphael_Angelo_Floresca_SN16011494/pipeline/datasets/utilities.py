@@ -58,10 +58,9 @@ def create_datagens(
     # Create datagen
     datagen = ImageDataGenerator(
         rescale=1./255, 
-        width_shift_range=[-75,75],
-        height_shift_range=[-75,75],
+        width_shift_range=[-0.15,0.15],
+        height_shift_range=[-0.15,0.15],
         horizontal_flip=True,
-        vertical_flip=True,
         rotation_range=90,
         brightness_range=[0.2,1.0],
         zoom_range=[0.5,1.5],

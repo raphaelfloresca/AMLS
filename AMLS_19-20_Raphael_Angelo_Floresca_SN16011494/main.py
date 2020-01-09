@@ -1,7 +1,7 @@
-from A1.a1 import A1CNN
-from A2.a2 import A2CNN
-from B1.b1 import B1CNN
-from B2.b2 import B2CNN
+from A1.a1 import A1MLP, A1CNN
+from A2.a2 import A2MLP, A2CNN
+from B1.b1 import B1MLP, B1CNN
+from B2.b2 import B2MLP, B2CNN
 from tensorflow.keras import backend as K
 import argparse
 
@@ -12,21 +12,26 @@ import argparse
 # Argument parser, used to define which learning rate scheduler to use as well as the number of epochs
 # This section is taken from: https://www.pyimagesearch.com/2019/07/22/keras-learning-rate-schedules-and-decay/
 ap = argparse.ArgumentParser()
-ap.add_argument("-s", "--schedule", type=str, default="",
+ap.add_argument("-s", "--schedule-type", type=list, default=["","","",""],
 	help="learning rate schedule method")
-ap.add_argument("-e", "--epochs", type=int, default=10,
+ap.add_argument("-e", "--epochs", type=int, default=[10,10,10,10],
 	help="# of epochs to train for")
-ap.add_argument("-l", "--learning_rate", type=float, default=0.01,
+ap.add_argument("-l", "--learning-rates", type=list, default=[0.01,0.01,0.01,0.01],
     help="starting learning rate")
-ap.add_argument("-f", "--find_learning_rate", type=bool, default=False,
+ap.add_argument("-f", "--find-lr", type=bool, default=False,
     help="find learning rate with the learning rate finder")
-ap.add_argument("-r", "--random_state", type=int, default=None,
+ap.add_argument("-r", "--random-state", type=int, default=None,
     help="random state for splitting the training and test sets, used for replicating results")
+ap.add_argument("-t", "--model-type", type=list, default=["cnn","cnn","cnn","cnn"],
+    help="choose model type ('mlp', 'cnn', 'xception') for each of the tasks")
 args = vars(ap.parse_args())
 
 # ======================================================================================================================
 # Task A1
-model_A1 = A1CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])        # Build model object.
+if args["model-type"] == "mlp":
+    model_A1 = A1MLP(args["epochs"][0], args["learning-rates"][0], args["schedule-type"][0], args["random_state"], args["find_lr"])        # Build model object.
+elif args["model-type"] == "cnn":
+    model_A1 = A1CNN(args["epochs"][0], args["learning-rates"][0], args["schedule-type"][0], args["random_state"], args["find_lr"])        # Build model object.
 acc_A1_train = model_A1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A1_test = model_A1.test()   # Test model based on the test set.
 
@@ -35,7 +40,10 @@ K.clear_session()
 
 # ======================================================================================================================
 # Task A2
-model_A2 = A2CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])
+if args["model-type"] == "mlp":
+    model_A2 = A2MLP(args["epochs"][1], args["learning-rates"][1], args["schedule-type"][1], args["random_state"], args["find_lr"])        # Build model object.
+elif args["model-type"] == "cnn":
+    model_A2 = A2CNN(args["epochs"][1], args["learning-rates"][1], args["schedule-type"][1], args["random_state"], args["find_lr"])        # Build model object.
 acc_A2_train = model_A2.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 acc_A2_test = model_A2.test()   # Test model based on the test set.
 
@@ -44,18 +52,24 @@ K.clear_session()
 
 # ======================================================================================================================
 # Task B1
-model_B1 = B1CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])
-acc_B1_train = model_B1.train()
-acc_B1_test = model_B1.test()
+if args["model-type"] == "mlp":
+    model_B1 = B1MLP(args["epochs"][2], args["learning-rates"][2], args["schedule-type"][2], args["random_state"], args["find_lr"])        # Build model object.
+elif args["model-type"] == "cnn":
+    model_B1 = B1CNN(args["epochs"][2], args["learning-rates"][2], args["schedule-type"][2], args["random_state"], args["find_lr"])        # Build model object.
+acc_B1_train = model_B1.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
+acc_B1_test = model_B1.test()   # Test model based on the test set.
 
 # Clear GPU memory
 K.clear_session()
 
 # ======================================================================================================================
 # Task B2
-model_B2 = B2CNN(args["epochs"], args["learning_rate"], args["schedule"], args["random_state"], args["find_learning_rate"])
-acc_B2_train = model_B2.train()
-acc_B2_test = model_B2.test()
+if args["model-type"] == "mlp":
+    model_B2 = B2MLP(args["epochs"][3], args["learning-rates"][3], args["schedule-type"][3], args["random_state"], args["find_lr"])        # Build model object.
+elif args["model-type"] == "cnn":
+    model_B2 = B2CNN(args["epochs"][3], args["learning-rates"][3], args["schedule-type"][3], args["random_state"], args["find_lr"])        # Build model object.
+acc_B2_train = model_B2.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
+acc_B2_test = model_B2.test()   # Test model based on the test set.
 
 # Clear GPU memory
 K.clear_session()

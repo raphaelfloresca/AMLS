@@ -19,7 +19,7 @@ class B2:
         df,
         "cartoon_set",
         "file_name",
-        "face_shape",
+        "eye_color",
         batch_size,
         random_state,
         None)

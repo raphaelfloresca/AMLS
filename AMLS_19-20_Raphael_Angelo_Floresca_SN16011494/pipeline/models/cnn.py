@@ -58,13 +58,13 @@ def train_cnn(
 	        callbacks = [LearningRateScheduler(schedule)]
 
         # initialize the decay for the optimizer
-        decay = 0.0
+        decay_rate = 0.0
  
         # if we are using Keras' "standard" decay, then we need to set the
         # decay parameter
         if schedule_type == "standard":
         	print("[INFO] using 'keras standard' learning rate decay...")
-        	decay = 1e-1 / epochs
+        	decay_rate = 1e-1 / epochs
  
         # otherwise, no learning rate schedule is being used
         elif schedule == "none":
@@ -96,7 +96,7 @@ def train_cnn(
 
     if schedule_type != "one_cycle":
         # initialize optimizer and model, then compile it
-        opt = SGD(lr=learning_rate, momentum=0.9, decay=decay)
+        opt = SGD(lr=learning_rate, momentum=0.9, decay=decay_rate)
     else:
         opt = SGD()
     

@@ -54,11 +54,10 @@ def train_cnn(
 
         # if the learning rate schedule is not empty, add it to the list of
         # callbacks
-        if schedule != "none" and schedule_type != "one_cycle":
+        if schedule_type != "none" and schedule_type != "one_cycle":
 	        callbacks = [LearningRateScheduler(schedule)]
 
         # initialize the decay for the optimizer
-        global decay
         decay = 0.0
  
         # if we are using Keras' "standard" decay, then we need to set the

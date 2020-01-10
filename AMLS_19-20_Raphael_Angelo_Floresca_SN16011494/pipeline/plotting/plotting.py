@@ -28,6 +28,7 @@ def plot_train_loss_acc_lr(H, epochs, schedule, schedule_type, task_name, tla_pl
         print("Plotting learning rate graph...")
         schedule.plot()
         plt.savefig(lr_plot_path)
+    plt.close()
 
 # Get indices of wrongfully misclassified test set
 # https://stackoverflow.com/questions/39300880/how-to-find-wrong-prediction-cases-in-test-set-cnns-using-keras

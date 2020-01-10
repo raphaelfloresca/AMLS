@@ -194,10 +194,10 @@ class A1CNN(A1):
             # Navigate to output folder in parent directory
             go_up_three_dirs()        
 
+            print("Creating learning rate finder plot...")
             # Plot learning rate finder plot
             self.lr_finder.plot_loss(
-                "output/lr_finder_plot_A1.png"
-            )
+                "output/lr_finder_plot_A1.png")
         else:
             # Plot training loss accuracy and learning rate change
             # Navigate to output folder in parent directory

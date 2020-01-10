@@ -16,7 +16,7 @@ ap.add_argument("-s", "--schedule_type", type=str, default='none,none,none,none'
 	help="learning rate schedule method")
 ap.add_argument("-e", "--epochs", type=str, default='10,10,10,10',
 	help="# of epochs to train for")
-ap.add_argument("-l", "--learning_rates", type=str, default='0.01,0.01,0.01,0.01',
+ap.add_argument("-l", "--learning_rates", type=str, default='0.003,0.003,0.003,0.003',
     help="starting learning rate")
 ap.add_argument("-f", "--find_lr", type=bool, default=False,
     help="find learning rate with the learning rate finder")

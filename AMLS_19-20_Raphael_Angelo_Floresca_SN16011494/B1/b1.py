@@ -282,7 +282,7 @@ class B1Xception(B1):
             self.epochs,
             learning_rate,
             schedule_type,
-            find_lr,
+            self.find_lr,
             self.train_gen,
             self.val_gen,
             "B1_frozen_model.h5",
@@ -298,7 +298,7 @@ class B1Xception(B1):
                 self.epochs,
                 learning_rate,
                 schedule_type,
-                find_lr,
+                self.find_lr,
                 self.train_gen,
                 self.val_gen,
                 "B1_frozen_model.h5",
@@ -310,10 +310,10 @@ class B1Xception(B1):
             # Navigate to output folder in parent directory
             go_up_three_dirs()        
 
+            print("Creating learning rate finder plot...")
             # Plot learning rate finder plot
             self.lr_finder.plot_loss(
-                "output/lr_finder_plot_B1.png"
-            )
+                "output/lr_finder_plot_B1.png")
         else:
             # Plot training loss accuracy and learning rate change
             # Navigate to output folder in parent directory

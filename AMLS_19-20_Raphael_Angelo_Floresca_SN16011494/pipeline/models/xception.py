@@ -137,13 +137,13 @@ def train_xception(
             val_gen,
             frozen_model_path)
 
-        model = load_model('frozen_model_path')
+        model = load_model(frozen_model_path)
 
         lr_finder = LRFinder(model)
         lr_finder.find(train_gen)
         return lr_finder
     else:
-        frozen_path = Path("frozen_model_path")
+        frozen_path = Path(frozen_model_path)
 
         if frozen_path.is_file() != True:
             train_frozen_xception(
@@ -158,7 +158,7 @@ def train_xception(
                 val_gen,
                 frozen_model_path)
 
-        model = load_model('frozen_model_path')
+        model = load_model(frozen_model_path)
 
         for layer in model.layers[:-2]:
             layer.trainable = True

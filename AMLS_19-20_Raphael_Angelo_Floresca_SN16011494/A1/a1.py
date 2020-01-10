@@ -244,7 +244,7 @@ class A1Xception(A1):
             schedule_type,
             find_lr,
             random_state,
-            frozen_model_path="a1_frozen_model.h5",
+            frozen_model_path="A1_frozen_model.h5",
             frozen_training_plot_path="train_loss_acc_A1_xception_frozen.png",
             frozen_training_plot_name="A1 (frozen model)"):
 

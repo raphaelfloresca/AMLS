@@ -140,6 +140,7 @@ def train_xception(
     if find_lr == True:
         print("[INFO] Finding learning rate...")
         
+        print("[INFO] Training frozen model...")
         train_frozen_xception(
             height,
             width,
@@ -163,6 +164,7 @@ def train_xception(
         frozen_path = Path(frozen_model_path)
 
         if frozen_path.is_file() != True:
+            "[INFO] Training frozen model..."
             train_frozen_xception(
                 height,
                 width,
@@ -238,6 +240,7 @@ def train_xception(
             metrics=["accuracy"])
 
         # Training and evaluating the Xception model for the second stage
+        print("[INFO] Training full model...")
         history = model.fit(train_gen,
             steps_per_epoch=train_gen.samples // batch_size,
             validation_data=val_gen,

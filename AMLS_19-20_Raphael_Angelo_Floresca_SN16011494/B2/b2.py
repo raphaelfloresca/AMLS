@@ -1,4 +1,4 @@
-from pipeline.datasets.cartoon_set import create_cartoon_set_df
+from pipeline.datasets.cartoon_set_eye_color import create_eye_color_df
 from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs, create_datagens, data_dir, cartoon_set_dir
 from pipeline.models.mlp import train_mlp
 from pipeline. models.cnn import train_cnn
@@ -13,7 +13,7 @@ class B2:
     num_classes = 5
     batch_size = 32
     random_state = 42
-    df = create_cartoon_set_df()
+    df = create_eye_color_df()
 
     train_gen, val_gen, test_gen = create_datagens(
         height,

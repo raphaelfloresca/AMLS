@@ -52,7 +52,7 @@ if model_type[1] == "mlp":
 elif model_type[1] == "cnn":
     model_A2 = A2CNN(epochs[1], learning_rates[1], schedule_type[1], args["find_lr"], args["random_state"])        # Build model object.
 elif model_type[1] == "xception":
-    model_A2 = A1Xception(epochs[1], learning_rates[1], schedule_type[1], args["find_lr"], args["random_state"])   # Build model object.
+    model_A2 = A2Xception(epochs[1], learning_rates[1], schedule_type[1], args["find_lr"], args["random_state"])   # Build model object.
 acc_A2_train = model_A2.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 if args["find_lr"] != True:
     acc_A2_test = model_A2.test()   # Test model based on the test set.
@@ -82,7 +82,7 @@ if model_type[3] == "mlp":
 elif model_type[3] == "cnn":
     model_B2 = B2CNN(epochs[3], learning_rates[3], schedule_type[3], args["find_lr"], args["random_state"])        # Build model object.
 elif model_type[3] == "xception":
-    model_B2 = B1Xception(epochs[3], learning_rates[3], schedule_type[3], args["find_lr"], args["random_state"])   # Build model object.
+    model_B2 = B2Xception(epochs[3], learning_rates[3], schedule_type[3], args["find_lr"], args["random_state"])   # Build model object.
 acc_B2_train = model_B2.train() # Train model based on the training set (you should fine-tune your model based on validation set.)
 if args["find_lr"] != True:
     acc_B2_test = model_B2.test()   # Test model based on the test set.

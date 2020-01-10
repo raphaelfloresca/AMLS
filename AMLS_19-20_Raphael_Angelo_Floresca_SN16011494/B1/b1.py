@@ -131,7 +131,7 @@ class B1MLP(B1):
 
     def test(self):
         # Go back to image folder
-        os.chdir("data/dataset_test_AMLS_19-20/cartoon_set")
+        os.chdir("data/dataset_test_AMLS_19-20/cartoon_set_test")
 
         # Split ImageDataGenerator object for the test set into separate X and y test sets
         X_test, y_test = get_X_y_test_sets(self.test_gen)
@@ -233,7 +233,7 @@ class B1CNN(B1):
 
     def test(self):
         # Go back to image folder
-        os.chdir("data/dataset_test_AMLS_19-20/cartoon_set")
+        os.chdir("data/dataset_test_AMLS_19-20/cartoon_set_test")
 
         # Split ImageDataGenerator object for the test set into separate X and y test sets
         X_test, y_test = get_X_y_test_sets(self.test_gen)
@@ -358,7 +358,7 @@ class B1Xception(B1):
 
     def test(self):
         # Go back to image folder
-        os.chdir("data/dataset_test_AMLS_19-20/cartoon_set")
+        os.chdir("data/dataset_test_AMLS_19-20/cartoon_set_test")
 
         # Split ImageDataGenerator object for the test set into separate X and y test sets
         X_test, y_test = get_X_y_test_sets(self.test_gen)

@@ -12,7 +12,7 @@ def create_face_shape_df():
     face_shape_df.drop(face_shape_df.columns[0], axis=1, inplace=True)
     return face_shape_df
 
-def create_eye_color_test_df():
+def create_face_shape_test_df():
     # Import cartoon_set_df
     cartoon_set_df = create_cartoon_set_test_df()
 

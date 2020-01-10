@@ -5,7 +5,7 @@ train_file_id = '1zCCpWhDfXVh4dEQoMB09nKSfLNJi-HyT'
 train_dest_path = 'data/dataset_AMLS_19-20.zip' 
 
 test_file_id = '1SxoyIvITKBxcjsyb0mQwW3qU1_uLK415'
-train_dest_path = 'data/dataset_test_AMLS_19-20.zip' 
+test_dest_path = 'data/dataset_test_AMLS_19-20.zip' 
 
 # Download datasets from Google Drive
 def download_dataset():

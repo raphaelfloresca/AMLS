@@ -16,6 +16,8 @@ class B1:
     train_df = create_face_shape_df()
     test_df = create_face_shape_test_df()
 
+    os.chdir(os.path.join(data_dir,cartoon_set_dir))
+
     train_gen, val_gen = create_train_datagens(
         height,
         width,

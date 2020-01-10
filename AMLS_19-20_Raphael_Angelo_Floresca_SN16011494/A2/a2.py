@@ -16,6 +16,8 @@ class A2:
     train_df = create_smiling_df()
     test_df = create_smiling_test_df()
 
+    os.chdir(os.path.join(data_dir,celeba_dir))
+
     train_gen, val_gen = create_train_datagens(
         height,
         width,

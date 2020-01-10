@@ -12,7 +12,7 @@ import argparse
 # Argument parser, used to define which learning rate scheduler to use as well as the number of epochs
 # This section is taken from: https://www.pyimagesearch.com/2019/07/22/keras-learning-rate-schedules-and-decay/
 ap = argparse.ArgumentParser()
-ap.add_argument("-s", "--schedule_type", type=str, default='none,none,none,none',
+ap.add_argument("-s", "--schedule_type", type=str, default='one_cycle,one_cycle,one_cycle,one_cycle',
 	help="learning rate schedule method")
 ap.add_argument("-e", "--epochs", type=str, default='10,10,10,10',
 	help="# of epochs to train for")
@@ -92,10 +92,10 @@ K.clear_session()
 
 # ======================================================================================================================
 # Print out your results with following format:
-print('TA1: Training accuracy: {}, Test accuracy: {};\n'.format(acc_A1_train, acc_A1_test) +
-      'TA2: Training accuracy: {}, Test accuracy: {};\n'.format(acc_A2_train, acc_A2_test) + 
-      'TA3: Training accuracy: {}, Test accuracy: {};\n'.format(acc_B1_train, acc_B1_test) +
-      'TA4: Training accuracy: {}, Test accuracy: {}'.format(acc_B2_train, acc_B2_test))
-      
+print('TA1: Validation accuracy: {}, Test accuracy: {};\n'.format(acc_A1_train, acc_A1_test) +
+      'TA2: Validation accuracy: {}, Test accuracy: {};\n'.format(acc_A2_train, acc_A2_test) + 
+      'TA3: Validation accuracy: {}, Test accuracy: {};\n'.format(acc_B1_train, acc_B1_test) +
+      'TA4: Validation accuracy: {}, Test accuracy: {}'.format(acc_B2_train, acc_B2_test))
+
 # If you are not able to finish a task, fill the corresponding variable with 'TBD'. For example:
 # acc_A1_train = 'TBD'

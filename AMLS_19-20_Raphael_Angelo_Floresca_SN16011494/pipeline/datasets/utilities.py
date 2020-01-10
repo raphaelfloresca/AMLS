@@ -2,10 +2,9 @@ import pandas as pd
 import os
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from pipeline.datasets.download_data import download_dataset
-from sklearn.model_selection import train_test_split
-
 
 data_dir = "data/dataset_AMLS_19-20"
+test_dir = "data/dataset_test_AMLS_19-20"
 parent_dir = "AMLSassignment19_20/AMLS_19-20_Raphael_Angelo_Floresca_SN16011494"
 
 # This checks whether the dataset has been downloaded
@@ -16,6 +15,8 @@ def check_path():
 # Paths of the two datasets
 celeba_dir = "celeba"
 cartoon_set_dir = "cartoon_set"
+celeba_test_dir = "celeba_test"
+cartoon_set_test_dir = "cartoon_set_test"
 
 # Used to go up three directories
 def go_up_three_dirs():
@@ -31,10 +32,18 @@ def create_celeba_df():
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
     return df
 
-# Create a dataframe for the cartoon_set labels.csv
-def create_cartoon_set_df():
+# Create a dataframe for the celeba labels.csv
+def create_celeba_test_df():
     check_path()
-    os.chdir(os.path.join(data_dir, cartoon_set_dir))
+    os.chdir(os.path.join(test_dir, celeba_test_dir))
+    # Import data as dataframe
+    df = pd.read_csv("labels.csv", sep="\t", dtype=str)
+    return df
+
+# Create a dataframe for the cartoon_set labels.csv
+def create_cartoon_set_test_df():
+    check_path()
+    os.chdir(os.path.join(test_dir, cartoon_set_test_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
     return df
@@ -42,10 +51,10 @@ def create_cartoon_set_df():
 # Create ImageDataGenerators for training, validation and testing
 # Rescale to ensure RGB values fall between 0 and 1, speeding up training.
 # Set aside 20% of the training set for validation by default, this can be changed.
-def create_datagens(
+def create_train_datagens(
         height, 
         width,
-        df,
+        train_df,
         img_dir,
         x_col,
         y_col,
@@ -65,15 +74,8 @@ def create_datagens(
         #zoom_range=[0.1,1.1],
         validation_split=validation_split)
 
-    # Create dataframe
-    df = df
-
-    # Create training and test sets for the smiling and smiling datasets
-    train, test = train_test_split(
-        df,
-        test_size=test_size,
-        random_state=random_state
-    )
+    # Create dataframes
+    train = train_df
 
     # Generate an image-label pair for the training set
     train_gen = datagen.flow_from_dataframe(
@@ -99,6 +101,38 @@ def create_datagens(
         subset="validation",
         preprocessing_function=preprocessing_function)
 
+    go_up_three_dirs()
+
+    return train_gen, val_gen
+
+# Create ImageDataGenerators for training, validation and testing
+# Rescale to ensure RGB values fall between 0 and 1, speeding up training.
+# Set aside 20% of the training set for validation by default, this can be changed.
+def create_test_datagen(
+        height, 
+        width,
+        test_df,
+        img_dir,
+        x_col,
+        y_col,
+        batch_size, 
+        random_state,
+        preprocessing_function,
+        test_size=0.2):
+
+    # Create datagen
+    datagen = ImageDataGenerator(
+        rescale=1./255, 
+        #width_shift_range=[-0.05,0.05],
+        #height_shift_range=[-0.05,0.05],
+        #horizontal_flip=True,
+        #rotation_range=10,
+        #zoom_range=[0.1,1.1]
+    )
+
+    # Create dataframe
+    test = test_df
+
     # Generate an image-label pair for the smiling test set as follows
     # Set batch_size = size of test set
     test_gen = datagen.flow_from_dataframe(
@@ -113,7 +147,7 @@ def create_datagens(
 
     go_up_three_dirs()
 
-    return train_gen, val_gen, test_gen
+    return test_gen
 
 def get_X_y_test_sets(test_gen):
     itr = test_gen

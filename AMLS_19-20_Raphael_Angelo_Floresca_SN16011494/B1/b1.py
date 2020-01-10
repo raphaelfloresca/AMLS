@@ -247,9 +247,6 @@ class B1Xception(B1):
             find_lr,
             random_state):
 
-        # Change to relevant image set directory
-        os.chdir(os.path.join(data_dir, cartoon_set_dir))
-
         # Change random state according to constructor
         self.random_state = random_state
         B1.random_state = self.random_state
@@ -268,6 +265,9 @@ class B1Xception(B1):
             B1.batch_size,
             B1.random_state,
             preprocess_input)
+
+        # Change to relevant image set directory
+        os.chdir(os.path.join(data_dir, cartoon_set_dir))
         
         if find_lr == True:
             self.lr_finder = train_xception(

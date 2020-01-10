@@ -258,7 +258,7 @@ class B1Xception(B1):
         self.epochs = epochs
         self.find_lr = find_lr
         self.schedule_type = schedule_type
-        self.frozen_model_path = "B1_frozen_model.h5",
+        self.frozen_model_path = "B1_frozen_model.h5"
         self.frozen_training_plot_path = "train_loss_acc_B1_xception_frozen.png"
         self.frozen_training_plot_name = "B1 (frozen model)"
 

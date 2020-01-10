@@ -135,8 +135,8 @@ def train_xception(
         train_gen,
         val_gen,
         frozen_model_path,
-        frozen_training_plot_name,
-        frozen_training_plot_path):
+        frozen_training_plot_path,
+        frozen_training_plot_name):
     if find_lr == True:
         print("[INFO] Finding learning rate...")
         
@@ -151,8 +151,8 @@ def train_xception(
             train_gen,
             val_gen,
             frozen_model_path,
-            frozen_training_plot_name,
-            frozen_training_plot_path)
+            frozen_training_plot_path,
+            frozen_training_plot_name)
 
         model = load_model(frozen_model_path)
 
@@ -174,8 +174,8 @@ def train_xception(
                 train_gen,
                 val_gen,
                 frozen_model_path,
-                frozen_training_plot_name,
-                frozen_training_plot_path)
+                frozen_training_plot_path,
+                frozen_training_plot_name)
 
         model = load_model(frozen_model_path)
 

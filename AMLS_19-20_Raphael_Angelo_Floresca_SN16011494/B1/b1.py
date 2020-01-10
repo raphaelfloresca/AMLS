@@ -8,8 +8,8 @@ import os
 from tensorflow.keras.applications.xception import preprocess_input
 
 class B1:
-    height = 299
-    width = 299
+    height = 500
+    width = 500
     num_classes = 5
     batch_size = 32
     random_state = 42
@@ -248,8 +248,8 @@ class B1Xception(B1):
             find_lr,
             random_state,
             frozen_model_path="B1_frozen_model.h5",
-            frozen_training_plot_name="B1 (frozen model)",
-            frozen_training_plot_path="train_loss_acc_B1_xception.png"):
+            frozen_training_plot_path="train_loss_acc_B1_xception_frozen.png",
+            frozen_training_plot_name="B1 (frozen model)"):
 
         # Change to relevant image set directory
         os.chdir(os.path.join(data_dir, cartoon_set_dir))
@@ -289,8 +289,8 @@ class B1Xception(B1):
             self.train_gen,
             self.val_gen,
             frozen_model_path,
-            frozen_training_plot_name,
-            frozen_training_plot_path)
+            frozen_training_plot_path,
+            frozen_training_plot_name)
         else:
             print("Training Xception...")
             self.model, self.history, self.schedule = train_xception(
@@ -305,8 +305,8 @@ class B1Xception(B1):
                 self.train_gen,
                 self.val_gen,
                 frozen_model_path,
-                frozen_training_plot_name,
-                frozen_training_plot_path)
+                frozen_training_plot_path,
+                frozen_training_plot_name)
 
     def train(self):
         if self.find_lr == True:
@@ -324,7 +324,7 @@ class B1Xception(B1):
 
             plot_train_loss_acc_lr(
                 self.history,
-                self.epochs,
+                int(self.epochs/2),
                 self.schedule,
                 self.schedule_type,
                 "B1",

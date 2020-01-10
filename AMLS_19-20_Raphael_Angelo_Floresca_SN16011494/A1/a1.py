@@ -248,8 +248,8 @@ class A1Xception(A1):
             find_lr,
             random_state,
             frozen_model_path="a1_frozen_model.h5",
-            frozen_training_plot_name="A1 (frozen model)",
-            frozen_training_plot_path="train_loss_acc_A1_xception.png"):
+            frozen_training_plot_path="train_loss_acc_A1_xception_frozen.png",
+            frozen_training_plot_name="A1 (frozen model)"):
 
         # Change to relevant image set directory
         os.chdir(os.path.join(data_dir, celeba_dir))
@@ -289,8 +289,8 @@ class A1Xception(A1):
             self.train_gen,
             self.val_gen,
             frozen_model_path,
-            frozen_training_plot_name,
-            frozen_training_plot_path)
+            frozen_training_plot_path,
+            frozen_training_plot_name)
         else:
             print("Training Xception...")
             self.model, self.history, self.schedule = train_xception(
@@ -305,8 +305,8 @@ class A1Xception(A1):
                 self.train_gen,
                 self.val_gen,
                 frozen_model_path,
-                frozen_training_plot_name,
-                frozen_training_plot_path)
+                frozen_training_plot_path,
+                frozen_training_plot_name)
 
     def train(self):
         if self.find_lr == True:
@@ -324,7 +324,7 @@ class A1Xception(A1):
 
             plot_train_loss_acc_lr(
                 self.history,
-                self.epochs,
+                int(self.epochs/2),
                 self.schedule,
                 self.schedule_type,
                 "A1",

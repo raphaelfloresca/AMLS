@@ -70,7 +70,7 @@ class A2MLP(A2):
             layer1_hn,
             layer2_hn)
         else:
-            print("Training MLP...")
+            print("[INFO] Training MLP...")
             self.model, self.history, self.schedule = train_mlp(
                 A2.height, 
                 A2.width,
@@ -176,7 +176,7 @@ class A2CNN(A2):
             kernel_size,
             fcl_size)
         else:
-            print("Training CNN...")
+            print("[INFO] Training CNN...")
             self.model, self.history, self.schedule = train_cnn(
                 A2.height, 
                 A2.width,
@@ -289,7 +289,7 @@ class A2Xception(A2):
             "train_loss_acc_A2_xception_frozen.png",
             "A2 (frozen model)")
         else:
-            print("Training Xception...")
+            print("[INFO] Training Xception...")
             self.model, self.history, self.schedule = train_xception(
                 A2.height, 
                 A2.width,
@@ -310,7 +310,7 @@ class A2Xception(A2):
             # Navigate to output folder in parent directory
             go_up_three_dirs()        
 
-            print("Creating learning rate finder plot...")
+            print("[INFO] Creating learning rate finder plot...")
             # Plot learning rate finder plot
             self.lr_finder.plot_loss(
                 "output/lr_finder_plot_A2.png")

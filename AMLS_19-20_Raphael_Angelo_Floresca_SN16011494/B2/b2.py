@@ -70,7 +70,7 @@ class B2MLP(B2):
             layer1_hn,
             layer2_hn)
         else:
-            print("Training MLP...")
+            print("[INFO] Training MLP...")
             self.model, self.history, self.schedule = train_mlp(
                 B2.height, 
                 B2.width,
@@ -176,7 +176,7 @@ class B2CNN(B2):
             kernel_size,
             fcl_size)
         else:
-            print("Training CNN...")
+            print("[INFO] Training CNN...")
             self.model, self.history, self.schedule = train_cnn(
                 B2.height, 
                 B2.width,
@@ -289,7 +289,7 @@ class B2Xception(B2):
             "train_loss_acc_B2_xception_frozen.png",
             "B2 (frozen model)")
         else:
-            print("Training Xception...")
+            print("[INFO] Training Xception...")
             self.model, self.history, self.schedule = train_xception(
                 B2.height, 
                 B2.width,
@@ -310,7 +310,7 @@ class B2Xception(B2):
             # Navigate to output folder in parent directory
             go_up_three_dirs()        
 
-            print("Creating learning rate finder plot...")
+            print("[INFO] Creating learning rate finder plot...")
             # Plot learning rate finder plot
             self.lr_finder.plot_loss(
                 "output/lr_finder_plot_B2.png")

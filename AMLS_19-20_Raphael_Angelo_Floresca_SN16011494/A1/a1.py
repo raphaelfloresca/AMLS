@@ -70,7 +70,7 @@ class A1MLP(A1):
             layer1_hn,
             layer2_hn)
         else:
-            print("Training MLP...")
+            print("[INFO] Training MLP...")
             self.model, self.history, self.schedule = train_mlp(
                 A1.height, 
                 A1.width,
@@ -173,7 +173,7 @@ class A1CNN(A1):
             kernel_size,
             fcl_size)
         else:
-            print("Training CNN...")
+            print("[INFO] Training CNN...")
             self.model, self.history, self.schedule = train_cnn(
                 A1.height, 
                 A1.width,
@@ -194,7 +194,7 @@ class A1CNN(A1):
             # Navigate to output folder in parent directory
             go_up_three_dirs()        
 
-            print("Creating learning rate finder plot...")
+            print("[INFO] Creating learning rate finder plot...")
             # Plot learning rate finder plot
             self.lr_finder.plot_loss(
                 "output/lr_finder_plot_A1.png")

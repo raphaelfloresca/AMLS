@@ -247,6 +247,9 @@ class A2Xception(A2):
             find_lr,
             random_state):
 
+        # Change to relevant image set directory
+        os.chdir(os.path.join(data_dir, celeba_dir))
+
         # Change random state according to constructor
         self.random_state = random_state
         A2.random_state = self.random_state

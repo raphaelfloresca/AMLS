@@ -270,21 +270,21 @@ class A1Xception(A1):
         # Change to relevant image set directory
         os.chdir(os.path.join(data_dir, celeba_dir))
         
-        if find_lr == True:
+        if self.find_lr == True:
             self.lr_finder = train_xception(
-            A1.height, 
-            A1.width,
-            A1.num_classes,
-            A1.batch_size,
-            self.epochs,
-            learning_rate,
-            schedule_type,
-            find_lr,
-            self.train_gen,
-            self.val_gen,
-            "A1_frozen_model.h5",
-            "train_loss_acc_A1_xception_frozen.png",
-            "A1 (frozen model)")
+                A1.height, 
+                A1.width,
+                A1.num_classes,
+                A1.batch_size,
+                self.epochs,
+                learning_rate,
+                schedule_type,
+                self.find_lr,
+                    self.train_gen,
+                self.val_gen,
+                "A1_frozen_model.h5",
+                "train_loss_acc_A1_xception_frozen.png",
+                "A1 (frozen model)")
         else:
             self.model, self.history, self.schedule = train_xception(
                 A1.height, 
@@ -294,7 +294,7 @@ class A1Xception(A1):
                 self.epochs,
                 learning_rate,
                 schedule_type,
-                find_lr,
+                self.find_lr,
                 self.train_gen,
                 self.val_gen,
                 "A1_frozen_model.h5",
@@ -308,8 +308,8 @@ class A1Xception(A1):
 
             # Plot learning rate finder plot
             self.lr_finder.plot_loss(
-                "output/lr_finder_plot_A1.png"
-            )
+                "output/lr_finder_plot_A1.png")
+                
         else:
             # Plot training loss accuracy and learning rate change
             # Navigate to output folder in parent directory

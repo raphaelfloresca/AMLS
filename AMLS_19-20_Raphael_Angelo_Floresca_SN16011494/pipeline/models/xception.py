@@ -111,6 +111,8 @@ def train_frozen_xception(
         callbacks=callbacks,
         epochs=int(epochs/2))
 
+    
+
     # Plot training plot for the frozen model
     plot_train_loss_acc_lr(
                 history,

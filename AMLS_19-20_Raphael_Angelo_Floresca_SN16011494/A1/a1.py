@@ -5,6 +5,7 @@ from pipeline.models.cnn import train_cnn
 from pipeline.models.xception import train_xception
 from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses, plot_grad_cam
 import os
+from tensorflow.keras.applications.xception import preprocess_input
 
 class A1:
     height = 218
@@ -258,7 +259,16 @@ class A1Xception(A1):
         self.find_lr = find_lr
         self.schedule_type = schedule_type
 
-        self.train_gen, self.val_gen, self.test_gen = A1.train_gen, A1.val_gen, A1.test_gen
+        self.train_gen, self.val_gen, self.test_gen = create_datagens(
+            A1.height,
+            A1.width,
+            A1.df,
+            "celeba",
+            "img_name",
+            "gender",
+            A1.batch_size,
+            A1.random_state,
+            preprocess_input)
         
         if find_lr == True:
             self.lr_finder = train_xception(

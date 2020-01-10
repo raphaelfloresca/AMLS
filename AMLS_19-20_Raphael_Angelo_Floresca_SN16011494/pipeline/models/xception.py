@@ -106,7 +106,7 @@ def train_frozen_xception(
         callbacks=callbacks,
         epochs=int(epochs/2))
 
-    # Save model    
+    # Save model
     frozen_model.save('frozen_xception.h5')
 
 def train_xception(

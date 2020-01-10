@@ -4,66 +4,221 @@
 from tensorflow.keras.applications.xception import Xception
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense
 from tensorflow.keras import Model
+from tensorflow.keras.models import load_model
 from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.callbacks import LearningRateScheduler
+from pathlib import Path
+from pipeline.optimisation.learning_rate_schedulers import StepDecay, PolynomialDecay
+from pipeline.optimisation.one_cycle_lr.lr_finder import LRFinder
+from pipeline.optimisation.one_cycle_lr.one_cycle_scheduler import OneCycleScheduler
 
-def train_xception(
+def train_frozen_xception(
         height,
         width,
         num_classes,
-        epochs,
         batch_size,
+        epochs,
+        learning_rate,
+        schedule_type,
         train_gen,
         val_gen):
 
-    # ResNet-50v2 is used as the base architecture for the model.
+    # Store the number of epochs to train for in a convenience variable,
+    # then initialize the list of callbacks and learning rate scheduler
+    # to be used
+    callbacks = []
+    schedule = None
+    
+    # check to see if step-based learning rate decay should be used
+    if schedule_type == "step":
+        print("[INFO] using 'step-based' learning rate decay...")
+        schedule = StepDecay(initAlpha=1e-1, factor=0.25, dropEvery=int(epochs/5))
+
+    # check to see if linear learning rate decay should should be used
+    elif schedule_type == "linear":
+        print("[INFO] using 'linear' learning rate decay...")
+        schedule = PolynomialDecay(maxEpochs=epochs, initAlpha=1e-1, power=1)
+    
+    # check to see if a polynomial learning rate decay should be used
+    elif schedule_type == "poly":
+        print("[INFO] using 'polynomial' learning rate decay...")
+        schedule = PolynomialDecay(maxEpochs=epochs, initAlpha=1e-1, power=5)
+
+    elif schedule_type == "one_cycle":
+        print("[INFO] using 'one cycle' learning...")
+        schedule = OneCycleScheduler(learning_rate)
+        callbacks = [schedule]
+
+    # if the learning rate schedule is not empty, add it to the list of
+    # callbacks
+    if schedule_type != "none" and schedule_type != "one_cycle":
+        callbacks = [LearningRateScheduler(schedule)]
+
+    # initialize the decay for the optimizer
+    decay = 0.0
+ 
+    # if we are using Keras' "standard" decay, then we need to set the
+    # decay parameter
+    if schedule_type == "standard":
+        print("[INFO] using 'keras standard' learning rate decay...")
+        decay = 1e-1 / epochs
+ 
+    # otherwise, no learning rate schedule is being used
+    elif schedule_type == "none":
+        print("[INFO] no learning rate schedule being used")
+        
+    # Xception is used as the base architecture for the model.
     # The top layers are not included in order to perform transfer learning.
     # Modified to allow for a custom input size
     base_model = Xception(weights="imagenet",
-                            include_top=False,
-                            input_shape=(height,width,3))
+                          include_top=False,
+                          input_shape=(height,width,3))
         
     # Implement own pooling layer
     avg = GlobalAveragePooling2D()(base_model.output)
+    
     # Output layer
     output = Dense(num_classes, activation="softmax")(avg)
+
     # Build model
-    model = Model(inputs=base_model.input, outputs=output)
+    frozen_model = Model(inputs=base_model.input, outputs=output)
 
     # First, we freeze the layers for the first part of the training
     for layer in base_model.layers:
         layer.trainable = False
 
-    # Specify optimiser parameters for the first stage
-    optimizer = SGD(lr=0.2, momentum=0.9, decay=0.01)
+    if schedule_type != "one_cycle":
+        # initialize optimizer and model, then compile it
+        opt = SGD(lr=learning_rate, momentum=0.9, decay=decay)
+    else:
+        opt = SGD()
         
     # We now compile the Xception model for the first stage
-    model.compile(loss="sparse_categorical_crossentropy", optimizer=optimizer,
-              metrics=["accuracy"])
+    frozen_model.compile(loss="sparse_categorical_crossentropy", optimizer=opt,
+                         metrics=["accuracy"])
 
     # Training and evaluating the Xception model for the first stage
-    history = model.fit(
+    frozen_model.fit(
         train_gen,
         steps_per_epoch=train_gen.samples // batch_size,
         validation_data=val_gen,
         validation_steps=val_gen.samples // batch_size,
+        callbacks=callbacks,
         epochs=int(epochs/2))
 
-    # Now, we unfreeze the layers for the second part of the training
-    for layer in base_model.layers:
-        layer.trainable = True
+    # Save model    
+    frozen_model.save('frozen_xception.h5')
 
-    # Specify optimiser parameters for the second stage
-    optimizer = SGD(lr=0.01, momentum=0.9, decay=0.001)
+def train_xception(
+        height,
+        width,
+        num_classes,
+        batch_size,
+        epochs,
+        learning_rate,
+        schedule_type,
+        find_lr,
+        train_gen,
+        val_gen):
+    if find_lr == True:
+        print("[INFO] Finding learning rate...")
         
-    # We now compile the Xception model for the second stage
-    model.compile(loss="sparse_categorical_crossentropy", optimizer=optimizer,
-              metrics=["accuracy"])
+        train_frozen_xception(
+            height,
+            width,
+            num_classes,
+            batch_size,
+            epochs,
+            learning_rate,
+            schedule_type,
+            train_gen,
+            val_gen)
 
-    # Training and evaluating the Xception model for the second stage
-    history = model.fit(
-        train_gen,
-        steps_per_epoch=train_gen.samples // batch_size,
-        validation_data=val_gen,
-        validation_steps=val_gen.samples // batch_size,
-        epochs=int(epochs/2))
-    return model, history
+        model = load_model('frozen_xception.h5')
+
+        lr_finder = LRFinder(model)
+        lr_finder.find(train_gen)
+        return lr_finder
+    else:
+        frozen_path = Path("frozen_xception.h5")
+
+        if frozen_path.is_file() != True:
+            train_frozen_xception(
+                height,
+                width,
+                num_classes,
+                batch_size,
+                epochs,
+                learning_rate,
+                schedule_type,
+                train_gen,
+                val_gen)
+
+        model = load_model('frozen_xception.h5')
+
+        for layer in model.layers[-2]:
+            layer.trainable = True
+
+        # Store the number of epochs to train for in a convenience variable,
+        # then initialize the list of callbacks and learning rate scheduler
+        # to be used
+        callbacks = []
+        schedule = None
+
+        # check to see if step-based learning rate decay should be used
+        if schedule_type == "step":
+            print("[INFO] using 'step-based' learning rate decay...")
+            schedule = StepDecay(initAlpha=1e-1, factor=0.25, dropEvery=int(epochs/5))
+
+        # check to see if linear learning rate decay should should be used
+        elif schedule_type == "linear":
+            print("[INFO] using 'linear' learning rate decay...")
+            schedule = PolynomialDecay(maxEpochs=epochs, initAlpha=1e-1, power=1)
+
+        # check to see if a polynomial learning rate decay should be used
+        elif schedule_type == "poly":
+            print("[INFO] using 'polynomial' learning rate decay...")
+            schedule = PolynomialDecay(maxEpochs=epochs, initAlpha=1e-1, power=5)
+
+        elif schedule_type == "one_cycle":
+            print("[INFO] using 'one cycle' learning...")
+            schedule = OneCycleScheduler(learning_rate)
+            callbacks = [schedule]
+
+        # if the learning rate schedule is not empty, add it to the list of
+        # callbacks
+        if schedule_type != "none" and schedule_type != "one_cycle":
+            callbacks = [LearningRateScheduler(schedule)]
+
+        # initialize the decay for the optimizer
+        decay = 0.0
+
+        # if we are using Keras' "standard" decay, then we need to set the
+        # decay parameter
+        if schedule_type == "standard":
+            print("[INFO] using 'keras standard' learning rate decay...")
+            decay = 1e-1 / epochs
+    
+        # otherwise, no learning rate schedule is being used
+        elif schedule_type == "none":
+            print("[INFO] no learning rate schedule being used")
+
+        if schedule_type != "one_cycle":
+            # initialize optimizer and model, then compile it
+            opt = SGD(lr=learning_rate, momentum=0.9, decay=decay)
+        else:
+            opt = SGD()
+    
+        # We now compile the Xception model for the first stage
+        model.compile(loss="sparse_categorical_crossentropy", 
+            optimizer=opt,
+            metrics=["accuracy"])
+
+        # Training and evaluating the Xception model for the second stage
+        history = model.fit(train_gen,
+            steps_per_epoch=train_gen.samples // batch_size,
+            validation_data=val_gen,
+            validation_steps=val_gen.samples // batch_size,
+            callbacks=callbacks,
+            epochs=epochs)
+        return model, history, schedule

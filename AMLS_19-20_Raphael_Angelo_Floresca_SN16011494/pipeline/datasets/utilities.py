@@ -1,16 +1,22 @@
 import pandas as pd
 import os
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from pipeline.datasets.download_data import download_dataset
+from pipeline.datasets.download_data import download_train_dataset, download_test_dataset
 
+dataset_dir = ""
 data_dir = "data/dataset_AMLS_19-20"
 test_dir = "data/dataset_test_AMLS_19-20"
 parent_dir = "AMLSassignment19_20/AMLS_19-20_Raphael_Angelo_Floresca_SN16011494"
 
-# This checks whether the dataset has been downloaded
-def check_path():
+# This checks whether the training dataset has been downloaded
+def check_train_path():
     if not os.path.exists(data_dir):
-        download_dataset()
+        download_train_dataset()
+
+# This checks whether the test dataset has been downloaded
+def check_test_path():
+    if not os.path.exists(test_dir):
+        download_test_dataset()
 
 # Paths of the two datasets
 celeba_dir = "celeba"
@@ -26,23 +32,31 @@ def go_up_three_dirs():
 
 # Create a dataframe for the celeba labels.csv
 def create_celeba_df():
-    check_path()
+    check_train_path()
     os.chdir(os.path.join(data_dir, celeba_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
     return df
 
-# Create a dataframe for the celeba labels.csv
+# Create a dataframe for the cartoon_set labels.csv
+def create_cartoon_set_df():
+    check_train_path()
+    os.chdir(os.path.join(data_dir, cartoon_set_dir))
+    # Import data as dataframe
+    df = pd.read_csv("labels.csv", sep="\t", dtype=str)
+    return df
+
+# Create a test dataframe for the celeba labels.csv
 def create_celeba_test_df():
-    check_path()
+    check_test_path()
     os.chdir(os.path.join(test_dir, celeba_test_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)
     return df
 
-# Create a dataframe for the cartoon_set labels.csv
+# Create a test dataframe for the cartoon_set labels.csv
 def create_cartoon_set_test_df():
-    check_path()
+    check_test_path()
     os.chdir(os.path.join(test_dir, cartoon_set_test_dir))
     # Import data as dataframe
     df = pd.read_csv("labels.csv", sep="\t", dtype=str)

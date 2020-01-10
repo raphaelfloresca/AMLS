@@ -261,6 +261,9 @@ class B1Xception(B1):
         self.epochs = epochs
         self.find_lr = find_lr
         self.schedule_type = schedule_type
+        self.frozen_model_path = frozen_model_path
+        self.frozen_training_plot_path = frozen_training_plot_path
+        self.frozen_training_plot_name = frozen_training_plot_name
 
         self.train_gen, self.val_gen, self.test_gen = create_datagens(
             B1.height,
@@ -288,9 +291,9 @@ class B1Xception(B1):
             find_lr,
             self.train_gen,
             self.val_gen,
-            frozen_model_path,
-            frozen_training_plot_path,
-            frozen_training_plot_name)
+            self.frozen_model_path,
+            self.frozen_training_plot_path,
+            self.frozen_training_plot_name)
         else:
             print("Training Xception...")
             self.model, self.history, self.schedule = train_xception(
@@ -304,9 +307,9 @@ class B1Xception(B1):
                 find_lr,
                 self.train_gen,
                 self.val_gen,
-                frozen_model_path,
-                frozen_training_plot_path,
-                frozen_training_plot_name)
+                self.frozen_model_path,
+                self.frozen_training_plot_path,
+                self.frozen_training_plot_name)
 
     def train(self):
         if self.find_lr == True:

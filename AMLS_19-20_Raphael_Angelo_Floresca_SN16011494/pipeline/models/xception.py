@@ -7,6 +7,7 @@ from tensorflow.keras import Model
 from tensorflow.keras.models import load_model
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.callbacks import LearningRateScheduler
+from tensorflow.keras import backend as K
 from pathlib import Path
 from pipeline.optimisation.learning_rate_schedulers import StepDecay, PolynomialDecay
 from pipeline.optimisation.one_cycle_lr.lr_finder import LRFinder
@@ -139,7 +140,6 @@ def train_xception(
         frozen_training_plot_name):
     if find_lr == True:
         print("[INFO] Finding learning rate...")
-        
         print("[INFO] Training frozen model...")
         train_frozen_xception(
             height,
@@ -247,4 +247,5 @@ def train_xception(
             validation_steps=val_gen.samples // batch_size,
             callbacks=callbacks,
             epochs=int(epochs/2))
+
         return model, history, schedule

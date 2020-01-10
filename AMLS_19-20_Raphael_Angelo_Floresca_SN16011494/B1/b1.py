@@ -246,10 +246,7 @@ class B1Xception(B1):
             learning_rate,
             schedule_type,
             find_lr,
-            random_state,
-            frozen_model_path="B1_frozen_model.h5",
-            frozen_training_plot_path="train_loss_acc_B1_xception_frozen.png",
-            frozen_training_plot_name="B1 (frozen model)"):
+            random_state):
 
         # Change to relevant image set directory
         os.chdir(os.path.join(data_dir, cartoon_set_dir))
@@ -261,9 +258,9 @@ class B1Xception(B1):
         self.epochs = epochs
         self.find_lr = find_lr
         self.schedule_type = schedule_type
-        self.frozen_model_path = frozen_model_path
-        self.frozen_training_plot_path = frozen_training_plot_path
-        self.frozen_training_plot_name = frozen_training_plot_name
+        self.frozen_model_path = "B1_frozen_model.h5",
+        self.frozen_training_plot_path = "train_loss_acc_B1_xception_frozen.png"
+        self.frozen_training_plot_name = "B1 (frozen model)"
 
         self.train_gen, self.val_gen, self.test_gen = create_datagens(
             B1.height,

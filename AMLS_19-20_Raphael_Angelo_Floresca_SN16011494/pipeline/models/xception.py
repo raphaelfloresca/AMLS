@@ -21,7 +21,8 @@ def train_frozen_xception(
         learning_rate,
         schedule_type,
         train_gen,
-        val_gen):
+        val_gen,
+        frozen_model_path):
 
     # Store the number of epochs to train for in a convenience variable,
     # then initialize the list of callbacks and learning rate scheduler
@@ -107,7 +108,7 @@ def train_frozen_xception(
         epochs=int(epochs/2))
 
     # Save model
-    frozen_model.save('frozen_xception.h5')
+    frozen_model.save(frozen_model_path)
 
 def train_xception(
         height,
@@ -119,7 +120,8 @@ def train_xception(
         schedule_type,
         find_lr,
         train_gen,
-        val_gen):
+        val_gen,
+        frozen_model_path):
     if find_lr == True:
         print("[INFO] Finding learning rate...")
         
@@ -132,15 +134,16 @@ def train_xception(
             learning_rate,
             schedule_type,
             train_gen,
-            val_gen)
+            val_gen,
+            frozen_model_path)
 
-        model = load_model('frozen_xception.h5')
+        model = load_model('frozen_model_path')
 
         lr_finder = LRFinder(model)
         lr_finder.find(train_gen)
         return lr_finder
     else:
-        frozen_path = Path("frozen_xception.h5")
+        frozen_path = Path("frozen_model_path")
 
         if frozen_path.is_file() != True:
             train_frozen_xception(
@@ -152,9 +155,10 @@ def train_xception(
                 learning_rate,
                 schedule_type,
                 train_gen,
-                val_gen)
+                val_gen,
+                frozen_model_path)
 
-        model = load_model('frozen_xception.h5')
+        model = load_model('frozen_model_path')
 
         for layer in model.layers[:-2]:
             layer.trainable = True
@@ -220,5 +224,5 @@ def train_xception(
             validation_data=val_gen,
             validation_steps=val_gen.samples // batch_size,
             callbacks=callbacks,
-            epochs=epochs)
+            epochs=int(epochs/2))
         return model, history, schedule

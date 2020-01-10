@@ -245,7 +245,8 @@ class A2Xception(A2):
             learning_rate,
             schedule_type,
             find_lr,
-            random_state):
+            random_state,
+            frozen_model_path="a2_frozen_model.h5"):
 
         # Change to relevant image set directory
         os.chdir(os.path.join(data_dir, celeba_dir))
@@ -283,7 +284,8 @@ class A2Xception(A2):
             schedule_type,
             find_lr,
             self.train_gen,
-            self.val_gen)
+            self.val_gen,
+            frozen_model_path)
         else:
             print("Training Xception...")
             self.model, self.history, self.schedule = train_xception(
@@ -296,7 +298,8 @@ class A2Xception(A2):
                 schedule_type,
                 find_lr,
                 self.train_gen,
-                self.val_gen)
+                self.val_gen,
+                frozen_model_path)
 
     def train(self):
         if self.find_lr == True:

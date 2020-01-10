@@ -16,7 +16,7 @@ ap.add_argument("-s", "--schedule_type", type=str, default='none,none,none,none'
 	help="learning rate schedule method")
 ap.add_argument("-e", "--epochs", type=str, default='10,10,10,10',
 	help="# of epochs to train for")
-ap.add_argument("-l", "--learning_rates", type=str, default='0.003,0.003,0.003,0.003',
+ap.add_argument("-l", "--learning_rates", type=str, default='0.01,0.01,0.1,0.1',
     help="starting learning rate")
 ap.add_argument("-f", "--find_lr", type=bool, default=False,
     help="find learning rate with the learning rate finder")
@@ -92,10 +92,10 @@ K.clear_session()
 
 # ======================================================================================================================
 # Print out your results with following format:
-print('TA1:{},{};TA2:{},{};TA3:{},{};TA4:{},{}'.format(acc_A1_train, acc_A1_test,
-                                                       acc_A2_train, acc_A2_test,
-                                                       acc_B1_train, acc_B1_test,
-                                                       acc_B2_train, acc_B2_test))
-
+print('TA1: Training accuracy: {}, Test accuracy: {};\n'.format(acc_A1_train, acc_A1_test) +
+      'TA2: Training accuracy: {}, Test accuracy: {};\n'.format(acc_A2_train, acc_A2_test) + 
+      'TA3: Training accuracy: {}, Test accuracy: {};\n'.format(acc_B1_train, acc_B1_test) +
+      'TA4: Training accuracy: {}, Test accuracy: {}'.format(acc_B2_train, acc_B2_test))
+      
 # If you are not able to finish a task, fill the corresponding variable with 'TBD'. For example:
 # acc_A1_train = 'TBD'

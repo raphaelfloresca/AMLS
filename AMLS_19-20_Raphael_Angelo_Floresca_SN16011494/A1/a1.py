@@ -111,7 +111,7 @@ class A1MLP(A1):
                 "output/lr_A1_mlp.png")
 
             # Get the training accuracy
-            training_accuracy = self.history.history['acc'][-1]
+            training_accuracy = self.history.history['val_acc'][-1]
             return training_accuracy
 
     def test(self):
@@ -213,7 +213,7 @@ class A1CNN(A1):
                 "output/lr_A1_cnn.png")
 
             # Get the training accuracy
-            training_accuracy = self.history.history['acc'][-1]
+            training_accuracy = self.history.history['val_acc'][-1]
             return training_accuracy
 
     def test(self):
@@ -325,7 +325,7 @@ class A1Xception(A1):
                 "output/lr_A1_xception.png")
 
             # Get the training accuracy
-            training_accuracy = self.history.history['acc'][-1]
+            training_accuracy = self.history.history['val_acc'][-1]
             return training_accuracy
 
     def test(self):

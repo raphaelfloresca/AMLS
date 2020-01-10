@@ -117,5 +117,5 @@ def create_datagens(
 
 def get_X_y_test_sets(test_gen):
     itr = test_gen
-    gender_X_test, gender_y_test = itr.next()
-    return gender_X_test, gender_y_test
+    X_test, y_test = itr.next()
+    return X_test, y_test

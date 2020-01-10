@@ -8,8 +8,8 @@ import os
 from tensorflow.keras.applications.xception import preprocess_input
 
 class B2:
-    height = 500
-    width = 500
+    height = 299
+    width = 299
     num_classes = 5
     batch_size = 32
     random_state = 42
@@ -111,7 +111,7 @@ class B2MLP(B2):
                 "output/lr_B2_mlp.png")
 
             # Get the training accuracy
-            training_accuracy = self.history.history['acc'][-1]
+            training_accuracy = self.history.history['val_acc'][-1]
             return training_accuracy
 
     def test(self):
@@ -216,7 +216,7 @@ class B2CNN(B2):
                 "output/lr_B2_cnn.png")
 
             # Get the training accuracy
-            training_accuracy = self.history.history['acc'][-1]
+            training_accuracy = self.history.history['val_acc'][-1]
             return training_accuracy
 
     def test(self):
@@ -329,7 +329,7 @@ class B2Xception(B2):
                 "output/lr_B2_xception.png")
 
             # Get the training accuracy
-            training_accuracy = self.history.history['acc'][-1]
+            training_accuracy = self.history.history['val_acc'][-1]
             return training_accuracy
 
     def test(self):

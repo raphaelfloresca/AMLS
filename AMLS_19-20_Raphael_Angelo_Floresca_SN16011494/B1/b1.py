@@ -349,7 +349,7 @@ class B1Xception(B1):
         plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_B1_xception.png")
 
         # Plot GradCam
-        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_4", "output/plot_top_5_gradcam_B1_xception.png")
+        plot_grad_cam(self.model, X_test, y_test, 3, "block14_sepconv2", "output/plot_top_5_gradcam_B1_xception.png")
 
         # Get the test accuracy
         test_accuracy = self.model.evaluate(X_test, y_test)[-1]

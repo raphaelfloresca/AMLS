@@ -127,9 +127,6 @@ class A1MLP(A1):
         # Plot top losses
         plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_A1_mlp.png")
 
-        # Plot GradCam
-        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_2", "output/plot_top_5_gradcam_A1_mlp.png")
-
         # Get the test accuracy
         test_accuracy = self.model.evaluate(X_test, y_test)[-1]
         return test_accuracy
@@ -349,7 +346,7 @@ class A1Xception(A1):
         plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_A1_xception.png")
 
         # Plot GradCam
-        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_4", "output/plot_top_5_gradcam_A1_xception.png")
+        plot_grad_cam(self.model, X_test, y_test, 3, "block14_sepconv2", "output/plot_top_5_gradcam_A1_xception.png")
 
         # Get the test accuracy
         test_accuracy = self.model.evaluate(X_test, y_test)[-1]

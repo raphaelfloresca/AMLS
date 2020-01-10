@@ -26,6 +26,7 @@ class A2:
         random_state,
         None)
 
+
 class A2MLP(A2):
     def __init__(
             self,
@@ -107,7 +108,7 @@ class A2MLP(A2):
                 self.schedule_type,
                 "A2",
                 "output/train_loss_acc_A2_mlp.png",
-                "output/lr_A2_cnn.png")
+                "output/lr_A2_mlp.png")
 
             # Get the training accuracy
             training_accuracy = self.history.history['acc'][-1]
@@ -246,7 +247,9 @@ class A2Xception(A2):
             schedule_type,
             find_lr,
             random_state,
-            frozen_model_path="a2_frozen_model.h5"):
+            frozen_model_path="A2_frozen_model.h5",
+            frozen_training_plot_name="A2 (frozen model)",
+            frozen_training_plot_path="train_loss_acc_A2_xception.png"):
 
         # Change to relevant image set directory
         os.chdir(os.path.join(data_dir, celeba_dir))
@@ -285,7 +288,9 @@ class A2Xception(A2):
             find_lr,
             self.train_gen,
             self.val_gen,
-            frozen_model_path)
+            frozen_model_path,
+            frozen_training_plot_name,
+            frozen_training_plot_path)
         else:
             print("Training Xception...")
             self.model, self.history, self.schedule = train_xception(
@@ -299,7 +304,9 @@ class A2Xception(A2):
                 find_lr,
                 self.train_gen,
                 self.val_gen,
-                frozen_model_path)
+                frozen_model_path,
+                frozen_training_plot_name,
+                frozen_training_plot_path)
 
     def train(self):
         if self.find_lr == True:
@@ -322,7 +329,7 @@ class A2Xception(A2):
                 self.schedule_type,
                 "A2",
                 "output/train_loss_acc_A2_xception.png",
-                "output/lr_A2_cnn.png")
+                "output/lr_A2_xception.png")
 
             # Get the training accuracy
             training_accuracy = self.history.history['acc'][-1]
@@ -342,7 +349,7 @@ class A2Xception(A2):
         plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_A2_xception.png")
 
         # Plot GradCam
-        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_2", "output/plot_top_5_gradcam_A2_xception.png")
+        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_4", "output/plot_top_5_gradcam_A2_xception.png")
 
         # Get the test accuracy
         test_accuracy = self.model.evaluate(X_test, y_test)[-1]

@@ -1,5 +1,5 @@
 from pipeline.datasets.cartoon_set_face_shape import create_face_shape_df
-from pipeline.datasets.utilities import get_X_y_test_sets, create_datagens, go_up_three_dirs, data_dir, cartoon_set_dir
+from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs, create_datagens, data_dir, cartoon_set_dir
 from pipeline.models.mlp import train_mlp
 from pipeline.models.cnn import train_cnn
 from pipeline.models.xception import train_xception
@@ -25,6 +25,7 @@ class B1:
         batch_size,
         random_state,
         None)
+
 
 class B1MLP(B1):
     def __init__(
@@ -107,7 +108,7 @@ class B1MLP(B1):
                 self.schedule_type,
                 "B1",
                 "output/train_loss_acc_B1_mlp.png",
-                "output/lr_B1_cnn.png")
+                "output/lr_B1_mlp.png")
 
             # Get the training accuracy
             training_accuracy = self.history.history['acc'][-1]
@@ -246,7 +247,9 @@ class B1Xception(B1):
             schedule_type,
             find_lr,
             random_state,
-            frozen_model_path="b1_frozen_model.h5"):
+            frozen_model_path="B1_frozen_model.h5",
+            frozen_training_plot_name="B1 (frozen model)",
+            frozen_training_plot_path="train_loss_acc_B1_xception.png"):
 
         # Change to relevant image set directory
         os.chdir(os.path.join(data_dir, cartoon_set_dir))
@@ -285,7 +288,9 @@ class B1Xception(B1):
             find_lr,
             self.train_gen,
             self.val_gen,
-            frozen_model_path)
+            frozen_model_path,
+            frozen_training_plot_name,
+            frozen_training_plot_path)
         else:
             print("Training Xception...")
             self.model, self.history, self.schedule = train_xception(
@@ -299,7 +304,9 @@ class B1Xception(B1):
                 find_lr,
                 self.train_gen,
                 self.val_gen,
-                frozen_model_path)
+                frozen_model_path,
+                frozen_training_plot_name,
+                frozen_training_plot_path)
 
     def train(self):
         if self.find_lr == True:
@@ -322,7 +329,7 @@ class B1Xception(B1):
                 self.schedule_type,
                 "B1",
                 "output/train_loss_acc_B1_xception.png",
-                "output/lr_B1_cnn.png")
+                "output/lr_B1_xception.png")
 
             # Get the training accuracy
             training_accuracy = self.history.history['acc'][-1]
@@ -342,7 +349,7 @@ class B1Xception(B1):
         plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_B1_xception.png")
 
         # Plot GradCam
-        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_2", "output/plot_top_5_gradcam_B1_xception.png")
+        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_4", "output/plot_top_5_gradcam_B1_xception.png")
 
         # Get the test accuracy
         test_accuracy = self.model.evaluate(X_test, y_test)[-1]

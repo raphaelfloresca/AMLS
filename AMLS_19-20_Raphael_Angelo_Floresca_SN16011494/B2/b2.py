@@ -1,7 +1,7 @@
 from pipeline.datasets.cartoon_set_eye_color import create_eye_color_df
 from pipeline.datasets.utilities import get_X_y_test_sets, go_up_three_dirs, create_datagens, data_dir, cartoon_set_dir
 from pipeline.models.mlp import train_mlp
-from pipeline. models.cnn import train_cnn
+from pipeline.models.cnn import train_cnn
 from pipeline.models.xception import train_xception
 from pipeline.plotting.plotting import plot_train_loss_acc_lr, plot_top_losses, plot_grad_cam
 import os
@@ -25,6 +25,7 @@ class B2:
         batch_size,
         random_state,
         None)
+
 
 class B2MLP(B2):
     def __init__(
@@ -107,7 +108,7 @@ class B2MLP(B2):
                 self.schedule_type,
                 "B2",
                 "output/train_loss_acc_B2_mlp.png",
-                "output/lr_B2_cnn.png")
+                "output/lr_B2_mlp.png")
 
             # Get the training accuracy
             training_accuracy = self.history.history['acc'][-1]
@@ -246,7 +247,9 @@ class B2Xception(B2):
             schedule_type,
             find_lr,
             random_state,
-            frozen_model_path="b2_frozen_model.h5"):
+            frozen_model_path="B2_frozen_model.h5",
+            frozen_training_plot_name="B2 (frozen model)",
+            frozen_training_plot_path="train_loss_acc_B2_xception.png"):
 
         # Change to relevant image set directory
         os.chdir(os.path.join(data_dir, cartoon_set_dir))
@@ -269,7 +272,7 @@ class B2Xception(B2):
             B2.batch_size,
             B2.random_state,
             preprocess_input)
-        
+
         # Change to relevant image set directory
         os.chdir(os.path.join(data_dir, cartoon_set_dir))
         
@@ -285,7 +288,9 @@ class B2Xception(B2):
             find_lr,
             self.train_gen,
             self.val_gen,
-            frozen_model_path)
+            frozen_model_path,
+            frozen_training_plot_name,
+            frozen_training_plot_path)
         else:
             print("Training Xception...")
             self.model, self.history, self.schedule = train_xception(
@@ -299,7 +304,9 @@ class B2Xception(B2):
                 find_lr,
                 self.train_gen,
                 self.val_gen,
-                frozen_model_path)
+                frozen_model_path,
+                frozen_training_plot_name,
+                frozen_training_plot_path)
 
     def train(self):
         if self.find_lr == True:
@@ -322,7 +329,7 @@ class B2Xception(B2):
                 self.schedule_type,
                 "B2",
                 "output/train_loss_acc_B2_xception.png",
-                "output/lr_B2_cnn.png")
+                "output/lr_B2_xception.png")
 
             # Get the training accuracy
             training_accuracy = self.history.history['acc'][-1]
@@ -342,7 +349,7 @@ class B2Xception(B2):
         plot_top_losses(self.model, X_test, y_test, "output/plot_top_losses_B2_xception.png")
 
         # Plot GradCam
-        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_2", "output/plot_top_5_gradcam_B2_xception.png")
+        plot_grad_cam(self.model, X_test, y_test, 3, "conv2d_4", "output/plot_top_5_gradcam_B2_xception.png")
 
         # Get the test accuracy
         test_accuracy = self.model.evaluate(X_test, y_test)[-1]

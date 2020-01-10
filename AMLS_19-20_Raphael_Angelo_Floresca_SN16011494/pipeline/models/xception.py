@@ -11,6 +11,7 @@ from pathlib import Path
 from pipeline.optimisation.learning_rate_schedulers import StepDecay, PolynomialDecay
 from pipeline.optimisation.one_cycle_lr.lr_finder import LRFinder
 from pipeline.optimisation.one_cycle_lr.one_cycle_scheduler import OneCycleScheduler
+from pipeline.plotting.plotting import plot_train_loss_acc_lr
 
 def train_frozen_xception(
         height,
@@ -22,7 +23,9 @@ def train_frozen_xception(
         schedule_type,
         train_gen,
         val_gen,
-        frozen_model_path):
+        frozen_model_path,
+        frozen_training_plot_path,
+        frozen_training_plot_name):
 
     # Store the number of epochs to train for in a convenience variable,
     # then initialize the list of callbacks and learning rate scheduler
@@ -99,13 +102,23 @@ def train_frozen_xception(
                          metrics=["accuracy"])
 
     # Training and evaluating the Xception model for the first stage
-    frozen_model.fit(
+    history = frozen_model.fit(
         train_gen,
         steps_per_epoch=train_gen.samples // batch_size,
         validation_data=val_gen,
         validation_steps=val_gen.samples // batch_size,
         callbacks=callbacks,
         epochs=int(epochs/2))
+
+    # Plot training plot for the frozen model
+    plot_train_loss_acc_lr(
+                history,
+                int(epochs/2),
+                schedule,
+                "none",
+                frozen_training_plot_name,
+                frozen_training_plot_path,
+                None)
 
     # Save model
     frozen_model.save(frozen_model_path)
@@ -121,7 +134,9 @@ def train_xception(
         find_lr,
         train_gen,
         val_gen,
-        frozen_model_path):
+        frozen_model_path,
+        frozen_training_plot_name,
+        frozen_training_plot_path):
     if find_lr == True:
         print("[INFO] Finding learning rate...")
         
@@ -135,7 +150,9 @@ def train_xception(
             schedule_type,
             train_gen,
             val_gen,
-            frozen_model_path)
+            frozen_model_path,
+            frozen_training_plot_name,
+            frozen_training_plot_path)
 
         model = load_model(frozen_model_path)
 
@@ -156,7 +173,9 @@ def train_xception(
                 schedule_type,
                 train_gen,
                 val_gen,
-                frozen_model_path)
+                frozen_model_path,
+                frozen_training_plot_name,
+                frozen_training_plot_path)
 
         model = load_model(frozen_model_path)
 

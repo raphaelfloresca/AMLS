@@ -20,11 +20,11 @@ def plot_train_loss_acc_lr(H, epochs, schedule, schedule_type, task_name, tla_pl
     plt.legend()
     plt.savefig(tla_plot_path)
  
-    if schedule is not None and schedule_type != "one_cycle":
+    if schedule_type != "none" and schedule_type != "one_cycle":
         print("Plotting learning rate graph...")
         schedule.plot(N)
         plt.savefig(lr_plot_path)
-    elif schedule is not None and schedule_type == "one_cycle":
+    elif schedule_type != "none" and schedule_type == "one_cycle":
         print("Plotting learning rate graph...")
         schedule.plot()
         plt.savefig(lr_plot_path)

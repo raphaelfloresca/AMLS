@@ -79,7 +79,6 @@ def create_train_datagens(
         batch_size, 
         random_state,
         preprocessing_function,
-        test_size=0.2,
         validation_split=0.25):
 
     # Create datagen
@@ -135,8 +134,7 @@ def create_test_datagen(
         y_col,
         batch_size, 
         random_state,
-        preprocessing_function,
-        test_size=0.2):
+        preprocessing_function):
 
     # Create datagen
     datagen = ImageDataGenerator(

@@ -156,7 +156,7 @@ def train_xception(
 
         model = load_model('frozen_xception.h5')
 
-        for layer in model.layers[-2]:
+        for layer in model.layers[:-2]:
             layer.trainable = True
 
         # Store the number of epochs to train for in a convenience variable,

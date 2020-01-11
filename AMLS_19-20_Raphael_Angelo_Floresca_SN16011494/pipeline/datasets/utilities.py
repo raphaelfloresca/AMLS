@@ -139,11 +139,11 @@ def create_test_datagen(
     # Create datagen
     datagen = ImageDataGenerator(
         rescale=1./255, 
-        #width_shift_range=[-0.05,0.05],
-        #height_shift_range=[-0.05,0.05],
-        #horizontal_flip=True,
-        #rotation_range=10,
-        #zoom_range=[0.1,1.1]
+        width_shift_range=[-0.15,0.15],
+        height_shift_range=[-0.15,0.15],
+        horizontal_flip=True,
+        rotation_range=15,
+        zoom_range=[0.15,1.15]
     )
 
     # Create dataframe

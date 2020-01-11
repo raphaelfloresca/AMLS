@@ -132,9 +132,14 @@ def plot_top_losses(model, X_test, y_test, ptl_plot_path):
     loss_pred_data = create_loss_pred_data(model, X_test, y_test)
     num_images = 9
     plt.figure(figsize=(6, 6))
-    for i in range(num_images):
-        plt.subplot(3, 3, i+1)
-        plot_wrong_image(i, loss_pred_data, X_test)
+    if np.shape(loss_pred_data)[1] >= num_images:
+        for i in range(num_images):
+            plt.subplot(3, 3, i+1)
+            plot_wrong_image(i, loss_pred_data, X_test)
+    else:
+        for i in range(num_images):
+            plt.subplot(1, 1, i+1)
+            plot_wrong_image(i, loss_pred_data, X_test)
     plt.tight_layout()
     plt.savefig(ptl_plot_path)
 

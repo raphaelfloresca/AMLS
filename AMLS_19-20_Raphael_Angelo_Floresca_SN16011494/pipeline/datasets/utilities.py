@@ -84,11 +84,11 @@ def create_train_datagens(
     # Create datagen
     datagen = ImageDataGenerator(
         rescale=1./255, 
-        width_shift_range=[-0.05,0.05],
-        height_shift_range=[-0.05,0.05],
+        width_shift_range=[-0.10,0.10],
+        height_shift_range=[-0.10,0.10],
         horizontal_flip=True,
         rotation_range=10,
-        zoom_range=[0.95,1.05],
+        zoom_range=[0.90,1.10],
         validation_split=validation_split)
 
     # Create dataframes
@@ -138,7 +138,12 @@ def create_test_datagen(
 
     # Create datagen
     datagen = ImageDataGenerator(
-        rescale=1./255
+        rescale=1./255, 
+        width_shift_range=[-0.10,0.10],
+        height_shift_range=[-0.10,0.10],
+        horizontal_flip=True,
+        rotation_range=10,
+        zoom_range=[0.90,1.10]
     )
 
     # Create dataframe

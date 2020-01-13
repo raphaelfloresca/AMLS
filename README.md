@@ -9,3 +9,5 @@ In the `AMLS_19-20_Raphael_Angelo_Floresca_SN16011494` folder, compile `main.py`
 - `--find_lr`: specifies whether the learning rate finder should be used. Default: `False`
 - `--random_state`: specifies a random seed when creating the training, validation and test sets. Default: `None`
 - `--model_type`: specifies the models used for each task. Specify the specific models for the tasks in sequential order in the following format (e.g. `mlp,mlp,mlp,mlp`). Accepts `mlp`,`cnn` and `xception` Default: `xception,xception,xception,xception`.
+## Output
+Check the `output` folder to find plots produced during training and testing.
